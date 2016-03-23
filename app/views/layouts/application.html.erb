@@ -9,6 +9,8 @@
 
 <body>
   <div class="mock-header">
+    <!-- <%= link_to 'Main Page', root_path, class: 'mock-button'  %> -->
+
     <% if user_signed_in? %>
       <%= "Hello, User-#{current_user.id} !"  %>
       <%= link_to 'Log out', destroy_user_session_path, method: :delete, class: 'mock-button'  %>
@@ -18,7 +20,7 @@
       <%= @current_profile || 'no-profile'  %>
       <%= link_to 'Edit your current profile', '#', class: 'mock-button'  %>
       <%= link_to 'Swich to your another profile', '#', class: 'mock-button'  %>
-      <%= link_to 'Create your new additional profile', '#', class: 'mock-button'  %>
+      <%= link_to 'Create your new additional profile', new_profile_path, class: 'mock-button'  %>
     <% else %>
       Hello, Guest!
       <%= link_to 'Log in', new_user_session_path, class: 'mock-button' %>
@@ -26,7 +28,7 @@
       <%= link_to 'Join', new_user_registration_path, class: 'mock-button' %>
     <% end %>
 
-    <%= link_to 'All profiles', '#', class: 'mock-button'  %>
+    <%= link_to 'All profiles', profiles_path, class: 'mock-button'  %>
 </div>
 
   <p class="notice"><%= notice %></p>

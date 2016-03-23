@@ -9,11 +9,19 @@
 
 <body>
   <% if user_signed_in? %>
-    <%= link_to 'Log out', destroy_user_session_path, method: :delete  %>
+    <%= "Hello, User-#{current_user.id} !"  %>
+    <%= link_to 'Log out', destroy_user_session_path, method: :delete, class: 'mock-button'  %>
+    or
+    <%= link_to 'Edit your user', destroy_user_session_path, class: 'mock-button'  %>
+    Your current profile is:
+    <%= @current_profile || 'no-profile'  %>
   <% else %>
-    <%= link_to 'Join', new_user_registration_path %>
-    <%= link_to 'Log in', new_user_session_path %>  
+    Hello, Guest!
+    <%= link_to 'Log in', new_user_session_path, class: 'mock-button' %>
+    or
+    <%= link_to 'Join', new_user_registration_path, class: 'mock-button' %>
   <% end %>
+
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
   <%= yield %>

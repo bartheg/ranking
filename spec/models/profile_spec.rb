@@ -41,17 +41,33 @@ RSpec.describe Profile, type: :model do
 
   end
 
-  describe '.save' do
+  describe '#save' do
 
     it 'changes the default profile of the user to itself if it is the only pfofile of the user' do
       user = User.create(email:"qweasd@qwe.pl", password:'asdqwe123123')
       profile = Profile.create user_id: user.id, description: "Some description", color: '#eeddaa'
 
-      expect(user.reload.default_profile.id).to equal profile.id
+      expect(user.reload.default_profile.id).to eq profile.id
+    end
+
+    it 'doesnt change default_profile when there is one' do
+      user1 = User.create(email:"qweasd@qwe.pl", password:'asdqwe123123')
+      profile1 = Profile.create user_id: user1.id, description: "Some description", color: '#eeddaa'
+      profile2 = Profile.create user_id: user1.id, description: "Some description", color: '#eeddaa'
+      expect(user1.reload.default_profile.id).to eq profile1.id
     end
 
   end
 
+  describe '#make_default' do
 
+    it 'force user object to change its default_profile' do
+      user1 = User.create(email:"qweasd@qwe.pl", password:'asdqwe123123')
+      profile1 = Profile.create user_id: user1.id, description: "Some description", color: '#eeddaa'
+      profile2 = Profile.create user_id: user1.id, description: "Some description", color: '#eeddaa'
+      profile2.make_default
+      expect(user1.reload.default_profile.id).to eq profile2.id
+    end
+  end
 
 end

@@ -7,6 +7,17 @@ class Profile < ActiveRecord::Base
   validates :user_id, presence: true
   validates :color, format: COLOR_REGEX, allow_nil: true
 
+  def make_default
+
+    # owner = self.user
+
+    self.user.profile_id = self.id
+    self.user.save
+
+    # self.user.update profile_id: self.id
+
+  end
+
   private
 
   def make_default_if_there_are_not_any

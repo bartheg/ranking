@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160327173059) do
+ActiveRecord::Schema.define(version: 20160327175641) do
 
   create_table "languages", force: :cascade do |t|
     t.string   "iso_639_1"
@@ -19,6 +19,13 @@ ActiveRecord::Schema.define(version: 20160327173059) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
+
+  create_table "languages_profiles", id: false, force: :cascade do |t|
+    t.integer "language_id"
+    t.integer "profile_id"
+  end
+
+  add_index "languages_profiles", ["language_id", "profile_id"], name: "index_languages_profiles_on_language_id_and_profile_id"
 
   create_table "profiles", force: :cascade do |t|
     t.integer  "user_id"

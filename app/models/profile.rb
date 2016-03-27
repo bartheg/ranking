@@ -1,5 +1,8 @@
 class Profile < ActiveRecord::Base
   belongs_to :user
+
+  has_and_belongs_to_many :languages
+  
   before_save :make_default_if_there_are_not_any
 
 

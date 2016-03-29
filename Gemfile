@@ -8,7 +8,9 @@ gem 'uglifier', '2.7.2'
 gem 'coffee-rails', '4.1.1'
 gem 'jquery-rails', '4.1.1'
 gem 'turbolinks', '2.5.3'
-gem 'devise', '3.5.6' 
+
+gem 'devise', '3.5.6'
+gem 'bootstrap-sass', '3.3.6 '
 
 gem 'rspec-rails', '3.4.2', group: [:test, :development]
 gem 'sqlite3', '1.3.11', group: [:test, :development]

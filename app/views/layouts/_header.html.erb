@@ -1,0 +1,18 @@
+<div class="mock-header">
+  <!-- <%= link_to 'Main Page', root_path, class: 'mock-button'  %> -->
+
+  <ul class="nav nav-pills">
+    <li role="presentation" class="active"><%= link_to 'Home', root_path %></li>
+    <% if user_signed_in? %>
+      <li role="presentation"><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
+      <li role="presentation"><%= link_to 'Edit your account', destroy_user_session_path %></li>
+      <li role="presentation"><%= link_to 'Edit your current profile', '#' %></li>
+      <li role="presentation"><%= link_to 'Swich to your another profile', '#' %></li>
+      <li role="presentation"><%= link_to 'Create your new additional profile', new_profile_path %></li>
+    <% else %>
+      <li role="presentation"><%= link_to 'Log in', new_user_session_path %></li>
+      <li role="presentation"><%= link_to 'Join', new_user_registration_path %></li>
+    <% end %>
+    <li role="presentation"><%= link_to 'All profiles', profiles_path %></li>
+  </ul>
+</div>

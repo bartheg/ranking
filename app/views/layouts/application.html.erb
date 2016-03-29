@@ -8,32 +8,18 @@
 </head>
 
 <body>
-  <div class="mock-header">
-    <!-- <%= link_to 'Main Page', root_path, class: 'mock-button'  %> -->
+  <div class="container">
+    <%= render 'layouts/header' %>
 
-    <% if user_signed_in? %>
-      <%= "Hello, User-#{current_user.id} !"  %>
-      <%= link_to 'Log out', destroy_user_session_path, method: :delete, class: 'mock-button'  %>
-      or
-      <%= link_to 'Edit your account', destroy_user_session_path, class: 'mock-button'  %>
-      Your current profile is:
-      <%= @current_profile || 'no-profile'  %>
-      <%= link_to 'Edit your current profile', '#', class: 'mock-button'  %>
-      <%= link_to 'Swich to your another profile', '#', class: 'mock-button'  %>
-      <%= link_to 'Create your new additional profile', new_profile_path, class: 'mock-button'  %>
-    <% else %>
-      Hello, Guest!
-      <%= link_to 'Log in', new_user_session_path, class: 'mock-button' %>
-      or
-      <%= link_to 'Join', new_user_registration_path, class: 'mock-button' %>
+    <% flash.each do |name, msg| %>
+      <%= content_tag(:div, msg, class: "alert alert-info") %>
     <% end %>
+    
+    <%= yield %>
 
-    <%= link_to 'All profiles', profiles_path, class: 'mock-button'  %>
-</div>
+    <%= render 'layouts/footer' %>
+  </div>
 
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
-  <%= yield %>
 </body>
 
 </html>

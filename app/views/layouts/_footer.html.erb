@@ -1,0 +1,13 @@
+<div class="well">
+  <p>
+    Debug:
+  </p>
+  <p>
+    User id:
+    <% if current_user %>
+      <%= current_user.id %>
+    <% else %>
+      nil (unlogged)
+    <% end %>
+  </p>
+</div>

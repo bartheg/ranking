@@ -5,10 +5,10 @@
     <li role="presentation" class=<%= "active" if current_page?(root_path) %>><%= link_to 'Home', root_path %></li>
     <% if user_signed_in? %>
       <li role="presentation"><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
-      <li role="presentation"><%= link_to 'Edit your account', destroy_user_session_path %></li>
+      <li role="presentation" class=<%= "active" if current_page?(edit_user_registration_path) %>><%= link_to 'Edit your account', edit_user_registration_path %></li>
       <li role="presentation"><%= link_to 'Edit your current profile', '#' %></li>
       <li role="presentation" class=<%= "active" if current_page?(user_profiles_path(user_id: current_user.id)) %>><%= link_to 'My profiles', user_profiles_path(user_id: current_user.id) %></li>
-      <li role="presentation"><%= link_to 'Create your new additional profile', new_profile_path %></li>
+      <li role="presentation" class=<%= "active" if current_page?(new_profile_path) %>><%= link_to 'Create your new additional profile', new_profile_path %></li>
     <% else %>
       <li role="presentation" class=<%= "active" if current_page?(new_user_session_path) %>><%= link_to 'Log in', new_user_session_path %></li>
       <li role="presentation" class=<%= "active" if current_page?(new_user_registration_path) %>><%= link_to 'Join', new_user_registration_path %></li>

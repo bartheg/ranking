@@ -70,4 +70,33 @@ RSpec.describe Profile, type: :model do
     end
   end
 
+  describe '.by_user' do
+    let! (:u1) { User.create email: 'qwe@qwe.qw', password: '123qweasd', profile_id: 1 }
+    let! (:p1) { Profile.create user_id: u1.id, description: "Description", color: '#edddaa' }
+    let! (:p2) { Profile.create user_id: u1.id, description: "Description 2", color: '#cdddaa' }
+    let! (:u2) { User.create email: 'qsse@qwe.qw', password: '1s3qweasd', profile_id: 3 }
+    let! (:p3) { Profile.create user_id: u2.id, description: "Description 3", color: '#ed4daa' }
+    let! (:p4) { Profile.create user_id: u2.id, description: "Description 4", color: '#cdd51a' }
+    let! (:u3) { User.create email: 'qffse@qwe.qw', password: '1s3sdeeasd', profile_id: nil }
+
+    it 'returns profiles of the user' do
+      expect(Profile.by_user u1).to match_array [p2, p1]
+    end
+
+    context 'no current_user' do
+      let (:current_user) { nil }
+      it 'returns false' do
+        expect(Profile.by_user current_user).to be false
+      end
+    end
+
+    context 'current user has not any profiles' do
+      it 'returns empty relation' do
+        current_user = u3
+        profiles = Profile.by_user current_user
+        expect(profiles).to be_empty
+      end
+    end
+
+  end
 end

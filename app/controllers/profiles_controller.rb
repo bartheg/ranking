@@ -1,9 +1,14 @@
 class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
+  before_action :find_user, only: [:index]
 
   # GET /profiles
   def index
-    @profiles = Profile.all
+    if @user
+      @profiles = @user.profiles
+    else
+      @profiles = Profile.all
+    end
   end
 
   # GET /profiles/1
@@ -46,13 +51,22 @@ class ProfilesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_profile
-      @profile = Profile.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_profile
+    @profile = Profile.find(params[:id])
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def profile_params
-      params[:profile]
+  # Only allow a trusted parameter "white list" through.
+  def profile_params
+    params[:profile]
+  end
+
+  def find_user
+    if params[:user_id] && current_user
+      if params[:user_id].to_i == current_user.id
+        @user = User.find params[:user_id]
+      end
     end
+  end
+
 end

@@ -3,11 +3,22 @@
     Debug:
   </p>
   <p>
-    User id:
-    <% if current_user %>
+    current_user.id:
+    <!-- <% if current_user %> -->
       <%= current_user.id %>
-    <% else %>
-      nil (unlogged)
-    <% end %>
+    <!-- <% else %> -->
+      <!-- nil (unlogged) -->
+    <!-- <% end %> -->
+  </p>
+  <p>
+    @user.id:
+    <!-- <% if @user %> -->
+      <%= @user.id %>
+    <!-- <% else %> -->
+      <!-- nil -->
+    <!-- <% end %> -->
+  </p>
+  <p>
+    params: <%= p params %>
   </p>
 </div>

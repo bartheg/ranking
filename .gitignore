@@ -4,16 +4,16 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-#/.bundle
-#/vendor/bundle/
-#/vendor/ruby/
-#
-#Gemfile.lock
-#.ruby-version
-#.rspec
-#
-#README.rdoc
-#mind_map.vym
+/.bundle
+/vendor/bundle/
+/vendor/ruby/
+
+Gemfile.lock
+.ruby-version
+.rspec
+
+README.rdoc
+mind_map.vym
 
 # Ignore the default SQLite database.
 /db/*.sqlite3

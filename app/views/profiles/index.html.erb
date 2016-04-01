@@ -2,16 +2,29 @@
 
 <h1>Listing Profiles</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th colspan="3"></th>
+      <th>Description</th>
+      <th>Color</th>
+      <th colspan="3">Options</th>
     </tr>
   </thead>
 
   <tbody>
     <% @profiles.each do |profile| %>
       <tr>
+        <td><%= profile.description %></td>
+        <td class="td-color-js" style="background-color:<%= profile.color %>;"><%= profile.color %></td>
+        <script>
+        var elem = $('td.td-color-js').last();
+        elem.lightOrDark();
+        if (elem.hasClass('dark')) {
+          elem.css('color', 'white');
+        } else {
+          elem.css('color', 'black');
+        }
+        </script>
         <td><%= link_to 'Show', profile %></td>
         <td><%= link_to 'Edit', edit_profile_path(profile) %></td>
         <td><%= link_to 'Destroy', profile, method: :delete, data: { confirm: 'Are you sure?' } %></td>

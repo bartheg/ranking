@@ -27,7 +27,7 @@ class ProfilesController < ApplicationController
   # POST /profiles
   def create
     @profile = Profile.new(profile_params)
-
+    @profile.user_id = current_user.id
     if @profile.save
       redirect_to @profile, notice: 'Profile was successfully created.'
     else
@@ -58,7 +58,7 @@ class ProfilesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def profile_params
-    params[:profile]
+    params.require(:profile).permit(:description, :color)
   end
 
   def find_user

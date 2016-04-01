@@ -8,12 +8,12 @@
 /vendor/bundle/
 /vendor/ruby/
 
-Gemfile.lock
-.ruby-version
-.rspec
+#Gemfile.lock
+#.ruby-version
+#.rspec
 
-README.rdoc
-mind_map.vym
+#README.rdoc
+#mind_map.vym
 
 # Ignore the default SQLite database.
 /db/*.sqlite3

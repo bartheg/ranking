@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160327175641) do
+ActiveRecord::Schema.define(version: 20160402183536) do
 
   create_table "languages", force: :cascade do |t|
     t.string   "iso_639_1"
@@ -26,6 +26,16 @@ ActiveRecord::Schema.define(version: 20160327175641) do
   end
 
   add_index "languages_profiles", ["language_id", "profile_id"], name: "index_languages_profiles_on_language_id_and_profile_id"
+
+  create_table "profile_name_edits", force: :cascade do |t|
+    t.integer  "profile_id"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "profile_name_edits", ["name"], name: "index_profile_name_edits_on_name"
+  add_index "profile_name_edits", ["profile_id"], name: "index_profile_name_edits_on_profile_id"
 
   create_table "profiles", force: :cascade do |t|
     t.integer  "user_id"

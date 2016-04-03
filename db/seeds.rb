@@ -36,7 +36,7 @@ languages = [
   { iso_639_1: "fi", english_name: "Finnish" },
   { iso_639_1: "sk", english_name: "Slovak" },
   { iso_639_1: "bg", english_name: "Bulgarian" },
-  { iso_639_1: "nb", english_name: "Norwegian Bokmål" },
+  { iso_639_1: "no", english_name: "Norwegian" },
   { iso_639_1: "he", english_name: "Hebrew" },
   { iso_639_1: "lt", english_name: "Lithuanian" },
   { iso_639_1: "hr", english_name: "Croatian" },

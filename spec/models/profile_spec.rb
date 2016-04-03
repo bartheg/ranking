@@ -100,5 +100,15 @@ RSpec.describe Profile, type: :model do
 
   end
 
+  describe '#current_name' do
+    let! (:u1) { User.create email: 'qwe@qwe.qw', password: '123qweasd', profile_id: 1 }
+    let! (:p1) { Profile.create user_id: u1.id, description: "Description", color: '#fdddaa' }
+    let! (:pne1) { ProfileNameEdit.create profile_id: p1.id, name: "First_Name"  }
+    let! (:pne2) { ProfileNameEdit.create profile_id: p1.id, name: "Second_Name" }
+
+    it 'returns the newest name' do
+      expect(p1.current_name).to eq 'Second_Name'
+    end
+  end
 
 end

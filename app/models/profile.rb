@@ -19,6 +19,10 @@ class Profile < ActiveRecord::Base
     Profile.where user_id: user.id
   end
 
+  def current_name
+    ProfileNameEdit.where(profile_id: self.id).last.name
+  end
+
   private
 
   def make_default_if_there_are_not_any

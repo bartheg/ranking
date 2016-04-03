@@ -6,8 +6,10 @@ class ProfilesController < ApplicationController
   def index
     if @user
       @profiles = @user.profiles
+      render :index_my
     else
       @profiles = Profile.all
+      render :index_all
     end
   end
 

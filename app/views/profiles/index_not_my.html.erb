@@ -1,11 +1,10 @@
 <p id="notice"><%= notice %></p>
 
-<h1>All profiles</h1>
+<h1>Profiles of user with id: <%= @user.id %></h1>
 
 <table class="table">
   <thead>
     <tr>
-      <th>User</th>
       <th>Name</th>
       <th>Description</th>
     </tr>
@@ -14,7 +13,6 @@
   <tbody>
     <% @profiles.each do |profile| %>
       <tr>
-        <td><%= profile.user_id %></td>
         <td><%= profile.current_name %></td>
         <td><%= profile.description %></td>
       </tr>

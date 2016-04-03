@@ -1,16 +1,26 @@
 class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
-  before_action :find_user, only: [:index]
+  # before_action :find_user, only: [:index]
 
   # GET /profiles
   def index
-    if @user
-      @profiles = @user.profiles
-      render :index_my
+
+    if params[:user_id]
+      @param_user_id = params[:user_id].to_i
+      @user = User.find @param_user_id
+      if current_user
+        @profiles = @user.profiles
+        if current_user.id == @param_user_id
+          render :index_my
+        else
+          render :index_not_my
+        end
+      end
     else
       @profiles = Profile.all
       render :index_all
     end
+
   end
 
   # GET /profiles/1

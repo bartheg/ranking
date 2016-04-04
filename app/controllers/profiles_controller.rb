@@ -38,7 +38,7 @@ class ProfilesController < ApplicationController
 
   # POST /profiles
   def create
-    @profile = Profile.new(profile_params)
+    @profile = Profile.new(params.require(:profile).permit(:name, :description, :color))
     @profile.user_id = current_user.id
     if @profile.save
       redirect_to @profile, notice: 'Profile was successfully created.'

@@ -25,6 +25,7 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/1
   def show
+    @languages = @profile.languages
   end
 
   # GET /profiles/new

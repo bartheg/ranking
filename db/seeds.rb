@@ -81,26 +81,13 @@ Language.create(languages)
 User.create(users)
 
 profiles = [
-  { user_id: 1, description: "Ni hao", color: '#dddd11'  },   # id 1
-  { user_id: 2, description: "siema kto pl", color: '#111111'  },   # id 2
-  { user_id: 3, description: "allah akbar, bum! kill all, isis good, more social for me", color: '#11dd11'  },   # id 3
-  { user_id: 4, description: "hello", color: '#1111dd'  },   # id 4
-  { user_id: 5, description: "hi", color: '#5525dd'  },   # id 5
-  { user_id: 6, description: "suomi", color: '#8888ff'  },   # id 6
-  { user_id: 7, description: "hola", color: '#ee1143'  },   # id 7
+  { user_id: 1, name: "Sun_Tzu", description: "Ni hao", color: '#dddd11'  },   # id 1
+  { user_id: 2, name: "pantherSS-88", description: "siema kto pl", color: '#111111'  },   # id 2
+  { user_id: 3, name: "Saladin", description: "allah akbar, bum! kill all, isis good, more social for me", color: '#11dd11'  },   # id 3
+  { user_id: 4, name: "Patton", description: "hello", color: '#1111dd'  },   # id 4
+  { user_id: 5, name: "Wellington", description: "hi", color: '#5525dd'  },   # id 5
+  { user_id: 6, name: "Suomi", description: "suomi", color: '#8888ff'  },   # id 6
+  { user_id: 7, name: "Matador", description: "hola", color: '#ee1143'  },   # id 7
 ]
 
 Profile.create profiles
-
-profile_name_edits = [
-  { profile_id: 1, name: "Sun_Tzu"  },   # id 1
-  { profile_id: 2, name: "pantherSS-88"  },   # id 2
-  { profile_id: 3, name: "Saladin"  },   # id 3
-  { profile_id: 4, name: "Patton"  },   # id 4
-  { profile_id: 5, name: "Wellington"  },   # id 5
-  { profile_id: 6, name: "Suomi"  },   # id 6
-  { profile_id: 7, name: "Matador"  },   # id 7
-
-]
-
-ProfileNameEdit.create profile_name_edits

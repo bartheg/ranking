@@ -1,7 +1,10 @@
 <!-- <p id="notice"><%= notice %></p> -->
 
 <% if @languages.present? %>
-  <ul class="list-group">
+  <p>
+    Languages:
+  </p>
+  <ul class="list-group list-group-sm">
     <% @languages.each do |language| %>
       <li class="list-group-item"><%= language.english_name %></li>
     <% end %>

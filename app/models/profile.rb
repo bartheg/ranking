@@ -1,13 +1,23 @@
 class Profile < ActiveRecord::Base
   belongs_to :user
-
   has_and_belongs_to_many :languages
+  # has_many :profile_name_edits
 
   before_save :make_default_if_there_are_not_any
 
   COLOR_REGEX = /\A#([a-f]|[A-F]|[0-9]){3}(([a-f]|[A-F]|[0-9]){3})?\z/
   validates :user_id, presence: true
   validates :color, format: COLOR_REGEX, allow_nil: true
+
+
+  NAME_REGEX = /\A(\w|\.|-)+\z/
+  MUST_HAVE_LETTER_REGEX = /[a-zA-Z]+/
+  # validates :profile_id, presence: true
+  validates :name, presence: true
+  validates :name, format: NAME_REGEX
+  validates :name, format: MUST_HAVE_LETTER_REGEX
+  validates :name, length: { maximum: 24, minimum: 3 }
+
 
   def make_default
     self.user.profile_id = self.id

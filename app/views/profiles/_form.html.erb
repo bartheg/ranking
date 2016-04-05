@@ -1,19 +1,36 @@
 <%= form_for(@profile) do |f| %>
+
   <% if @profile.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
 
       <ul>
-      <% @profile.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% @profile.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
   <div class="form-group">
+    <%= f.label :name %><br />
+    <%= f.text_field :name, autofocus: true, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :description %><br />
-    <%= f.text_area :description, autofocus: true, class: 'form-control' %>
+    <%= f.text_area :description, autofocus: !@profile.new_record?, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag :languages %><br />
+    <%= hidden_field_tag "profile[language_ids][]", nil %>
+    <% Language.all.each do |language| %>
+      <span class='lang-checkbox'>
+        <%= check_box_tag "profile[language_ids][]", language.id, @profile.language_ids.include?(language.id), id: dom_id(language) %>
+        <%= label_tag dom_id(language), language.english_name %>
+      </span>
+    <% end %>
   </div>
 
   <div class="form-group">
@@ -22,8 +39,8 @@
   </div>
 
 
-
   <div class="actions">
     <%= f.submit(class: "btn btn-primary") %>
   </div>
+
 <% end %>

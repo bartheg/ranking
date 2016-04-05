@@ -1,18 +1,42 @@
 class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
-  before_action :find_user, only: [:index]
+  # before_action :find_user, only: [:index]
 
   # GET /profiles
   def index
-    if @user
-      @profiles = @user.profiles
+
+    if params[:user_id]
+      @param_user_id = params[:user_id].to_i
+      @user = User.find @param_user_id
+      if current_user
+        @profiles = @user.profiles
+        if current_user.id == @param_user_id
+          render :index_my
+        else
+          render :index_not_my
+        end
+      end
     else
       @profiles = Profile.all
+      render :index_all
     end
+
   end
 
   # GET /profiles/1
   def show
+    @languages = @profile.languages
+
+    if current_user
+      if current_user.id == @profile.user_id
+        render :show_my
+      else
+        render :show_not_my
+      end
+    else
+      render :show_not_my
+    end
+
   end
 
   # GET /profiles/new
@@ -22,6 +46,8 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/1/edit
   def edit
+    @languages = @profile.languages
+
   end
 
   # POST /profiles
@@ -58,7 +84,7 @@ class ProfilesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def profile_params
-    params.require(:profile).permit(:description, :color)
+    params.require(:profile).permit(:description, :color, language_ids: [])
   end
 
   def find_user

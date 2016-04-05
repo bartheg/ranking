@@ -1,0 +1,19 @@
+<!-- <p id="notice"><%= notice %></p> -->
+
+<% if @languages.present? %>
+  <p>
+    Languages:
+  </p>
+  <ul class="list-group list-group-sm">
+    <% @languages.each do |language| %>
+      <li class="list-group-item"><%= language.english_name %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>
+    No languages.
+  </p>
+<% end %>
+
+<%= link_to 'Edit', edit_profile_path(@profile) %> |
+<%= link_to 'Back', profiles_path %>

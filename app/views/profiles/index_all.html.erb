@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>All profiles</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>User id</th>
+      <th>Number of profiles</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @profiles.each do |profile| %>
+      <tr>
+        <td class="profile-name"><%= link_to profile.name, profile %></td>
+        <td><%= truncate(profile.description, length: 200, separator: ' ') %></td>
+        <td><%= profile.user_id %></td>
+        <td><%= profile.user.profiles.count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Profile', new_profile_path %>

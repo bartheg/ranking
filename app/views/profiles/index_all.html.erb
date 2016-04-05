@@ -5,18 +5,20 @@
 <table class="table">
   <thead>
     <tr>
-      <th>User</th>
       <th>Name</th>
       <th>Description</th>
+      <th>User id</th>
+      <th>Number of profiles</th>
     </tr>
   </thead>
 
   <tbody>
     <% @profiles.each do |profile| %>
       <tr>
+        <td class="profile-name"><%= link_to profile.name, profile %></td>
+        <td><%= truncate(profile.description, length: 200, separator: ' ') %></td>
         <td><%= profile.user_id %></td>
-        <td><%= profile.name %></td>
-        <td><%= profile.description %></td>
+        <td><%= profile.user.profiles.count %></td>
       </tr>
     <% end %>
   </tbody>

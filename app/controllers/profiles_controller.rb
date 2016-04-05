@@ -26,6 +26,17 @@ class ProfilesController < ApplicationController
   # GET /profiles/1
   def show
     @languages = @profile.languages
+
+    if current_user
+      if current_user.id == @profile.user_id
+        render :show_my
+      else
+        render :show_not_my
+      end
+    else
+      render :show_not_my
+    end
+
   end
 
   # GET /profiles/new

@@ -1,0 +1,34 @@
+<!-- <p id="notice"><%= notice %></p> -->
+<dl>
+  <dt>Name</dt>
+  <dd><%= @profile.name %></dd>
+
+  <dt>Description</dt>
+  <dd><%= @profile.description %></dd>
+
+  <dt>Languages</dt>
+  <% if @languages.present? %>
+    <% @languages.each do |language| %>
+      <dd><%= language.english_name %></dd>
+    <% end %>
+  <% else %>
+    <dd>No languages.</dd>
+  <% end %>
+  <!-- other terms and definitions -->
+</dl>
+
+============
+<% if @languages.present? %>
+  <ul class="list-group list-group-sm">
+    <% @languages.each do |language| %>
+      <li class="list-group-item"><%= language.english_name %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>
+    No languages.
+  </p>
+<% end %>
+
+<%= link_to 'Edit', edit_profile_path(@profile) %> |
+<%= link_to 'Back', profiles_path %>

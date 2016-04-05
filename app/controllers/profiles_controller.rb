@@ -25,6 +25,7 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/1
   def show
+    @languages = @profile.languages
   end
 
   # GET /profiles/new
@@ -34,11 +35,13 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/1/edit
   def edit
+    @languages = @profile.languages
+
   end
 
   # POST /profiles
   def create
-    @profile = Profile.new(params.require(:profile).permit(:name, :description, :color))
+    @profile = Profile.new(profile_params)
     @profile.user_id = current_user.id
     if @profile.save
       redirect_to @profile, notice: 'Profile was successfully created.'
@@ -70,7 +73,7 @@ class ProfilesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def profile_params
-    params.require(:profile).permit(:description, :color)
+    params.require(:profile).permit(:description, :color, language_ids: [])
   end
 
   def find_user

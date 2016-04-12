@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160407141126) do
+ActiveRecord::Schema.define(version: 20160412130646) do
+
+  create_table "factions", force: :cascade do |t|
+    t.string   "full_name"
+    t.string   "short_name"
+    t.text     "description"
+    t.boolean  "scenario_dependent"
+    t.integer  "game_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "factions", ["full_name"], name: "index_factions_on_full_name", unique: true
+  add_index "factions", ["game_id"], name: "index_factions_on_game_id"
+  add_index "factions", ["short_name"], name: "index_factions_on_short_name", unique: true
 
   create_table "games", force: :cascade do |t|
     t.string   "full_name"

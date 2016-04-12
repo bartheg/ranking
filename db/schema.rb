@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160404125203) do
+ActiveRecord::Schema.define(version: 20160407141126) do
+
+  create_table "games", force: :cascade do |t|
+    t.string   "full_name"
+    t.string   "short_name"
+    t.text     "description"
+    t.boolean  "simultaneous_turns"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "games", ["full_name"], name: "index_games_on_full_name", unique: true
+  add_index "games", ["short_name"], name: "index_games_on_short_name", unique: true
 
   create_table "languages", force: :cascade do |t|
     t.string   "iso_639_1"

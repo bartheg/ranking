@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160412131413) do
+ActiveRecord::Schema.define(version: 20160413183239) do
 
   create_table "factions", force: :cascade do |t|
     t.string   "full_name"
@@ -63,6 +63,19 @@ ActiveRecord::Schema.define(version: 20160412131413) do
   end
 
   add_index "languages_profiles", ["language_id", "profile_id"], name: "index_languages_profiles_on_language_id_and_profile_id"
+
+  create_table "maps", force: :cascade do |t|
+    t.string   "full_name"
+    t.string   "short_name"
+    t.string   "size"
+    t.text     "description"
+    t.boolean  "random_generated"
+    t.integer  "game_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "maps", ["game_id"], name: "index_maps_on_game_id"
 
   create_table "profiles", force: :cascade do |t|
     t.integer  "user_id"

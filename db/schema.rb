@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160413183239) do
+ActiveRecord::Schema.define(version: 20160413183731) do
 
   create_table "factions", force: :cascade do |t|
     t.string   "full_name"
@@ -88,6 +88,18 @@ ActiveRecord::Schema.define(version: 20160413183239) do
 
   add_index "profiles", ["name"], name: "index_profiles_on_name", unique: true
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id"
+
+  create_table "scenarios", force: :cascade do |t|
+    t.string   "full_name"
+    t.string   "short_name"
+    t.text     "description"
+    t.boolean  "mirror_matchups_allowed"
+    t.integer  "game_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "scenarios", ["game_id"], name: "index_scenarios_on_game_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

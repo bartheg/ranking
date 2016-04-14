@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414123645) do
+ActiveRecord::Schema.define(version: 20160414132244) do
 
   create_table "faction_to_scenario_assignments", force: :cascade do |t|
     t.integer  "faction_id"
@@ -80,12 +80,12 @@ ActiveRecord::Schema.define(version: 20160414123645) do
     t.string   "size"
     t.text     "description"
     t.boolean  "random_generated"
-    t.integer  "game_id"
+    t.integer  "scenario_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
   end
 
-  add_index "maps", ["game_id"], name: "index_maps_on_game_id"
+  add_index "maps", ["scenario_id"], name: "index_maps_on_scenario_id"
 
   create_table "profiles", force: :cascade do |t|
     t.integer  "user_id"

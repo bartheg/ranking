@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160413183731) do
+ActiveRecord::Schema.define(version: 20160414123645) do
+
+  create_table "faction_to_scenario_assignments", force: :cascade do |t|
+    t.integer  "faction_id"
+    t.integer  "scenario_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "faction_to_scenario_assignments", ["faction_id"], name: "index_faction_to_scenario_assignments_on_faction_id"
+  add_index "faction_to_scenario_assignments", ["scenario_id"], name: "index_faction_to_scenario_assignments_on_scenario_id"
 
   create_table "factions", force: :cascade do |t|
     t.string   "full_name"

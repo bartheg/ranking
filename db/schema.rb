@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160415154445) do
+ActiveRecord::Schema.define(version: 20160415160203) do
 
   create_table "faction_to_scenario_assignments", force: :cascade do |t|
     t.integer  "faction_id"
@@ -91,14 +91,14 @@ ActiveRecord::Schema.define(version: 20160415154445) do
     t.string   "short_name"
     t.text     "description"
     t.boolean  "mirror_matchups_allowed"
-    t.integer  "game_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "ladder_id"
     t.string   "map_size"
     t.boolean  "map_random_generated"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
-  add_index "scenarios", ["game_id"], name: "index_scenarios_on_game_id"
+  add_index "scenarios", ["ladder_id"], name: "index_scenarios_on_ladder_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

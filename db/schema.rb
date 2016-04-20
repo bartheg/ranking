@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160415160203) do
+ActiveRecord::Schema.define(version: 20160419112958) do
+
+  create_table "default_ladder_configs", force: :cascade do |t|
+    t.integer  "average_rating"
+    t.integer  "loot_factor"
+    t.integer  "loot_constant"
+    t.integer  "disproportion_factor"
+    t.integer  "draw_factor"
+    t.integer  "hours_to_confirm"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
 
   create_table "faction_to_scenario_assignments", force: :cascade do |t|
     t.integer  "faction_id"

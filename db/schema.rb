@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160419112958) do
+ActiveRecord::Schema.define(version: 20160420112308) do
 
   create_table "default_ladder_configs", force: :cascade do |t|
     t.integer  "average_rating"
@@ -96,6 +96,26 @@ ActiveRecord::Schema.define(version: 20160419112958) do
 
   add_index "profiles", ["name"], name: "index_profiles_on_name", unique: true
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id"
+
+  create_table "reports", force: :cascade do |t|
+    t.integer  "scenario_id"
+    t.integer  "reporter_id"
+    t.integer  "opponent_id"
+    t.integer  "reporters_faction_id"
+    t.integer  "opponents_faction_id"
+    t.text     "message"
+    t.integer  "result"
+    t.boolean  "status"
+    t.boolean  "calculated"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "reports", ["opponent_id"], name: "index_reports_on_opponent_id"
+  add_index "reports", ["opponents_faction_id"], name: "index_reports_on_opponents_faction_id"
+  add_index "reports", ["reporter_id"], name: "index_reports_on_reporter_id"
+  add_index "reports", ["reporters_faction_id"], name: "index_reports_on_reporters_faction_id"
+  add_index "reports", ["scenario_id"], name: "index_reports_on_scenario_id"
 
   create_table "scenarios", force: :cascade do |t|
     t.string   "full_name"

@@ -1,6 +1,10 @@
 class Profile < ActiveRecord::Base
   belongs_to :user
   has_and_belongs_to_many :languages
+  has_many :ratings
+  has_many :reports_as_reporter, class_name: 'Report', foreighn_key: reporter_id
+  has_many :reports_as_opponent, class_name: 'Report', foreighn_key: opponent_id
+
   # has_many :profile_name_edits
 
   before_save :make_default_if_there_are_not_any

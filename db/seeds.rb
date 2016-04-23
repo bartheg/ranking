@@ -99,8 +99,13 @@ Profile.all.each do |profile|
   native_lan_index += 1
 end
 
-#id 1
+# game id 1
 Game.create(full_name: 'The Battle for Wesnoth',
             short_name: 'Wesnoth',
             description: 'The Battle for Wesnoth is a Free, turn-based tactical strategy game with a high fantasy theme, featuring both single-player, and online/hotseat multiplayer combat. More on www.wesnoth.org',
             simultaneous_turns: false)
+
+# ladder id 1
+Ladder.create(name: 'Wesnoth Blitz Test Ladder',
+            description: 'This is fake Ladder. All results are fake here',
+            game_id: 1)

@@ -91,3 +91,10 @@ profiles = [
 ]
 
 Profile.create profiles
+
+native_languages = [7, 10, 14, 1, 1, 26, 5]
+native_lan_index = 0
+Profile.all.each do |profile|
+  profile.languages << Language.find(native_languages[native_lan_index])
+  native_lan_index += 1
+end

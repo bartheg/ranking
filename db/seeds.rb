@@ -109,3 +109,44 @@ Game.create(full_name: 'The Battle for Wesnoth',
 Ladder.create(name: 'Wesnoth Blitz Test Ladder',
             description: 'This is fake Ladder. All results are fake here',
             game_id: 1)
+
+# faction id 1
+Faction.create(full_name: 'Drakes',
+            short_name: 'Drakes',
+            description: 'The Drakes are a faction of dragon-like Drakes and their lizard Saurian allies. Drakes are descendants of dragons, but smaller in size. Saurians are far smaller and from different ancestry. Together, the Drake faction has high mobility but low defense, leading to unusual tactics for a Default faction.',
+            scenario_dependent: false,
+            game_id: 1)
+
+# faction id 2
+Faction.create(full_name: 'Knalgan Alliance',
+            short_name: 'Knalgan Alliance',
+            description: 'The Knalgan Alliance is a faction of Dwarves and their outlaw Human allies. Dwarves are an old race who live underground and have tough, but short, warriors. The outlaws are humans who are not socially acceptable among others of their race, but have become allies of the dwarves due to common enemies. This leads to a combination of tough and defensive dwarves who are only good on certain terrain and humans who can cover ground that dwarves are not good at fighting in.',
+            scenario_dependent: false,
+            game_id: 1)
+
+# faction id 3
+Faction.create(full_name: 'Loyalists',
+            short_name: 'Loyalists',
+            description: 'The Loyalists are a faction of Humans who are loyal to the throne of Wesnoth. Humans are a versatile race who specialize in many different areas. Similarly, the Loyalist faction is a very versatile melee-oriented faction with important ranged support from bowmen and mages.',
+            scenario_dependent: false,
+            game_id: 1)
+
+# faction id 4
+Faction.create(full_name: 'Northerners',
+            short_name: 'Northerners',
+            description: 'The Northerners are a faction of Orcs and their allies who live in the north of the Great Continent, thus their name. Northerners consist of the warrior orcs race, the enslaved goblins, trolls who are tricked into combat by the orcs, and the serpentine naga. The Northerners play best by taking advantage of having many low-cost and high HP soldiers.',
+            scenario_dependent: false,
+            game_id: 1)
+
+# faction id 5
+Faction.create(full_name: 'Rebels',
+            short_name: 'Rebels',
+            description: "The Rebels are a faction of Elves and their various forest-dwelling allies. They get their human name, Rebels, from the time of Heir to the Throne, when they started the rebellion against the evil Queen Asheviere. Elves are a magical race that are masters of the bow and are capable of living many years longer than humans. In harmony with nature, the elves find allies with the human mages, certain merfolk, and tree creatures called \"Woses.\" Rebels are best played taking advantage of their high forest defense, mastery of ranged attacks, and the elves' neutral alignment.",
+            scenario_dependent: false,
+            game_id: 1)
+
+# faction id 6
+Faction.create(full_name: 'Undead',
+            short_name: 'UndThe Undead are a faction of undead creatures and human practitioners of dark arts that usually accompany them. Often, these "Dark Adepts" are the units that do the most damage for the faction, but they have a major vulnerability - their practicing of this forbidden, evil magic has consumed all their energy and so they have no melee attack at all. The Undead are a very aggressive faction and the most powerful Default Era faction at nighttime.',
+            scenario_dependent: false,
+            game_id: 1)

@@ -150,3 +150,16 @@ Faction.create(full_name: 'Undead',
             short_name: 'UndThe Undead are a faction of undead creatures and human practitioners of dark arts that usually accompany them. Often, these "Dark Adepts" are the units that do the most damage for the faction, but they have a major vulnerability - their practicing of this forbidden, evil magic has consumed all their energy and so they have no melee attack at all. The Undead are a very aggressive faction and the most powerful Default Era faction at nighttime.',
             scenario_dependent: false,
             game_id: 1)
+
+# faction id 1
+Scenario.create(full_name: 'Weldyn Channel',
+                short_name: 'Weldyn Channel',
+                description: 'Weldyn Channel is a map with a lake.',
+                mirror_matchups_allowed: true,
+                ladder_id: 1,
+                map_size: nil,
+                map_random_generated: false)
+
+wesnoth_factions = Faction.where(id: [1,2,3,4,5,6])
+
+Scenario.find(1).factions << wesnoth_factions

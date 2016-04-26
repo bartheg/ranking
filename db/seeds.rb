@@ -151,7 +151,9 @@ Faction.create(full_name: 'Undead',
             scenario_dependent: false,
             game_id: 1)
 
-# faction id 1
+wesnoth_factions = Faction.where(id: [1,2,3,4,5,6])
+
+# scenario id 1
 Scenario.create(full_name: 'Weldyn Channel',
                 short_name: 'Weldyn Channel',
                 description: 'Weldyn Channel is a map with a lake.',
@@ -160,6 +162,59 @@ Scenario.create(full_name: 'Weldyn Channel',
                 map_size: nil,
                 map_random_generated: false)
 
-wesnoth_factions = Faction.where(id: [1,2,3,4,5,6])
-
 Scenario.find(1).factions << wesnoth_factions
+
+# scenario id 2
+Scenario.create(full_name: 'Hamlets',
+                short_name: 'Hamlets',
+                description: 'Hamlets is a very boring map.',
+                mirror_matchups_allowed: true,
+                ladder_id: 1,
+                map_size: nil,
+                map_random_generated: false)
+
+Scenario.find(2).factions << wesnoth_factions
+
+# scenario id 3
+Scenario.create(full_name: 'The Freelands',
+                short_name: 'The Freelands',
+                description: 'The Freelands is a map with three ways to the enemy castle.',
+                mirror_matchups_allowed: true,
+                ladder_id: 1,
+                map_size: nil,
+                map_random_generated: false)
+
+Scenario.find(3).factions << wesnoth_factions
+
+# scenario id 4
+Scenario.create(full_name: 'Caves of the Basilisk',
+                short_name: 'Caves of the Basilisk',
+                description: 'Caves of the Basilisk is a map.',
+                mirror_matchups_allowed: true,
+                ladder_id: 1,
+                map_size: nil,
+                map_random_generated: false)
+
+Scenario.find(4).factions << wesnoth_factions
+
+# scenario id 5
+Scenario.create(full_name: 'Den of Onis',
+                short_name: 'Den of Onis',
+                description: 'Den of Onis is a map.',
+                mirror_matchups_allowed: true,
+                ladder_id: 1,
+                map_size: nil,
+                map_random_generated: false)
+
+Scenario.find(5).factions << wesnoth_factions
+
+# scenario id 6
+Scenario.create(full_name: 'Fallenstar Lake',
+                short_name: 'Fallenstar Lake',
+                description: 'Fallenstar Lake is a map.',
+                mirror_matchups_allowed: true,
+                ladder_id: 1,
+                map_size: nil,
+                map_random_generated: false)
+
+Scenario.find(6).factions << wesnoth_factions

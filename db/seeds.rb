@@ -241,16 +241,149 @@ Scenario.create(full_name: 'Standard Match',
                 map_size: nil,
                 map_random_generated: false)
 
-# # faction id 7
-# Faction.create(full_name: 'Drakes',
-#             short_name: 'Drakes',
-#             description: 'The Drakes are a faction of dragon-like Drakes and their lizard Saurian allies. Drakes are descendants of dragons, but smaller in size. Saurians are far smaller and from different ancestry. Together, the Drake faction has high mobility but low defense, leading to unusual tactics for a Default faction.',
-#             scenario_dependent: false,
-#             game_id: 2)
-#
-# # faction id 8
-# Faction.create(full_name: 'Knalgan Alliance',
-#             short_name: 'Knalgan Alliance',
-#             description: 'The Knalgan Alliance is a faction of Dwarves and their outlaw Human allies. Dwarves are an old race who live underground and have tough, but short, warriors. The outlaws are humans who are not socially acceptable among others of their race, but have become allies of the dwarves due to common enemies. This leads to a combination of tough and defensive dwarves who are only good on certain terrain and humans who can cover ground that dwarves are not good at fighting in.',
-#             scenario_dependent: false,
-#             game_id: 2)
+# faction id 7
+Faction.create(full_name: 'Mid-Republican Roman(later)',
+            short_name: 'Mid-Republican Roman(later)',
+            description: 'Lorem ipsum dolor sit amet augue. Sed sed neque. Integer mi non nisl tristique mauris enim, id lorem. Maecenas eget odio. Nunc ut tellus non urna. Phasellus tempor id, orci. Etiam at turpis et wisi. Nam turpis at arcu quis augue. Lorem ipsum dolor urna, mattis sed, luctus et turpis. Lorem ipsum erat, fringilla neque, fringilla faucibus, fermentum diam mi ornare vel, congue et, pharetra leo. Quisque sed turpis.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 8
+Faction.create(full_name: 'Late Republican Roman',
+            short_name: 'Late Republican Roman',
+            description: 'Duis elementum eu, cursus arcu sed nulla eu odio et ultrices posuere ante pellentesque ipsum wisi, aliquam id, porttitor odio. Nunc sapien. Praesent in nulla id augue. Praesent scelerisque tellus consectetuer adipiscing laoreet, enim diam sit amet, vulputate ante. Morbi a nunc. Etiam sit amet quam. Sed fringilla mollis. Sed eros.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 9
+Faction.create(full_name: 'Late Republican Roman(Brutus & Cassius)',
+            short_name: 'Late Republican Roman(Brutus & Cassius)',
+            description: 'Nam varius ligula. Curabitur et ultrices posuere iaculis dignissim sagittis et, posuere cubilia Curae, Phasellus vulputate et, imperdiet nunc, tempus arcu. Suspendisse et magnis dis parturient montes, nascetur ridiculus mus. Nunc gravida. In urna. Donec erat volutpat.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 10
+Faction.create(full_name: 'Gallic(Early Lowland)',
+            short_name: 'Gallic(Early Lowland)',
+            description: 'Quisque neque nibh faucibus erat. Quisque in quam. Phasellus sagittis tortor et turpis. Proin dui sodales tempor. Phasellus pulvinar massa in metus. Nullam sit amet lacus. Vivamus faucibus orci elit, ut odio urna, egestas purus. Pellentesque quam ante euismod pulvinar mollis, orci luctus et malesuada fames ac lacus. Ut nonummy. Sed faucibus, quam. Nam nec tellus. Fusce et enim. Cras sed augue mi, porttitor magna.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 11
+Faction.create(full_name: 'Gallic(Early Hill Tribes)',
+            short_name: 'Gallic(Early Hill Tribes)',
+            description: ' Donec eleifend et, fermentum laoreet, tortor turpis, accumsan imperdiet, risus tortor, fermentum augue. Cum sociis natoque penatibus et luctus at, suscipit dolor. Sed dignissim dolor urna orci ut tellus ac nunc. Praesent commodo volutpat ut, pellentesque accumsan.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 12
+Faction.create(full_name: 'Gallic(Later Lowlands)',
+            short_name: 'Gallic(Later Lowlands)',
+            description: 'Nullam sit amet, tellus. Morbi accumsan lorem. Maecenas bibendum ac, sodales at, posuere cubilia Curae, Mauris pretium eu, pede. Aliquam sem. Donec nonummy, tellus rutrum id, lacinia dignissim. Aliquam fringilla, nibh. Donec elit. Vestibulum ante ipsum wisi, dapibus vitae, fringilla sed, pretium erat sed orci ac arcu mi ornare ornare.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 13
+Faction.create(full_name: 'Gallic(Later Hill Tribes)',
+            short_name: 'Gallic(Later Hill Tribes)',
+            description: 'Cras porta, erat volutpat. Nam lorem hendrerit sed, aliquet elit. Mauris arcu. Nam dolor id tincidunt luctus. Phasellus sapien eros, varius leo. Nullam bibendum leo, aliquet eget, lacinia quis, varius in, consequat porttitor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per conubia nostra, per inceptos hymenaeos.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 14
+Faction.create(full_name: 'Pyrrhic',
+            short_name: 'Pyrrhic',
+            description: 'Lorem ipsum dolor sit amet augue. Sed sed neque. Integer mi non nisl tristique mauris enim, id lorem. Maecenas eget odio. Nunc ut tellus non urna. Phasellus tempor id, orci. Etiam at turpis et wisi. Nam turpis at arcu quis augue. Lorem ipsum dolor urna, mattis sed, luctus et turpis. Lorem ipsum erat, fringilla neque, fringilla faucibus, fermentum diam mi ornare vel, congue et, pharetra leo. Quisque sed turpis.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 15
+Faction.create(full_name: 'Pyrrhic(in Italy)',
+            short_name: 'Pyrrhic(in Italy)',
+            description: 'Duis elementum eu, cursus arcu sed nulla eu odio et ultrices posuere ante pellentesque ipsum wisi, aliquam id, porttitor odio. Nunc sapien. Praesent in nulla id augue. Praesent scelerisque tellus consectetuer adipiscing laoreet, enim diam sit amet, vulputate ante. Morbi a nunc. Etiam sit amet quam. Sed fringilla mollis. Sed eros.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 16
+Faction.create(full_name: 'Pyrrhic(in Greece)',
+            short_name: 'Pyrrhic(in Greece)',
+            description: 'Nam varius ligula. Curabitur et ultrices posuere iaculis dignissim sagittis et, posuere cubilia Curae, Phasellus vulputate et, imperdiet nunc, tempus arcu. Suspendisse et magnis dis parturient montes, nascetur ridiculus mus. Nunc gravida. In urna. Donec erat volutpat.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 17
+Faction.create(full_name: 'Later Carthaginian(pre-235BC)',
+            short_name: 'Later Carthaginian(pre-235BC)',
+            description: 'Quisque neque nibh faucibus erat. Quisque in quam. Phasellus sagittis tortor et turpis. Proin dui sodales tempor. Phasellus pulvinar massa in metus. Nullam sit amet lacus. Vivamus faucibus orci elit, ut odio urna, egestas purus. Pellentesque quam ante euismod pulvinar mollis, orci luctus et malesuada fames ac lacus. Ut nonummy. Sed faucibus, quam. Nam nec tellus. Fusce et enim. Cras sed augue mi, porttitor magna.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 18
+Faction.create(full_name: 'Later Carthaginian(post-235BC)',
+            short_name: 'Later Carthaginian(post-235BC)',
+            description: ' Donec eleifend et, fermentum laoreet, tortor turpis, accumsan imperdiet, risus tortor, fermentum augue. Cum sociis natoque penatibus et luctus at, suscipit dolor. Sed dignissim dolor urna orci ut tellus ac nunc. Praesent commodo volutpat ut, pellentesque accumsan.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 19
+Faction.create(full_name: 'Later Carthaginian(in Africa)',
+            short_name: 'Later Carthaginian(in Africa)',
+            description: 'Nullam sit amet, tellus. Morbi accumsan lorem. Maecenas bibendum ac, sodales at, posuere cubilia Curae, Mauris pretium eu, pede. Aliquam sem. Donec nonummy, tellus rutrum id, lacinia dignissim. Aliquam fringilla, nibh. Donec elit. Vestibulum ante ipsum wisi, dapibus vitae, fringilla sed, pretium erat sed orci ac arcu mi ornare ornare.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 20
+Faction.create(full_name: 'Later Carthaginian(3rd Punic)',
+            short_name: 'Later Carthaginian(3rd Punic)',
+            description: 'Cras porta, erat volutpat. Nam lorem hendrerit sed, aliquet elit. Mauris arcu. Nam dolor id tincidunt luctus. Phasellus sapien eros, varius leo. Nullam bibendum leo, aliquet eget, lacinia quis, varius in, consequat porttitor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per conubia nostra, per inceptos hymenaeos.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 21
+Faction.create(full_name: 'Illyrian',
+            short_name: 'Illyrian',
+            description: 'Lorem ipsum dolor sit amet augue. Sed sed neque. Integer mi non nisl tristique mauris enim, id lorem. Maecenas eget odio. Nunc ut tellus non urna. Phasellus tempor id, orci. Etiam at turpis et wisi. Nam turpis at arcu quis augue. Lorem ipsum dolor urna, mattis sed, luctus et turpis. Lorem ipsum erat, fringilla neque, fringilla faucibus, fermentum diam mi ornare vel, congue et, pharetra leo. Quisque sed turpis.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 22
+Faction.create(full_name: 'Illyrian(common)',
+            short_name: 'Illyrian(common)',
+            description: 'Duis elementum eu, cursus arcu sed nulla eu odio et ultrices posuere ante pellentesque ipsum wisi, aliquam id, porttitor odio. Nunc sapien. Praesent in nulla id augue. Praesent scelerisque tellus consectetuer adipiscing laoreet, enim diam sit amet, vulputate ante. Morbi a nunc. Etiam sit amet quam. Sed fringilla mollis. Sed eros.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 23
+Faction.create(full_name: 'Spanish(Iberian)',
+            short_name: 'Spanish(Iberian)',
+            description: 'Nam varius ligula. Curabitur et ultrices posuere iaculis dignissim sagittis et, posuere cubilia Curae, Phasellus vulputate et, imperdiet nunc, tempus arcu. Suspendisse et magnis dis parturient montes, nascetur ridiculus mus. Nunc gravida. In urna. Donec erat volutpat.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 24
+Faction.create(full_name: 'Spanish(Lusitanian)',
+            short_name: 'Spanish(Lusitanian)',
+            description: 'Quisque neque nibh faucibus erat. Quisque in quam. Phasellus sagittis tortor et turpis. Proin dui sodales tempor. Phasellus pulvinar massa in metus. Nullam sit amet lacus. Vivamus faucibus orci elit, ut odio urna, egestas purus. Pellentesque quam ante euismod pulvinar mollis, orci luctus et malesuada fames ac lacus. Ut nonummy. Sed faucibus, quam. Nam nec tellus. Fusce et enim. Cras sed augue mi, porttitor magna.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 25
+Faction.create(full_name: 'Spanish(Celtiberian)',
+            short_name: 'Spanish(Celtiberian)',
+            description: ' Donec eleifend et, fermentum laoreet, tortor turpis, accumsan imperdiet, risus tortor, fermentum augue. Cum sociis natoque penatibus et luctus at, suscipit dolor. Sed dignissim dolor urna orci ut tellus ac nunc. Praesent commodo volutpat ut, pellentesque accumsan.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 26
+Faction.create(full_name: 'Later Macedonian',
+            short_name: 'Later Macedonian',
+            description: 'Nullam sit amet, tellus. Morbi accumsan lorem. Maecenas bibendum ac, sodales at, posuere cubilia Curae, Mauris pretium eu, pede. Aliquam sem. Donec nonummy, tellus rutrum id, lacinia dignissim. Aliquam fringilla, nibh. Donec elit. Vestibulum ante ipsum wisi, dapibus vitae, fringilla sed, pretium erat sed orci ac arcu mi ornare ornare.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 27
+Faction.create(full_name: 'Attalid Pergamene',
+            short_name: 'Attalid Pergamene',
+            description: 'Cras porta, erat volutpat. Nam lorem hendrerit sed, aliquet elit. Mauris arcu. Nam dolor id tincidunt luctus. Phasellus sapien eros, varius leo. Nullam bibendum leo, aliquet eget, lacinia quis, varius in, consequat porttitor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per conubia nostra, per inceptos hymenaeos.',
+            scenario_dependent: false,
+            game_id: 2)

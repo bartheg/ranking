@@ -218,3 +218,39 @@ Scenario.create(full_name: 'Fallenstar Lake',
                 map_random_generated: false)
 
 Scenario.find(6).factions << wesnoth_factions
+
+#########
+
+# game id 2
+Game.create(full_name: 'Field of Glory',
+            short_name: 'FoG',
+            description: 'Field of Glory is an approachable and fun wargame system for your PC that covers the ancient and medieval worlds.',
+            simultaneous_turns: false)
+
+# ladder id 2
+Ladder.create(name: 'FoG Test Ladder 500 points',
+            description: 'This is fake Ladder. All results are fake here',
+            game_id: 2)
+
+# scenario id 7
+Scenario.create(full_name: 'Standard Match',
+                short_name: 'Match',
+                description: 'The map is chosed by a plyer with the initiative.',
+                mirror_matchups_allowed: true,
+                ladder_id: 2,
+                map_size: nil,
+                map_random_generated: false)
+
+# # faction id 7
+# Faction.create(full_name: 'Drakes',
+#             short_name: 'Drakes',
+#             description: 'The Drakes are a faction of dragon-like Drakes and their lizard Saurian allies. Drakes are descendants of dragons, but smaller in size. Saurians are far smaller and from different ancestry. Together, the Drake faction has high mobility but low defense, leading to unusual tactics for a Default faction.',
+#             scenario_dependent: false,
+#             game_id: 2)
+#
+# # faction id 8
+# Faction.create(full_name: 'Knalgan Alliance',
+#             short_name: 'Knalgan Alliance',
+#             description: 'The Knalgan Alliance is a faction of Dwarves and their outlaw Human allies. Dwarves are an old race who live underground and have tough, but short, warriors. The outlaws are humans who are not socially acceptable among others of their race, but have become allies of the dwarves due to common enemies. This leads to a combination of tough and defensive dwarves who are only good on certain terrain and humans who can cover ground that dwarves are not good at fighting in.',
+#             scenario_dependent: false,
+#             game_id: 2)

@@ -507,8 +507,6 @@ Faction.create(full_name: 'Hatran',
             scenario_dependent: false,
             game_id: 2)
 
-########################
-
 # faction id 45
 Faction.create(full_name: 'Later Jewish(Hycranus II)',
             short_name: 'Later Jewish(Hycranus II)',

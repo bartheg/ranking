@@ -387,3 +387,180 @@ Faction.create(full_name: 'Attalid Pergamene',
             description: 'Cras porta, erat volutpat. Nam lorem hendrerit sed, aliquet elit. Mauris arcu. Nam dolor id tincidunt luctus. Phasellus sapien eros, varius leo. Nullam bibendum leo, aliquet eget, lacinia quis, varius in, consequat porttitor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per conubia nostra, per inceptos hymenaeos.',
             scenario_dependent: false,
             game_id: 2)
+
+# faction id 28
+Faction.create(full_name: 'Numidian(Juba I)',
+            short_name: 'Numidian(Juba I)',
+            description: 'Cras porta, erat volutpat. Nam lorem hendrerit sed, aliquet elit. Mauris arcu. Nam dolor id tincidunt luctus. Phasellus sapien eros, varius leo. Nullam bibendum leo, aliquet eget, lacinia quis, varius in, consequat porttitor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per conubia nostra, per inceptos hymenaeos.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 29
+Faction.create(full_name: 'Numidian(Bogus)',
+            short_name: 'Numidian(Bogus)',
+            description: 'Lorem ipsum dolor sit amet augue. Sed sed neque. Integer mi non nisl tristique mauris enim, id lorem. Maecenas eget odio. Nunc ut tellus non urna. Phasellus tempor id, orci. Etiam at turpis et wisi. Nam turpis at arcu quis augue. Lorem ipsum dolor urna, mattis sed, luctus et turpis. Lorem ipsum erat, fringilla neque, fringilla faucibus, fermentum diam mi ornare vel, congue et, pharetra leo. Quisque sed turpis.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 30
+Faction.create(full_name: 'Numidian(Juba II)',
+            short_name: 'Numidian(Juba II)',
+            description: 'Duis elementum eu, cursus arcu sed nulla eu odio et ultrices posuere ante pellentesque ipsum wisi, aliquam id, porttitor odio. Nunc sapien. Praesent in nulla id augue. Praesent scelerisque tellus consectetuer adipiscing laoreet, enim diam sit amet, vulputate ante. Morbi a nunc. Etiam sit amet quam. Sed fringilla mollis. Sed eros.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 31
+Faction.create(full_name: 'Later Seleucid(pre-166BC)',
+            short_name: 'Later Seleucid(pre-166BC)',
+            description: 'Nam varius ligula. Curabitur et ultrices posuere iaculis dignissim sagittis et, posuere cubilia Curae, Phasellus vulputate et, imperdiet nunc, tempus arcu. Suspendisse et magnis dis parturient montes, nascetur ridiculus mus. Nunc gravida. In urna. Donec erat volutpat.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 32
+Faction.create(full_name: 'Later Seleucid(post-166BC)',
+            short_name: 'Later Seleucid(post-166BC)',
+            description: 'Quisque neque nibh faucibus erat. Quisque in quam. Phasellus sagittis tortor et turpis. Proin dui sodales tempor. Phasellus pulvinar massa in metus. Nullam sit amet lacus. Vivamus faucibus orci elit, ut odio urna, egestas purus. Pellentesque quam ante euismod pulvinar mollis, orci luctus et malesuada fames ac lacus. Ut nonummy. Sed faucibus, quam. Nam nec tellus. Fusce et enim. Cras sed augue mi, porttitor magna.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 33
+Faction.create(full_name: 'Later Ptolemaic(Greek)',
+            short_name: 'Later Ptolemaic(Greek)',
+            description: ' Donec eleifend et, fermentum laoreet, tortor turpis, accumsan imperdiet, risus tortor, fermentum augue. Cum sociis natoque penatibus et luctus at, suscipit dolor. Sed dignissim dolor urna orci ut tellus ac nunc. Praesent commodo volutpat ut, pellentesque accumsan.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 34
+Faction.create(full_name: 'Later Ptolemaic(Roman)',
+            short_name: 'Later Ptolemaic(Roman)',
+            description: 'Nullam sit amet, tellus. Morbi accumsan lorem. Maecenas bibendum ac, sodales at, posuere cubilia Curae, Mauris pretium eu, pede. Aliquam sem. Donec nonummy, tellus rutrum id, lacinia dignissim. Aliquam fringilla, nibh. Donec elit. Vestibulum ante ipsum wisi, dapibus vitae, fringilla sed, pretium erat sed orci ac arcu mi ornare ornare.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 35
+Faction.create(full_name: 'Pontic(early)',
+            short_name: 'Pontic(early)',
+            description: 'Cras porta, erat volutpat. Nam lorem hendrerit sed, aliquet elit. Mauris arcu. Nam dolor id tincidunt luctus. Phasellus sapien eros, varius leo. Nullam bibendum leo, aliquet eget, lacinia quis, varius in, consequat porttitor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per conubia nostra, per inceptos hymenaeos.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 36
+Faction.create(full_name: 'Pontic(late)',
+            short_name: 'Pontic(late)',
+            description: 'Cras porta, erat volutpat. Nam lorem hendrerit sed, aliquet elit. Mauris arcu. Nam dolor id tincidunt luctus. Phasellus sapien eros, varius leo. Nullam bibendum leo, aliquet eget, lacinia quis, varius in, consequat porttitor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per conubia nostra, per inceptos hymenaeos.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 37
+Faction.create(full_name: 'Spartacus Slave Revolt(HF)',
+            short_name: 'Spartacus Slave Revolt(HF)',
+            description: 'Cras porta, erat volutpat. Nam lorem hendrerit sed, aliquet elit. Mauris arcu. Nam dolor id tincidunt luctus. Phasellus sapien eros, varius leo. Nullam bibendum leo, aliquet eget, lacinia quis, varius in, consequat porttitor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per conubia nostra, per inceptos hymenaeos.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 38
+Faction.create(full_name: 'Spartacus Slave Revolt(MF)',
+            short_name: 'Spartacus Slave Revolt(MF)',
+            description: 'Lorem ipsum dolor sit amet augue. Sed sed neque. Integer mi non nisl tristique mauris enim, id lorem. Maecenas eget odio. Nunc ut tellus non urna. Phasellus tempor id, orci. Etiam at turpis et wisi. Nam turpis at arcu quis augue. Lorem ipsum dolor urna, mattis sed, luctus et turpis. Lorem ipsum erat, fringilla neque, fringilla faucibus, fermentum diam mi ornare vel, congue et, pharetra leo. Quisque sed turpis.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 39
+Faction.create(full_name: 'Early Armenian(Tigran the Great)',
+            short_name: 'Early Armenian(Tigran the Great)',
+            description: 'Duis elementum eu, cursus arcu sed nulla eu odio et ultrices posuere ante pellentesque ipsum wisi, aliquam id, porttitor odio. Nunc sapien. Praesent in nulla id augue. Praesent scelerisque tellus consectetuer adipiscing laoreet, enim diam sit amet, vulputate ante. Morbi a nunc. Etiam sit amet quam. Sed fringilla mollis. Sed eros.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 40
+Faction.create(full_name: 'Early Armenian(Khosrov I)',
+            short_name: 'Early Armenian(Khosrov I)',
+            description: 'Nam varius ligula. Curabitur et ultrices posuere iaculis dignissim sagittis et, posuere cubilia Curae, Phasellus vulputate et, imperdiet nunc, tempus arcu. Suspendisse et magnis dis parturient montes, nascetur ridiculus mus. Nunc gravida. In urna. Donec erat volutpat.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 41
+Faction.create(full_name: 'Parthian',
+            short_name: 'Parthian',
+            description: 'Quisque neque nibh faucibus erat. Quisque in quam. Phasellus sagittis tortor et turpis. Proin dui sodales tempor. Phasellus pulvinar massa in metus. Nullam sit amet lacus. Vivamus faucibus orci elit, ut odio urna, egestas purus. Pellentesque quam ante euismod pulvinar mollis, orci luctus et malesuada fames ac lacus. Ut nonummy. Sed faucibus, quam. Nam nec tellus. Fusce et enim. Cras sed augue mi, porttitor magna.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 42
+Faction.create(full_name: 'Parthian(Saka Campaign)',
+            short_name: 'Parthian(Saka Campaign)',
+            description: ' Donec eleifend et, fermentum laoreet, tortor turpis, accumsan imperdiet, risus tortor, fermentum augue. Cum sociis natoque penatibus et luctus at, suscipit dolor. Sed dignissim dolor urna orci ut tellus ac nunc. Praesent commodo volutpat ut, pellentesque accumsan.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 43
+Faction.create(full_name: 'Suren Indo-Parthian',
+            short_name: 'Suren Indo-Parthian',
+            description: 'Nullam sit amet, tellus. Morbi accumsan lorem. Maecenas bibendum ac, sodales at, posuere cubilia Curae, Mauris pretium eu, pede. Aliquam sem. Donec nonummy, tellus rutrum id, lacinia dignissim. Aliquam fringilla, nibh. Donec elit. Vestibulum ante ipsum wisi, dapibus vitae, fringilla sed, pretium erat sed orci ac arcu mi ornare ornare.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 44
+Faction.create(full_name: 'Hatran',
+            short_name: 'Hatran',
+            description: 'Cras porta, erat volutpat. Nam lorem hendrerit sed, aliquet elit. Mauris arcu. Nam dolor id tincidunt luctus. Phasellus sapien eros, varius leo. Nullam bibendum leo, aliquet eget, lacinia quis, varius in, consequat porttitor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per conubia nostra, per inceptos hymenaeos.',
+            scenario_dependent: false,
+            game_id: 2)
+
+########################
+
+# faction id 45
+Faction.create(full_name: 'Later Jewish(Hycranus II)',
+            short_name: 'Later Jewish(Hycranus II)',
+            description: 'Duis elementum eu, cursus arcu sed nulla eu odio et ultrices posuere ante pellentesque ipsum wisi, aliquam id, porttitor odio. Nunc sapien. Praesent in nulla id augue. Praesent scelerisque tellus consectetuer adipiscing laoreet, enim diam sit amet, vulputate ante. Morbi a nunc. Etiam sit amet quam. Sed fringilla mollis. Sed eros.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 46
+Faction.create(full_name: 'Later Jewish(48BC-47BC)',
+            short_name: 'Later Jewish(48BC-47BC)',
+            description: 'Nam varius ligula. Curabitur et ultrices posuere iaculis dignissim sagittis et, posuere cubilia Curae, Phasellus vulputate et, imperdiet nunc, tempus arcu. Suspendisse et magnis dis parturient montes, nascetur ridiculus mus. Nunc gravida. In urna. Donec erat volutpat.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 47
+Faction.create(full_name: 'Later Jewish(Antigonus)',
+            short_name: 'Later Jewish(Antigonus)',
+            description: 'Quisque neque nibh faucibus erat. Quisque in quam. Phasellus sagittis tortor et turpis. Proin dui sodales tempor. Phasellus pulvinar massa in metus. Nullam sit amet lacus. Vivamus faucibus orci elit, ut odio urna, egestas purus. Pellentesque quam ante euismod pulvinar mollis, orci luctus et malesuada fames ac lacus. Ut nonummy. Sed faucibus, quam. Nam nec tellus. Fusce et enim. Cras sed augue mi, porttitor magna.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 48
+Faction.create(full_name: 'Later Jewish',
+            short_name: 'Later Jewish',
+            description: ' Donec eleifend et, fermentum laoreet, tortor turpis, accumsan imperdiet, risus tortor, fermentum augue. Cum sociis natoque penatibus et luctus at, suscipit dolor. Sed dignissim dolor urna orci ut tellus ac nunc. Praesent commodo volutpat ut, pellentesque accumsan.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 49
+Faction.create(full_name: 'Bosporan(early)',
+            short_name: 'Bosporan(early)',
+            description: 'Nullam sit amet, tellus. Morbi accumsan lorem. Maecenas bibendum ac, sodales at, posuere cubilia Curae, Mauris pretium eu, pede. Aliquam sem. Donec nonummy, tellus rutrum id, lacinia dignissim. Aliquam fringilla, nibh. Donec elit. Vestibulum ante ipsum wisi, dapibus vitae, fringilla sed, pretium erat sed orci ac arcu mi ornare ornare.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 50
+Faction.create(full_name: 'Bosporan(mid)',
+            short_name: 'Bosporan(mid)',
+            description: 'Cras porta, erat volutpat. Nam lorem hendrerit sed, aliquet elit. Mauris arcu. Nam dolor id tincidunt luctus. Phasellus sapien eros, varius leo. Nullam bibendum leo, aliquet eget, lacinia quis, varius in, consequat porttitor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per conubia nostra, per inceptos hymenaeos.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 51
+Faction.create(full_name: 'Bosporan(late)',
+            short_name: 'Bosporan(late)',
+            description: 'Nullam sit amet, tellus. Morbi accumsan lorem. Maecenas bibendum ac, sodales at, posuere cubilia Curae, Mauris pretium eu, pede. Aliquam sem. Donec nonummy, tellus rutrum id, lacinia dignissim. Aliquam fringilla, nibh. Donec elit. Vestibulum ante ipsum wisi, dapibus vitae, fringilla sed, pretium erat sed orci ac arcu mi ornare ornare.',
+            scenario_dependent: false,
+            game_id: 2)
+
+# faction id 52
+Faction.create(full_name: 'Bosporan(218-284)',
+            short_name: 'Bosporan(218-284)',
+            description: 'Cras porta, erat volutpat. Nam lorem hendrerit sed, aliquet elit. Mauris arcu. Nam dolor id tincidunt luctus. Phasellus sapien eros, varius leo. Nullam bibendum leo, aliquet eget, lacinia quis, varius in, consequat porttitor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per conubia nostra, per inceptos hymenaeos.',
+            scenario_dependent: false,
+            game_id: 2)

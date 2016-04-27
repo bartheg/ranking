@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   end
 
   get 'pages/home'
+  get 'pages/about'
+
   get 'pages/access_denied'
 
   # The priority is based upon order of creation: first created -> highest priority.

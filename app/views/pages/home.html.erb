@@ -1,14 +1,3 @@
-<div class="jumbotron">
-
-
-  <h1>Track your game skill!</h1>
-  <p><span class="glyphicon glyphicon-user"></span> Create a profile!</p>
-  <p><span class="glyphicon glyphicon-globe"></span> Play with players from around the world!</p>
-  <p><span class="glyphicon glyphicon-comment"></span> Make comments!</p>
-  <p><span class="glyphicon glyphicon-sort-by-attributes-alt"></span> Browse statistics!</p>
-  <p><span class="glyphicon glyphicon-scale"></span> Observe your progress!</p>
-  <p><span class="glyphicon glyphicon-star"></span> Gain points!</p>
-  <p><span class="glyphicon glyphicon-heart"></span> And fame!</p>
-
-
-</div>
+<% if !user_signed_in? %>
+  <%= render 'jumbo' %>
+<% end %>

@@ -84,7 +84,7 @@ class ProfilesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def profile_params
-    params.require(:profile).permit(:description, :color, language_ids: [])
+    params.require(:profile).permit(:name, :description, :color, language_ids: [])
   end
 
   def find_user

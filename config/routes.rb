@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :profiles, only: :index
   end
 
+  resources :games
 
   get 'pages/home'
   get 'pages/about'

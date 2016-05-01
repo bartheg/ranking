@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :profiles, only: :index
   end
 
+
   get 'pages/home'
   get 'pages/about'
 
@@ -27,7 +28,12 @@ Rails.application.routes.draw do
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-  resources :profiles
+  resources :profiles do
+    member do
+      get :switch_to
+    end
+  end
+
   # Example resource route with options:
   #   resources :products do
   #     member do

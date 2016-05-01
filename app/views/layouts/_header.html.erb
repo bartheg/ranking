@@ -1,24 +1,20 @@
+<!--  USER BAR  -->
 <% if user_signed_in? %>
-
-  <div class="well well-sm">
+  <div class="well well-sm profile-color" data-color="<%= current_user.current_profile.color %>" style="background-color: <%= current_user.current_profile.color %>;">
     <ul class="nav nav-pills">
-
       <li role="presentation" class="dropdown pull-right">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
           Switch profile <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-
           <% @profiles.each do |profile| %>
-            <li role="presentation"><%= link_to profile.name, '#' %></li>
+            <li role="presentation"><%= link_to profile.name, switch_to_profile_path(profile), method: :get %></li>
           <% end %>
-
         </ul>
       </li>
-
       <li role="presentation" class="dropdown pull-right">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-          <%= current_user.default_profile.name %> <span class="caret"></span>
+          <%= current_user.current_profile.name %> <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
           <li role="presentation"><%= link_to 'Edit my current profile', '#' %></li>
@@ -27,49 +23,30 @@
           <li role="presentation"><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
         </ul>
       </li>
-
-
-
     </ul>
   </div>
+<% else %>
+  <ul class="nav nav-pills">
+    <li role="presentation" class="pull-right <%= "active" if current_page?(new_user_session_path) %>"><%= link_to 'Log in', new_user_session_path %></li>
+    <li role="presentation" class="pull-right <%= "active" if current_page?(new_user_registration_path) %>"><%= link_to 'Join', new_user_registration_path %></li>
+  </ul>
 <% end %>
 
-<div class="well well-sm">
-  <!-- <%= link_to 'Main Page', root_path, class: 'mock-button'  %> -->
-
-<ul class="nav nav-pills">
+<!--  TABS  -->
+<ul class="nav nav-tabs">
   <li role="presentation" class=<%= "active" if current_page?(root_path) %>><%= link_to 'Home', root_path %></li>
   <% if user_signed_in? %>
-
-    <li role="presentation" class=<%= "active" if current_page?(user_profiles_path(user_id: current_user.id)) %>><%= link_to 'My profiles', user_profiles_path(user_id: current_user.id) %></li>
-<!--
-
-    <li role="presentation" class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-        Games <span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu">
-        <li role="presentation"><%= link_to 'X', '#' %></li>
-        <li role="presentation"><%= link_to 'Y', '#' %></li>
-      </ul>
-    </li>
-
-    <li role="presentation" class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-        My ladders <span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu">
-        <li role="presentation"><%= link_to 'X', '#' %></li>
-        <li role="presentation"><%= link_to 'Y', '#' %></li>
-      </ul>
-    </li> -->
-
+    <li role="presentation" class=<%= "active" if current_page?(profile_path(id: current_user.current_profile.id)) %>><%= link_to 'Profile', profile_path(id: current_user.current_profile.id) %></li>
   <% else %>
-    <li role="presentation" class=<%= "active" if current_page?(new_user_session_path) %>><%= link_to 'Log in', new_user_session_path %></li>
-    <li role="presentation" class=<%= "active" if current_page?(new_user_registration_path) %>><%= link_to 'Join', new_user_registration_path %></li>
   <% end %>
   <li role="presentation" class=<%= "active" if current_page?(profiles_path) %>><%= link_to 'All profiles', profiles_path %></li>
   <li role="presentation" class= "<%= "active" if current_page?(pages_about_path) %>"><%= link_to 'About', pages_about_path %></li>
 </ul>
 
+<!--  SUB MENU  -->
+<div class="btn-toolbar" role="toolbar" aria-label="...">
+  <div class="btn-group" role="group" aria-label="...">
+    <%= link_to 'All profiles', profiles_path, class: "btn" %>
+    <%= link_to 'About', pages_about_path, class: "btn" %>
+  </div>
 </div>

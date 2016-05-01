@@ -37,8 +37,8 @@ class Profile < ActiveRecord::Base
 
   def make_default_if_there_are_not_any
     owner = self.user
-    unless owner.default_profile
-      owner.default_profile = self
+    unless owner.current_profile
+      owner.current_profile = self
       owner.save
     end
   end

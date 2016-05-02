@@ -11,5 +11,25 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe GamesHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  # describe '.link_to_game_laders' do
+  #   subject { Game.new(full_name: 'The Wattle for Besnod',
+  #               short_name: 'Besnod',
+  #               description: 'Lelum polelum',
+  #               simultaneous_turns: false)}
+  #
+  #   let!(:ladder1) {Ladder.new(name: 'Ladder1',
+  #               description: 'This is fake Ladder. All results are fake here',
+  #               game_id: 1)}
+  #   let!(:ladder2) {Ladder.new(name: 'Ladder2',
+  #               description: 'This is fake Ladder. All results are fake here',
+  #               game_id: 2)}
+  #   let!(:ladder3) {Ladder.new(name: 'Ladder3',
+  #               description: 'This is fake Ladder. All results are fake here',
+  #               game_id: 1)}
+  #   it 'returns number of laddersand link if number is greater then zero' do
+  #     expect(link_to_game_laders ubject).to eq {link_to 2, game_ladders_path(subject.id)}
+  #   end
+  # end
+
 end

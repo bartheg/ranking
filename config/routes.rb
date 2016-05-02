@@ -5,7 +5,10 @@ Rails.application.routes.draw do
     resources :profiles, only: :index
   end
 
-  resources :games
+  resources :games do
+    resources :ladders, only: :index    
+  end
+
   resources :ladders
 
 

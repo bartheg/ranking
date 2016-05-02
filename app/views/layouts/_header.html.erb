@@ -7,7 +7,7 @@
           Switch profile <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-          <% @profiles.each do |profile| %>
+          <% @my_profiles.each do |profile| %>
             <li role="presentation"><%= link_to profile.name, switch_to_profile_path(profile), method: :get %></li>
           <% end %>
         </ul>

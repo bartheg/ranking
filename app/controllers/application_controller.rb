@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
 
   def get_profiles
     if current_user
-      @profiles = current_user.profiles
+      @my_profiles = current_user.profiles
     end
   end
 

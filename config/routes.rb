@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   end
 
   resources :games
+  resources :ladders
+
 
   get 'pages/home'
   get 'pages/about'

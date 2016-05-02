@@ -1,0 +1,25 @@
+<h1>Ladders</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Ladder id</th>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ladders.each do |ladder| %>
+      <tr>
+        <td><%= ladder.id %></td>
+        <td><%= link_to ladder.name, ladder %></td>
+        <td><%= truncate(ladder.description, length: 500, separator: ' ') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Profile', new_profile_path %>

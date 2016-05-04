@@ -1,0 +1,26 @@
+<h1><%= @header %></h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Scenario id</th>
+      <th>Name</th>
+      <th>Description</th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @scenarios.each do |scenario| %>
+      <tr>
+        <td><%= scenario.id %></td>
+        <td><%= link_to scenario.short_name, scenario %></td>
+        <td><%= truncate(scenario.description, length: 500, separator: ' ') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Profile', new_profile_path %>

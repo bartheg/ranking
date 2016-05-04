@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     resources :ladders, only: :index
   end
 
+  resources :scenarios
+  
   resources :ladders do
     resources :scenarios, only: :index
   end

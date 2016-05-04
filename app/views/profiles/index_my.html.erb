@@ -18,7 +18,7 @@
       <tr>
         <td><%= profile.name %></td>
         <td><%= truncate(profile.description, length: 400, separator: ' ') %></td>
-        <td><%= "yes" if profile.id == @user.default_profile.id %></td>
+        <td><%= "yes" if profile.id == @user.current_profile.id %></td>
         <td class="td-color-js" style="background-color:<%= profile.color %>;"><%= profile.color %></td>
         <script>
         var elem = $('td.td-color-js').last();

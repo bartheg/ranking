@@ -1,0 +1,36 @@
+<h1>Games</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Game id</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Ladders</th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @games.each do |game| %>
+      <tr>
+        <td><%= game.id %></td>
+        <td><%= link_to game.full_name, game %></td>
+        <td><%= truncate(game.description, length: 500, separator: ' ') %></td>
+        <td>
+          <% number_of_ladders = game.ladders.count %>
+          <% if number_of_ladders > 0 %>
+            <%= link_to number_of_ladders, game_ladders_path(game) %>
+          <% else %>
+            number_of_ladders
+          <% end %>
+        </td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Profile', new_profile_path %>

@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  before_action :set_profile, only: [:show, :edit, :update, :destroy]
+  before_action :set_profile, only: [:show, :edit, :update, :destroy, :switch_to]
   # before_action :find_user, only: [:index]
 
   # GET /profiles
@@ -37,6 +37,12 @@ class ProfilesController < ApplicationController
       render :show_not_my
     end
 
+  end
+
+
+  def switch_to
+    @profile.make_default
+    redirect_to :back
   end
 
   # GET /profiles/new
@@ -84,7 +90,7 @@ class ProfilesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def profile_params
-    params.require(:profile).permit(:description, :color, language_ids: [])
+    params.require(:profile).permit(:name, :description, :color, language_ids: [])
   end
 
   def find_user

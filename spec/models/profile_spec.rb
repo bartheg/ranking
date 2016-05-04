@@ -84,26 +84,26 @@ RSpec.describe Profile, type: :model do
       user = User.create(email:"qweasd@qwe.pl", password:'asdqwe123123')
       profile = Profile.create user_id: user.id, name: "KkkK", description: "Some description", color: '#eeddaa'
 
-      expect(user.reload.default_profile.id).to eq profile.id
+      expect(user.reload.current_profile.id).to eq profile.id
     end
 
-    it 'doesnt change default_profile when there is one' do
+    it 'doesnt change current_profile when there is one' do
       user1 = User.create(email:"qweasd@qwe.pl", password:'asdqwe123123')
       profile1 = Profile.create user_id: user1.id, name: "ErkK", description: "Some description", color: '#eeddaa'
       profile2 = Profile.create user_id: user1.id, name: "KEkK", description: "Some description", color: '#eeddaa'
-      expect(user1.reload.default_profile.id).to eq profile1.id
+      expect(user1.reload.current_profile.id).to eq profile1.id
     end
 
   end
 
   describe '#make_default' do
 
-    it 'force user object to change its default_profile' do
+    it 'force user object to change its current_profile' do
       user1 = User.create(email:"qweasd@qwe.pl", password:'asdqwe123123')
       profile1 = Profile.create user_id: user1.id, name: "KEk4rfK", description: "Some description", color: '#eeddaa'
       profile2 = Profile.create user_id: user1.id, name: "K44K", description: "Some description", color: '#eeddaa'
       profile2.make_default
-      expect(user1.reload.default_profile.id).to eq profile2.id
+      expect(user1.reload.current_profile.id).to eq profile2.id
     end
   end
 

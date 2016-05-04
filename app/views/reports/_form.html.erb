@@ -1,0 +1,41 @@
+<%= form_for(@report) do |f| %>
+
+  <% if @report.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@report.errors.count, "error") %> prohibited this report from being saved:</h2>
+
+      <ul>
+        <% @report.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :scenario %><br />
+    <%= f.collection_select(:scenario_id, @report.scenario.ladder.scenarios, :id, :full_name, include_blank: true) %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :reporters_faction, 'Your Faction' %><br />
+    <%= f.collection_select(:reporters_faction_id, @report.scenario.factions, :id, :full_name, include_blank: true) %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :opponent %><br />
+    <%= f.text_field :opponent, autofocus: true, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :opponents_faction, "Your Opponent's Faction" %><br />
+    <%= f.collection_select(:opponents_faction_id, @report.scenario.factions, :id, :full_name, include_blank: true) %>
+  </div>
+
+
+
+  <div class="actions">
+    <%= f.submit(class: "btn btn-primary") %>
+  </div>
+
+<% end %>

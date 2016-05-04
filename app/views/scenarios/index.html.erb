@@ -6,6 +6,7 @@
       <th>Scenario id</th>
       <th>Name</th>
       <th>Description</th>
+      <th> </th>
 
     </tr>
   </thead>
@@ -16,6 +17,7 @@
         <td><%= scenario.id %></td>
         <td><%= link_to scenario.short_name, scenario %></td>
         <td><%= truncate(scenario.description, length: 500, separator: ' ') %></td>
+        <td><%= link_to 'Report new game', new_scenario_report_path(scenario.id) %></td>
       </tr>
     <% end %>
   </tbody>

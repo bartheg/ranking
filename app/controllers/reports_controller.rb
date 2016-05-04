@@ -12,13 +12,29 @@ class ReportsController < ApplicationController
     end
   end
 
+### copyed
 
   def new
-
+    @report = Report.new
+    if params[:scenario_id]
+      @report.scenario_id = params[:scenario_id]
+    end
   end
 
   def create
+    @report = Report.new(report_params)
+    @report.user_id = current_user.id
+    if @report.save
+      redirect_to @report, notice: 'Report was successfully created.'
+    else
+      render :new
+    end
+  end
 
+  private
+
+  def report_params
+    params.require(:report).permit(:name, :description, :color, language_ids: [])
   end
 
 end

@@ -1,7 +1,7 @@
 class Profile < ActiveRecord::Base
   belongs_to :user
   has_and_belongs_to_many :languages
-  has_many :ratings
+  has_many :rankings
   has_many :reports_as_reporter, class_name: 'Report', foreign_key: 'reporter_id'
   has_many :reports_as_opponent, class_name: 'Report', foreign_key: 'opponent_id'
 

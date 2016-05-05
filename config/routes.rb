@@ -6,11 +6,18 @@ Rails.application.routes.draw do
   end
 
   resources :games do
-    resources :ladders, only: :index    
+    resources :ladders, only: :index
   end
 
-  resources :ladders
+  resources :scenarios do
+    resources :reports
+  end
 
+  resources :ladders do
+    resources :scenarios, only: :index
+  end
+
+  resources :reports
 
   get 'pages/home'
   get 'pages/about'

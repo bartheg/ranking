@@ -562,3 +562,7 @@ Faction.create(full_name: 'Bosporan(218-284)',
             description: 'Cras porta, erat volutpat. Nam lorem hendrerit sed, aliquet elit. Mauris arcu. Nam dolor id tincidunt luctus. Phasellus sapien eros, varius leo. Nullam bibendum leo, aliquet eget, lacinia quis, varius in, consequat porttitor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per conubia nostra, per inceptos hymenaeos.',
             scenario_dependent: false,
             game_id: 2)
+
+fog_ror_factions = Faction.where(id: (7..52).to_a)
+
+Scenario.find(7).factions << fog_ror_factions

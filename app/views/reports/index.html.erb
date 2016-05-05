@@ -7,7 +7,8 @@
       <th>Game</th>
       <th>Ladder</th>
       <th>Scenario</th>
-      <th>Who</th>
+      <th>Reporter</th>
+      <th>Opponent</th>
       <th>Winner</th>
     </tr>
   </thead>
@@ -16,15 +17,16 @@
     <% @reports.each do |report| %>
       <tr>
         <td><%= report.id %></td>
-        <td><%= report.scenario.ladder.game %></td>
-        <td><%= report.scenario.ladder %></td>
-        <td><%= report.scenario %></td>
-        <td><%= report.reporter %> (<%= report.reporters_faction %>) vs <%= report.opponent %> (<%= report.opponents_faction %>)</td>
+        <td><%= report.scenario.ladder.game.full_name %></td>
+        <td><%= report.scenario.ladder.name %></td>
+        <td><%= report.scenario.full_name %></td>
+        <td><%= report.reporter.name %> (<%= report.reporters_faction.full_name %>)</td>
+        <td><%= report.opponent.name %> (<%= report.opponents_faction.full_name %>)</td>
         <td>
           <% if report.result < 0 %>
-            <%= report.opponent %> (<%= report.opponents_faction %>)
+            <%= report.opponent.name %> (<%= report.opponents_faction.full_name %>)
           <% elsif report.result > 0 %>
-            <%= report.reporter %> (<%= report.reporters_faction %>)
+            <%= report.reporter.name %> (<%= report.reporters_faction.full_name %>)
           <% else %>
             draw
           <% end %>

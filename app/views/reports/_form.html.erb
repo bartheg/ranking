@@ -18,21 +18,34 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :reporters_faction, 'Your Faction' %><br />
+    <%= f.label :reporter, 'Me' %><br />
+    <%= f.collection_select(:reporter_id, Profile.where(user_id: current_user.id), :id, :name) %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :reporters_faction, 'My faction' %><br />
     <%= f.collection_select(:reporters_faction_id, @report.scenario.factions, :id, :full_name, include_blank: true) %>
   </div>
 
   <div class="form-group">
-    <%= f.label :opponent %><br />
-    <%= f.text_field :opponent, autofocus: true, class: 'form-control' %>
+    <%= f.label :opponents_name, 'My opponent' %><br />
+    <%= f.text_field :opponents_name, autofocus: true, class: 'form-control' %>
   </div>
 
   <div class="form-group">
-    <%= f.label :opponents_faction, "Your Opponent's Faction" %><br />
+    <%= f.label :opponents_faction, "My opponent's faction" %><br />
     <%= f.collection_select(:opponents_faction_id, @report.scenario.factions, :id, :full_name, include_blank: true) %>
   </div>
 
+  <div class="form-group">
+    <%= f.label :result_description, "Result" %><br />
+    <%= f.collection_select(:result_description, [ 'I won', 'I lost', 'Draw'], :to_s, :to_s, include_blank: true) %>
+  </div>
 
+  <div class="form-group">
+    <%= f.label :message %><br />
+    <%= f.text_area :message, class: 'form-control' %>
+  </div>
 
   <div class="actions">
     <%= f.submit(class: "btn btn-primary") %>

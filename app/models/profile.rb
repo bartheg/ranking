@@ -1,6 +1,10 @@
 class Profile < ActiveRecord::Base
   belongs_to :user
   has_and_belongs_to_many :languages
+  has_many :rankings
+  has_many :reports_as_reporter, class_name: 'Report', foreign_key: 'reporter_id'
+  has_many :reports_as_opponent, class_name: 'Report', foreign_key: 'opponent_id'
+
   # has_many :profile_name_edits
 
   before_save :make_default_if_there_are_not_any
@@ -33,8 +37,8 @@ class Profile < ActiveRecord::Base
 
   def make_default_if_there_are_not_any
     owner = self.user
-    unless owner.default_profile
-      owner.default_profile = self
+    unless owner.current_profile
+      owner.current_profile = self
       owner.save
     end
   end

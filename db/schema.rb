@@ -11,7 +11,75 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160404125203) do
+ActiveRecord::Schema.define(version: 20160504152748) do
+
+  create_table "confirmations", force: :cascade do |t|
+    t.integer  "report_id"
+    t.boolean  "agree"
+    t.text     "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "confirmations", ["report_id"], name: "index_confirmations_on_report_id"
+
+  create_table "default_ladder_configs", force: :cascade do |t|
+    t.integer  "average_rating"
+    t.integer  "loot_factor"
+    t.integer  "loot_constant"
+    t.integer  "disproportion_factor"
+    t.integer  "draw_factor"
+    t.integer  "hours_to_confirm"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  create_table "faction_to_scenario_assignments", force: :cascade do |t|
+    t.integer  "faction_id"
+    t.integer  "scenario_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "faction_to_scenario_assignments", ["faction_id"], name: "index_faction_to_scenario_assignments_on_faction_id"
+  add_index "faction_to_scenario_assignments", ["scenario_id"], name: "index_faction_to_scenario_assignments_on_scenario_id"
+
+  create_table "factions", force: :cascade do |t|
+    t.string   "full_name"
+    t.string   "short_name"
+    t.text     "description"
+    t.boolean  "scenario_dependent"
+    t.integer  "game_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "factions", ["full_name"], name: "index_factions_on_full_name", unique: true
+  add_index "factions", ["game_id"], name: "index_factions_on_game_id"
+  add_index "factions", ["short_name"], name: "index_factions_on_short_name", unique: true
+
+  create_table "games", force: :cascade do |t|
+    t.string   "full_name"
+    t.string   "short_name"
+    t.text     "description"
+    t.boolean  "simultaneous_turns"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "games", ["full_name"], name: "index_games_on_full_name", unique: true
+  add_index "games", ["short_name"], name: "index_games_on_short_name", unique: true
+
+  create_table "ladders", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "game_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "ladders", ["game_id"], name: "index_ladders_on_game_id"
+  add_index "ladders", ["name"], name: "index_ladders_on_name", unique: true
 
   create_table "languages", force: :cascade do |t|
     t.string   "iso_639_1"
@@ -38,6 +106,53 @@ ActiveRecord::Schema.define(version: 20160404125203) do
 
   add_index "profiles", ["name"], name: "index_profiles_on_name", unique: true
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id"
+
+  create_table "rankings", force: :cascade do |t|
+    t.integer  "ladder_id"
+    t.integer  "profile_id"
+    t.integer  "value"
+    t.integer  "report_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "rankings", ["ladder_id"], name: "index_rankings_on_ladder_id"
+  add_index "rankings", ["profile_id"], name: "index_rankings_on_profile_id"
+  add_index "rankings", ["report_id"], name: "index_rankings_on_report_id"
+
+  create_table "reports", force: :cascade do |t|
+    t.integer  "scenario_id"
+    t.integer  "reporter_id"
+    t.integer  "opponent_id"
+    t.integer  "reporters_faction_id"
+    t.integer  "opponents_faction_id"
+    t.text     "message"
+    t.integer  "result"
+    t.boolean  "status"
+    t.boolean  "calculated"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "reports", ["opponent_id"], name: "index_reports_on_opponent_id"
+  add_index "reports", ["opponents_faction_id"], name: "index_reports_on_opponents_faction_id"
+  add_index "reports", ["reporter_id"], name: "index_reports_on_reporter_id"
+  add_index "reports", ["reporters_faction_id"], name: "index_reports_on_reporters_faction_id"
+  add_index "reports", ["scenario_id"], name: "index_reports_on_scenario_id"
+
+  create_table "scenarios", force: :cascade do |t|
+    t.string   "full_name"
+    t.string   "short_name"
+    t.text     "description"
+    t.boolean  "mirror_matchups_allowed"
+    t.integer  "ladder_id"
+    t.string   "map_size"
+    t.boolean  "map_random_generated"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "scenarios", ["ladder_id"], name: "index_scenarios_on_ladder_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

@@ -1,0 +1,41 @@
+<h1><%= @header %></h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Report id</th>
+      <th>Game</th>
+      <th>Ladder</th>
+      <th>Scenario</th>
+      <th>Reporter</th>
+      <th>Opponent</th>
+      <th>Winner</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reports.each do |report| %>
+      <tr>
+        <td><%= report.id %></td>
+        <td><%= report.scenario.ladder.game.full_name %></td>
+        <td><%= report.scenario.ladder.name %></td>
+        <td><%= report.scenario.full_name %></td>
+        <td><%= report.reporter.name %> (<%= report.reporters_faction.full_name %>)</td>
+        <td><%= report.opponent.name %> (<%= report.opponents_faction.full_name %>)</td>
+        <td>
+          <% if report.result < 0 %>
+            <%= report.opponent.name %> (<%= report.opponents_faction.full_name %>)
+          <% elsif report.result > 0 %>
+            <%= report.reporter.name %> (<%= report.reporters_faction.full_name %>)
+          <% else %>
+            draw
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Profile', new_profile_path %>

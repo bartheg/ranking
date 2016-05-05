@@ -26,11 +26,11 @@ class ReportsController < ApplicationController
     @report = Report.new(report_params)
 
     @report.opponent = Profile.where(name: report_params[:opponents_name]).first
-    if report_params[:result_description] = 'I lost'
+    if report_params[:result_description] == 'I lost'
       @report.result = -1
-    elsif report_params = 'I won'
+    elsif report_params == 'I won'
       @report.result = 1
-    elsif report_params = 'Draw'
+    elsif report_params == 'Draw'
       @report.result = 0
     end
 

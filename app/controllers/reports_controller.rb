@@ -13,7 +13,6 @@ class ReportsController < ApplicationController
   end
 
 ### copyed
-
   def new
     @report = Report.new
     if params[:scenario_id]

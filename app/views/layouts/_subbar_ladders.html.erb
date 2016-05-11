@@ -1,0 +1,8 @@
+<div class="btn-toolbar" role="toolbar" aria-label="...">
+  <div class="btn-group" role="group" aria-label="...">
+    <%= link_to 'All', ladders_path, class: "btn" %>
+    <% if user_signed_in? %>
+      <%= link_to 'Participated', '#', class: "btn" %>
+    <% end %>
+  </div>
+</div>

@@ -49,20 +49,20 @@
 <!--  TABS  -->
 <ul class="nav nav-tabs">
   <li role="presentation" class=<%= "active" if current_page?(root_path) %>><%= link_to 'Home', root_path %></li>
-  <% if user_signed_in? %>
-    <li role="presentation" class=<%= "active" if current_page?(profile_path(id: current_user.current_profile.id)) %>><%= link_to 'Profile', profile_path(id: current_user.current_profile.id) %></li>
-  <% end %>
   <li role="presentation" class=<%= "active" if current_page?(games_path) %>><%= link_to 'Games', games_path %></li>
   <li role="presentation" class=<%= "active" if current_page?(ladders_path) %>><%= link_to 'Ladders', ladders_path %></li>
   <li role="presentation" class=<%= "active" if current_page?(reports_path) %>><%= link_to 'Reports', reports_path %></li>
-  <li role="presentation" class=<%= "active" if current_page?(profiles_path) %>><%= link_to 'All profiles', profiles_path %></li>
+  <li role="presentation" class=<%= "active" if current_page?(profiles_path) %>><%= link_to 'Profiles', profiles_path %></li>
   <li role="presentation" class= "<%= "active" if current_page?(pages_about_path) %>"><%= link_to 'About', pages_about_path %></li>
 </ul>
 
 <!--  SUB MENU  -->
-<div class="btn-toolbar" role="toolbar" aria-label="...">
-  <div class="btn-group" role="group" aria-label="...">
-    <%= link_to 'All profiles', profiles_path, class: "btn" %>
-    <%= link_to 'About', pages_about_path, class: "btn" %>
-  </div>
-</div>
+<% if current_page?(games_path) %>
+  <%= render 'layouts/subbar_games' %>
+<% elsif current_page?(ladders_path) %>
+  <%= render 'layouts/subbar_ladders' %>
+<% elsif current_page?(reports_path) %>
+  <%= render 'layouts/subbar_reports' %>
+<% elsif current_page?(profiles_path) %>
+  <%= render 'layouts/subbar_profiles' %>
+<% end %>

@@ -1,0 +1,9 @@
+<div class="btn-toolbar" role="toolbar" aria-label="...">
+  <div class="btn-group" role="group" aria-label="...">
+    <%= link_to 'All', profiles_path, class: "btn" %>
+    <% if user_signed_in? %>
+      <%= link_to 'Participated', '#', class: "btn" %>
+      <%= link_to 'My profile', profile_path(id: current_user.current_profile.id), class: "btn" %>
+    <% end %>
+  </div>
+</div>

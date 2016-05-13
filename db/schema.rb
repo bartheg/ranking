@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160504152748) do
+ActiveRecord::Schema.define(version: 20160513111725) do
 
   create_table "confirmations", force: :cascade do |t|
     t.integer  "report_id"
@@ -128,7 +128,6 @@ ActiveRecord::Schema.define(version: 20160504152748) do
     t.integer  "opponents_faction_id"
     t.text     "message"
     t.integer  "result"
-    t.boolean  "status"
     t.boolean  "calculated"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false

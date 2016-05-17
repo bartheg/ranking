@@ -3,6 +3,7 @@
     <%= link_to 'All', ladders_path, class: "btn" %>
     <% if user_signed_in? %>
       <%= link_to 'Participated', '#', class: "btn" %>
+      <%= link_to 'Create a new ladder', new_ladder_path, class: "btn btn-danger" %>
     <% end %>
   </div>
 </div>

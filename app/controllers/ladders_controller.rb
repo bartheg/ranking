@@ -12,4 +12,23 @@ class LaddersController < ApplicationController
     end
   end
 
+  def new
+    @ladder = Ladder.new
+  end
+
+  def create
+    @ladder = Ladder.new(ladder_params)
+    if @ladder.save
+      redirect_to @ladder, notice: 'Ladder was successfully created.'
+    else
+      render :new
+    end
+  end
+
+  private
+
+  def ladder_params
+    params.require(:ladder).permit(:name, :description, :game_id)
+  end
+
 end

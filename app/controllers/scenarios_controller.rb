@@ -1,5 +1,7 @@
 class ScenariosController < ApplicationController
 
+  before_action :set_scenario, only: [:show]
+
   def index
     if params[:ladder_id]
       @ladder = Ladder.find(params[:ladder_id].to_i)
@@ -11,5 +13,16 @@ class ScenariosController < ApplicationController
       @scenarios = Scenario.all
     end
   end
+
+  def show
+
+  end
+
+
+  private
+  def set_scenario
+    @scenario = Scenario.find(params[:id])
+  end
+
 
 end

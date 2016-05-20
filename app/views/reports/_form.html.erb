@@ -13,8 +13,12 @@
   <% end %>
 
   <div class="form-group">
+
     <%= f.label :scenario %><br />
-    <%= f.collection_select(:scenario_id, @report.scenario.ladder.scenarios, :id, :full_name, include_blank: true) %>
+    <% if @report.scenario %>
+      <%= f.collection_select(:scenario_id, @report.scenario.ladder.scenarios, :id, :full_name, include_blank: true) %>
+    <% end %>
+
   </div>
 
   <div class="form-group">

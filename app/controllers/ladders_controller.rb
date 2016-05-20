@@ -21,6 +21,8 @@ class LaddersController < ApplicationController
 
   def new
     @ladder = Ladder.new
+    @game = Game.find(params[:game_id].to_i)
+    @ladder.game = @game
   end
 
   def create

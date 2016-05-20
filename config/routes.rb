@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   end
 
   resources :games do
-    resources :ladders, only: :index
+    resources :ladders, only: [:index, :new]
   end
 
   resources :scenarios do

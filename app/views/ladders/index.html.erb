@@ -8,6 +8,7 @@
       <th>Game</th>
       <th>Description</th>
       <th>Scenarios</th>
+      <th></th>
     </tr>
   </thead>
 
@@ -26,6 +27,7 @@
             0
           <% end %>
         </td>
+        <td><%= link_to 'Create a new scenario', new_ladder_scenario_path(ladder) %></td>
       </tr>
     <% end %>
   </tbody>

@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   end
 
   resources :ladders do
-    resources :scenarios, only: :index
+    resources :scenarios, only: [:index, :new]
   end
 
   resources :reports

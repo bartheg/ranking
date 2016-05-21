@@ -14,15 +14,25 @@ class ScenariosController < ApplicationController
     end
   end
 
+  def new
+    @scenario = Scenario.new
+    @ladder = Ladder.find(params[:ladder_id].to_i)
+    @scenario.ladder = @ladder
+  end
+
   def show
 
   end
 
 
   private
+
   def set_scenario
     @scenario = Scenario.find(params[:id])
   end
 
+  def scenario_params
+    params.require(:scenario).permit(:name, :description, :ladder_id)
+  end
 
 end

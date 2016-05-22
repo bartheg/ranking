@@ -14,14 +14,26 @@ class ScenariosController < ApplicationController
     end
   end
 
+  def show
+
+  end
+
   def new
     @scenario = Scenario.new
     @ladder = Ladder.find(params[:ladder_id].to_i)
+    @game = @ladder.game
     @scenario.ladder = @ladder
   end
 
-  def show
-
+  def create
+    @ladder = Ladder.find(params[:ladder_id])
+    @scenario = Scenario.new(scenario_params)
+    @scenario.ladder = @ladder
+    if @scenario.save
+      redirect_to @scenario, notice: 'Scenario was successfully created.'
+    else
+      render :new
+    end
   end
 
 
@@ -32,7 +44,7 @@ class ScenariosController < ApplicationController
   end
 
   def scenario_params
-    params.require(:scenario).permit(:name, :description, :ladder_id)
+    params.require(:scenario).permit(:full_name,:short_name, :description, :ladder_id, :map_size, :mirror_matchups_allowed, :map_random_generated)
   end
 
 end

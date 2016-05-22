@@ -1,7 +1,7 @@
 <div class="panel panel-default">
 
   <div class="panel-heading">
-    <h2><%= @game.full_name %> / New Ladder</h1>
+    <h2><%= @ladder.game.full_name %> / <%= @ladder.name %> / New Scenario</h1>
   </div>
 
   <div class="panel-body">
@@ -9,7 +9,7 @@
   </div>
 
   <div class="panel-footer">
-    <%= link_to 'Back', ladders_path %>
+    <%= link_to 'Back', scenarios_path %>
   </div>
 
 </div>

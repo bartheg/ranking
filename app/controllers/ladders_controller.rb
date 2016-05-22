@@ -2,7 +2,6 @@ class LaddersController < ApplicationController
 
   before_action :set_ladder, only: [:show]
 
-
   def index
     if params[:game_id]
       @game = Game.find(params[:game_id].to_i)
@@ -20,11 +19,15 @@ class LaddersController < ApplicationController
   end
 
   def new
+    @game = Game.find(params[:game_id].to_i)
     @ladder = Ladder.new
+    @ladder.game = @game
   end
 
   def create
+    @game = Game.find(params[:game_id])
     @ladder = Ladder.new(ladder_params)
+    @ladder.game = @game
     if @ladder.save
       redirect_to @ladder, notice: 'Ladder was successfully created.'
     else
@@ -33,13 +36,13 @@ class LaddersController < ApplicationController
   end
 
   private
+
   def set_ladder
     @ladder = Ladder.find(params[:id])
   end
 
-
   def ladder_params
-    params.require(:ladder).permit(:name, :description, :game_id)
+    params.require(:ladder).permit(:name, :description)
   end
 
 end

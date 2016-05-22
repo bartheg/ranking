@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   end
 
   resources :games do
-    resources :ladders, only: :index
+    resources :ladders, only: [:index, :new, :create]
   end
 
   resources :scenarios do
@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   end
 
   resources :ladders do
-    resources :scenarios, only: :index
+    resources :scenarios, only: [:index, :new, :create]
   end
 
   resources :reports

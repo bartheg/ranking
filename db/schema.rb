@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160513143436) do
+ActiveRecord::Schema.define(version: 20160522194131) do
 
   create_table "confirmations", force: :cascade do |t|
     t.integer  "report_id"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20160513143436) do
   add_index "confirmations", ["report_id"], name: "index_confirmations_on_report_id"
 
   create_table "default_ladder_configs", force: :cascade do |t|
-    t.integer  "average_rating"
+    t.integer  "default_ranking"
     t.integer  "loot_factor"
     t.integer  "loot_constant"
     t.integer  "disproportion_factor"

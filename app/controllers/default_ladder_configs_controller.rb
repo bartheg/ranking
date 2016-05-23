@@ -5,7 +5,7 @@ class DefaultLadderConfigsController < ApplicationController
   end
 
   def update
-    @default_ladder_config = Section.find(params[:id])
+    @default_ladder_config = DefaultLadderConfig.find(params[:id])
     if @default_ladder_config.update_attributes(default_ladder_config_params)
       flash[:notice] = "Default ladder config updated successfully."
       redirect_to edit_default_ladder_config_path(@default_ladder_config)

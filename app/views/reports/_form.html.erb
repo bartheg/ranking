@@ -13,8 +13,12 @@
   <% end %>
 
   <div class="form-group">
+
     <%= f.label :scenario %><br />
-    <%= f.collection_select(:scenario_id, @report.scenario.ladder.scenarios, :id, :full_name, include_blank: true) %>
+    <% if @report.scenario %>
+      <%= f.collection_select(:scenario_id, @report.scenario.ladder.scenarios, :id, :full_name, include_blank: true) %>
+    <% end %>
+
   </div>
 
   <div class="form-group">
@@ -28,13 +32,13 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :opponents_name, 'My opponent' %><br />
-    <%= f.text_field :opponents_name, autofocus: true, class: 'form-control' %>
+    <%= f.label :confirmers_name, 'My opponent' %><br />
+    <%= f.text_field :confirmers_name, autofocus: true, class: 'form-control' %>
   </div>
 
   <div class="form-group">
-    <%= f.label :opponents_faction, "My opponent's faction" %><br />
-    <%= f.collection_select(:opponents_faction_id, @report.scenario.factions, :id, :full_name, include_blank: true) %>
+    <%= f.label :confirmers_faction, "My opponent's faction" %><br />
+    <%= f.collection_select(:confirmers_faction_id, @report.scenario.factions, :id, :full_name, include_blank: true) %>
   </div>
 
   <div class="form-group">

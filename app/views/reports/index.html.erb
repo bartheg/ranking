@@ -8,7 +8,7 @@
       <th>Ladder</th>
       <th>Scenario</th>
       <th>Reporter</th>
-      <th>Opponent</th>
+      <th>Confirmer</th>
       <th>Winner</th>
     </tr>
   </thead>
@@ -21,10 +21,10 @@
         <td><%= report.scenario.ladder.name %></td>
         <td><%= report.scenario.full_name %></td>
         <td><%= report.reporter.name %> (<%= report.reporters_faction.full_name %>)</td>
-        <td><%= report.opponent.name %> (<%= report.opponents_faction.full_name %>)</td>
+        <td><%= report.confirmer.name %> (<%= report.confirmers_faction.full_name %>)</td>
         <td>
           <% if report.result < 0 %>
-            <%= report.opponent.name %> (<%= report.opponents_faction.full_name %>)
+            <%= report.confirmer.name %> (<%= report.confirmers_faction.full_name %>)
           <% elsif report.result > 0 %>
             <%= report.reporter.name %> (<%= report.reporters_faction.full_name %>)
           <% else %>

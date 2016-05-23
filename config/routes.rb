@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  resources :default_ladder_configs, only: [:edit, :update]
+
   devise_for :users
 
   resources :users do
@@ -6,7 +9,7 @@ Rails.application.routes.draw do
   end
 
   resources :games do
-    resources :ladders, only: :index
+    resources :ladders, only: [:index, :new, :create]
   end
 
   resources :scenarios do
@@ -14,13 +17,16 @@ Rails.application.routes.draw do
   end
 
   resources :ladders do
-    resources :scenarios, only: :index
+    resources :scenarios, only: [:index, :new, :create]
   end
 
   resources :reports
 
   get 'pages/home'
   get 'pages/about'
+
+  get 'pages/admin'
+
 
   get 'pages/access_denied'
 

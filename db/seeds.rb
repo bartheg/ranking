@@ -6,6 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+DefaultLadderConfig.create(default_ranking: 1500, loot_factor: 10, loot_constant: 10, disproportion_factor: 10, draw_factor: 50, hours_to_confirm: 49)
+
 languages = [
   # most used on the internet
   { iso_639_1: "en", english_name: "English" },  # id:  1
@@ -78,6 +80,7 @@ users = [
 ]
 
 Language.create(languages)
+
 User.create(users)
 
 profiles = [

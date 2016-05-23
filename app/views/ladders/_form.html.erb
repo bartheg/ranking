@@ -1,0 +1,34 @@
+<%= form_for([@game, @ladder]) do |f| %>
+
+  <% if @ladder.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ladder.errors.count, "error") %> prohibited this ladder from being saved:</h2>
+
+      <ul>
+        <% @ladder.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- <div class="form-group">
+    <%# f.label :game, "The game" %><br />
+    <%# f.collection_select(:game_id, Game.all, :id, :full_name, include_blank: true) %>
+  </div> -->
+  <!-- <%#f.hidden_field :task_id, :value => task.id%> -->
+  <div class="form-group">
+    <%= f.label :name %><br />
+    <%= f.text_field :name, autofocus: true, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :description %><br />
+    <%= f.text_area :description, class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit(class: "btn btn-primary") %>
+  </div>
+
+<% end %>

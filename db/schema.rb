@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20160504133911) do
+=======
+ActiveRecord::Schema.define(version: 20160522194131) do
+>>>>>>> develop
 
   create_table "confirmations", force: :cascade do |t|
     t.integer  "report_id"
@@ -24,7 +28,7 @@ ActiveRecord::Schema.define(version: 20160504133911) do
   add_index "confirmations", ["report_id"], name: "index_confirmations_on_report_id"
 
   create_table "default_ladder_configs", force: :cascade do |t|
-    t.integer  "average_rating"
+    t.integer  "default_ranking"
     t.integer  "loot_factor"
     t.integer  "loot_constant"
     t.integer  "disproportion_factor"
@@ -123,19 +127,18 @@ ActiveRecord::Schema.define(version: 20160504133911) do
   create_table "reports", force: :cascade do |t|
     t.integer  "scenario_id"
     t.integer  "reporter_id"
-    t.integer  "opponent_id"
+    t.integer  "confirmer_id"
     t.integer  "reporters_faction_id"
-    t.integer  "opponents_faction_id"
+    t.integer  "confirmers_faction_id"
     t.text     "message"
     t.integer  "result"
-    t.boolean  "status"
     t.boolean  "calculated"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
-  add_index "reports", ["opponent_id"], name: "index_reports_on_opponent_id"
-  add_index "reports", ["opponents_faction_id"], name: "index_reports_on_opponents_faction_id"
+  add_index "reports", ["confirmer_id"], name: "index_reports_on_confirmer_id"
+  add_index "reports", ["confirmers_faction_id"], name: "index_reports_on_confirmers_faction_id"
   add_index "reports", ["reporter_id"], name: "index_reports_on_reporter_id"
   add_index "reports", ["reporters_faction_id"], name: "index_reports_on_reporters_faction_id"
   add_index "reports", ["scenario_id"], name: "index_reports_on_scenario_id"

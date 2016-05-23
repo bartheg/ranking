@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  resources :default_ladder_configs, only: [:edit, :update]
+
   devise_for :users
 
   resources :users do
@@ -21,6 +24,9 @@ Rails.application.routes.draw do
 
   get 'pages/home'
   get 'pages/about'
+
+  get 'pages/admin'
+
 
   get 'pages/access_denied'
 

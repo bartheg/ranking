@@ -33,6 +33,7 @@
           <li role="presentation"><%= link_to 'Edit my current profile', '#' %></li>
           <li role="presentation" class=<%= "active" if current_page?(edit_user_registration_path) %>><%= link_to 'Edit my account', edit_user_registration_path %></li>
           <li role="presentation" class=<%= "active" if current_page?(new_profile_path) %>><%= link_to 'Create a new profile', new_profile_path %></li>
+          <li role="presentation"><%= link_to 'Admin options', pages_admin_path %></li>
           <li role="presentation"><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
         </ul>
       </li>

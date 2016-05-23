@@ -24,13 +24,8 @@ class ReportsController < ApplicationController
   def create
     @report = Report.new(report_params)
 
-<<<<<<< HEAD
-    @report.opponent = Profile.where(name: report_params[:opponents_name]).first
-    if report_params[:result_description] == 'I lost'
-=======
     @report.confirmer = Profile.where(name: report_params[:confirmers_name]).first
     if report_params[:result_description] = 'I lost'
->>>>>>> develop
       @report.result = -1
     elsif report_params == 'I won'
       @report.result = 1

@@ -1,0 +1,48 @@
+<%= form_for(@default_ladder_config) do |f| %>
+
+  <% if @default_ladder_config.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@default_ladder_config.errors.count, "error") %> prohibited this report from being saved:</h2>
+
+      <ul>
+        <% @default_ladder_config.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :default_ranking %><br />
+    <%= f.number_field :default_ranking, in: 1..10000, step: 1, autofocus: true, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :loot_factor %><br />
+    <%= f.number_field :loot_factor, in: 1..100, step: 1, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :loot_constant %><br />
+    <%= f.number_field :loot_constant, in: 1..100, step: 1, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :disproportion_factor %><br />
+    <%= f.number_field :disproportion_factor, in: 1..100, step: 1, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :draw_factor %><br />
+    <%= f.number_field :draw_factor, in: 1..100, step: 1, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :hours_to_confirm %><br />
+    <%= f.number_field :hours_to_confirm, in: 1..100, step: 1, class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit(class: "btn btn-primary") %>
+  </div>
+
+<% end %>

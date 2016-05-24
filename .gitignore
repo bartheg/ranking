@@ -8,7 +8,6 @@
 /vendor/bundle/
 /vendor/ruby/
 
-Gemfile.lock
 .ruby-version
 .rspec
 

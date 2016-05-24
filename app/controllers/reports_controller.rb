@@ -13,7 +13,6 @@ class ReportsController < ApplicationController
   end
 
 ### copyed
-
   def new
     @report = Report.new
     if params[:scenario_id]
@@ -28,9 +27,9 @@ class ReportsController < ApplicationController
     @report.confirmer = Profile.where(name: report_params[:confirmers_name]).first
     if report_params[:result_description] = 'I lost'
       @report.result = -1
-    elsif report_params = 'I won'
+    elsif report_params == 'I won'
       @report.result = 1
-    elsif report_params = 'Draw'
+    elsif report_params == 'Draw'
       @report.result = 0
     end
 

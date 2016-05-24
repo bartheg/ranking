@@ -1,6 +1,6 @@
-class CreateRatings < ActiveRecord::Migration
+class CreateRankings < ActiveRecord::Migration
   def change
-    create_table :ratings do |t|
+    create_table :rankings do |t|
       t.references :ladder, index: true, foreign_key: true
       t.references :profile, index: true, foreign_key: true
       t.integer :value

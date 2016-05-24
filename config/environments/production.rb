@@ -78,7 +78,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # MAYBE THIS WILL HELP
-  config.action_mailer.default_url_options = { host: "https://skill-tracker.herokuapp.com" }
+  config.action_mailer.default_url_options = { host: "https://young-fortress-73326.herokuapp.com" }
   # MAIL from tutorial https://rubyonrailshelp.wordpress.com/2014/01/02/setting-up-mailer-using-devise-for-forgot-password/
 
   config.action_mailer.delivery_method = :smtp

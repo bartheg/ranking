@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
 
-  before_action :get_profiles
+  before_action :get_profiles, :set_profile_color, :set_profile_name
 
   protect_from_forgery with: :exception
 
@@ -15,5 +15,22 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def set_profile_color
+    @profile_color = '#444444'
+    if current_user
+      if current_user.current_profile
+        @profile_color = current_user.current_profile.color
+      end
+    end
+  end
+
+  def set_profile_name
+    @profile_name = 'PROFILE_NOT_CREATED'
+    if current_user
+      if current_user.current_profile
+        @profile_name = current_user.current_profile.name
+      end
+    end
+  end
 
 end

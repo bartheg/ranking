@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160525131101) do
+ActiveRecord::Schema.define(version: 20160525134917) do
 
   create_table "confirmations", force: :cascade do |t|
     t.integer  "report_id"
@@ -119,6 +119,17 @@ ActiveRecord::Schema.define(version: 20160525131101) do
   add_index "rankings", ["ladder_id"], name: "index_rankings_on_ladder_id"
   add_index "rankings", ["profile_id"], name: "index_rankings_on_profile_id"
   add_index "rankings", ["report_id"], name: "index_rankings_on_report_id"
+
+  create_table "report_comments", force: :cascade do |t|
+    t.integer  "report_id"
+    t.integer  "profile_id"
+    t.text     "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "report_comments", ["profile_id"], name: "index_report_comments_on_profile_id"
+  add_index "report_comments", ["report_id"], name: "index_report_comments_on_report_id"
 
   create_table "reports", force: :cascade do |t|
     t.integer  "scenario_id"

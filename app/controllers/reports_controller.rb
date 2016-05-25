@@ -44,7 +44,7 @@ class ReportsController < ApplicationController
   private
 
   def report_params
-    params.require(:report).permit(:scenario_id, :reporter_id, :confirmers_name, :reporters_faction_id, :confirmers_faction_id, :result_description, :message)
+    params.require(:report).permit(:scenario_id, :reporter_id, :confirmers_name, :reporters_faction_id, :confirmers_faction_id, :result_description)
   end
 
 end

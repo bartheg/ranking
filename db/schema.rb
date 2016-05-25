@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20160504133911) do
-=======
-ActiveRecord::Schema.define(version: 20160522194131) do
->>>>>>> develop
+ActiveRecord::Schema.define(version: 20160525131101) do
 
   create_table "confirmations", force: :cascade do |t|
     t.integer  "report_id"
@@ -130,7 +126,6 @@ ActiveRecord::Schema.define(version: 20160522194131) do
     t.integer  "confirmer_id"
     t.integer  "reporters_faction_id"
     t.integer  "confirmers_faction_id"
-    t.text     "message"
     t.integer  "result"
     t.boolean  "calculated"
     t.datetime "created_at",            null: false
@@ -148,12 +143,14 @@ ActiveRecord::Schema.define(version: 20160522194131) do
     t.string   "short_name"
     t.text     "description"
     t.boolean  "mirror_matchups_allowed"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "ladder_id"
     t.string   "map_size"
     t.boolean  "map_random_generated"
-    t.integer  "ladder_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
+
+  add_index "scenarios", ["ladder_id"], name: "index_scenarios_on_ladder_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

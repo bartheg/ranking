@@ -11,17 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160525134917) do
-
-  create_table "confirmations", force: :cascade do |t|
-    t.integer  "report_id"
-    t.boolean  "agree"
-    t.text     "message"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "confirmations", ["report_id"], name: "index_confirmations_on_report_id"
+ActiveRecord::Schema.define(version: 20160526133409) do
 
   create_table "default_ladder_configs", force: :cascade do |t|
     t.integer  "default_ranking"

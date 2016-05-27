@@ -9,6 +9,13 @@ class Report < ActiveRecord::Base
 
   attr_accessor :confirmers_name, :result_description
 
+  validates :scenario_id, presence: true
+  validates :reporter_id, presence: true
+  validates :confirmer_id, presence: true
+  validates :reporters_faction_id, presence: true
+  validates :confirmers_faction_id, presence: true
+  validates :result, presence: true
+
 
   # COLOR_REGEX = /\A#([a-f]|[A-F]|[0-9]){3}(([a-f]|[A-F]|[0-9]){3})?\z/
   # validates :user_id, presence: true
@@ -18,7 +25,6 @@ class Report < ActiveRecord::Base
   # NAME_REGEX = /\A(\w|\.|-)+\z/
   # MUST_HAVE_LETTER_REGEX = /[a-zA-Z]+/
   # # validates :profile_id, presence: true
-  # validates :name, presence: true
   # validates :name, format: NAME_REGEX
   # validates :name, format: MUST_HAVE_LETTER_REGEX
   # validates :name, length: { maximum: 24, minimum: 3 }

@@ -5,6 +5,8 @@ class Profile < ActiveRecord::Base
   has_many :reports_as_reporter, class_name: 'Report', foreign_key: 'reporter_id'
   has_many :reports_as_confirmer, class_name: 'Report', foreign_key: 'confirmer_id'
 
+  has_many :report_comments
+
   # has_many :profile_name_edits
 
   before_save :make_default_if_there_are_not_any

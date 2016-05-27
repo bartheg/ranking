@@ -11,21 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20160504133911) do
-=======
-ActiveRecord::Schema.define(version: 20160522194131) do
->>>>>>> develop
-
-  create_table "confirmations", force: :cascade do |t|
-    t.integer  "report_id"
-    t.boolean  "agree"
-    t.text     "message"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "confirmations", ["report_id"], name: "index_confirmations_on_report_id"
+ActiveRecord::Schema.define(version: 20160526184747) do
 
   create_table "default_ladder_configs", force: :cascade do |t|
     t.integer  "default_ranking"
@@ -124,17 +110,28 @@ ActiveRecord::Schema.define(version: 20160522194131) do
   add_index "rankings", ["profile_id"], name: "index_rankings_on_profile_id"
   add_index "rankings", ["report_id"], name: "index_rankings_on_report_id"
 
+  create_table "report_comments", force: :cascade do |t|
+    t.integer  "report_id"
+    t.integer  "profile_id"
+    t.text     "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "report_comments", ["profile_id"], name: "index_report_comments_on_profile_id"
+  add_index "report_comments", ["report_id"], name: "index_report_comments_on_report_id"
+
   create_table "reports", force: :cascade do |t|
     t.integer  "scenario_id"
     t.integer  "reporter_id"
     t.integer  "confirmer_id"
     t.integer  "reporters_faction_id"
     t.integer  "confirmers_faction_id"
-    t.text     "message"
     t.integer  "result"
     t.boolean  "calculated"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.boolean  "confirmed"
   end
 
   add_index "reports", ["confirmer_id"], name: "index_reports_on_confirmer_id"
@@ -148,12 +145,14 @@ ActiveRecord::Schema.define(version: 20160522194131) do
     t.string   "short_name"
     t.text     "description"
     t.boolean  "mirror_matchups_allowed"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "ladder_id"
     t.string   "map_size"
     t.boolean  "map_random_generated"
-    t.integer  "ladder_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
+
+  add_index "scenarios", ["ladder_id"], name: "index_scenarios_on_ladder_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

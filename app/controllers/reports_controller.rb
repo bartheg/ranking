@@ -25,11 +25,11 @@ class ReportsController < ApplicationController
     @report = Report.new(report_params)
 
     @report.confirmer = Profile.where(name: report_params[:confirmers_name]).first
-    if report_params[:result_description] = 'I lost'
+    if report_params[:result_description] == 'I lost'
       @report.result = -1
-    elsif report_params == 'I won'
+    elsif report_params[:result_description] == 'I won'
       @report.result = 1
-    elsif report_params == 'Draw'
+    elsif report_params[:result_description] == 'Draw'
       @report.result = 0
     end
 
@@ -44,7 +44,7 @@ class ReportsController < ApplicationController
   private
 
   def report_params
-    params.require(:report).permit(:scenario_id, :reporter_id, :confirmers_name, :reporters_faction_id, :confirmers_faction_id, :result_description, :message)
+    params.require(:report).permit(:scenario_id, :reporter_id, :confirmers_name, :reporters_faction_id, :confirmers_faction_id, :result_description)
   end
 
 end

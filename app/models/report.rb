@@ -22,7 +22,8 @@ class Report < ActiveRecord::Base
   def profiles_are_from_different_users
     if reporter_id and confirmer_id
       if self.reporter.user_id == self.confirmer.user_id
-        self.errors.add(:confirmer, "profile belongs to you. Are you trying to cheat?")
+        # self.errors.add(:confirmer, "profile belongs to you. Are you trying to cheat?")
+        self.errors[:base] << "Your opponent's profile belongs to YOU!"
       end
     end
   end

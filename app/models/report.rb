@@ -21,7 +21,7 @@ class Report < ActiveRecord::Base
 
   def profiles_are_from_different_users
     if reporter_id and confirmer_id
-      if self.reporter.user_id == self.confirmer.user_id)
+      if self.reporter.user_id == self.confirmer.user_id
         self.errors.add(:confirmer, "profile belongs to you. Are you trying to cheat?")
       end
     end

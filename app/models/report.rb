@@ -16,18 +16,15 @@ class Report < ActiveRecord::Base
   validates :confirmers_faction_id, presence: true
   validates :result, presence: true
 
+  validate :profiles_are_from_different_users
 
-  # COLOR_REGEX = /\A#([a-f]|[A-F]|[0-9]){3}(([a-f]|[A-F]|[0-9]){3})?\z/
-  # validates :user_id, presence: true
-  # validates :color, format: COLOR_REGEX, allow_nil: true
-  #
-  #
-  # NAME_REGEX = /\A(\w|\.|-)+\z/
-  # MUST_HAVE_LETTER_REGEX = /[a-zA-Z]+/
-  # # validates :profile_id, presence: true
-  # validates :name, format: NAME_REGEX
-  # validates :name, format: MUST_HAVE_LETTER_REGEX
-  # validates :name, length: { maximum: 24, minimum: 3 }
 
+  def profiles_are_from_different_users
+    if reporter_id and confirmer_id
+      if self.reporter.user_id == self.confirmer.user_id)
+        self.errors.add(:confirmer, "profile belongs to you. Are you trying to cheat?")
+      end
+    end
+  end
 
 end

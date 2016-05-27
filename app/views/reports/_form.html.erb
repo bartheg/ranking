@@ -6,7 +6,11 @@
 
       <ul>
         <% @report.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+          <% if message == "Confirmer profile belongs to you. Are you trying to cheat?"%>
+            <li>Your opponent's profile belongs to YOU!</li>
+          <% else %>
+            <li><%= message %></li>
+          <% end %>
         <% end %>
       </ul>
     </div>

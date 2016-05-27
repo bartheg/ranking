@@ -3,7 +3,14 @@ require 'rails_helper'
 RSpec.describe Report, type: :model do
 
   describe 'validations' do
-    subject { Report.new(scenario_id: 1, reporter_id: 1, confirmer_id: 4,
+    before do
+      @user1 = User.create!(email:"qweasd@qwe.pl", password:'asdqwe123123')
+      @user2 = User.create!(email:"1212qweasd@qwe.pl", password:'wasdqwe123123')
+      @profile1 = Profile.create! user_id: @user1.id, name: "User1", description: "Some description", color: '#ffffff'
+      @profile2 = Profile.create! user_id: @user2.id, name: "User2", description: "Some description", color: '#111111'
+    end
+
+    subject { Report.new(scenario_id: 1, reporter_id: @profile1.id, confirmer_id: @profile2.id,
       reporters_faction_id: 1, confirmers_faction_id: 2,
       result: 1, calculated: false, confirmed: false) }
 
@@ -41,13 +48,13 @@ RSpec.describe Report, type: :model do
       expect(subject).to be_invalid
     end
 
-    # it 'is invalid when reporter and confirmer are the same user\'s profiles' do
-    #   user1 = User.create!(email:"qweasd@qwe.pl", password:'asdqwe123123')
-    #   profile1 = Profile.create! user_id: user1.id, name: "Cheater1", description: "Some description", color: '#ffffff'
-    #   profile2 = Profile.create! user_id: user1.id, name: "Cheater2", description: "Some description", color: '#111111'
-    #   report = Report.new(scenario_id: 1, reporter_id: profile1.id, confirmer_id: profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result: 1, calculated: false, confirmed: false)
-    #   expect(report).to be_invalid
-    # end
+    it 'is invalid when reporter and confirmer are the same user\'s profiles' do
+      user1 = User.create!(email:"q555weasd@qwe.pl", password:'asdqwe123123')
+      profile1 = Profile.create! user_id: user1.id, name: "Cheater1", description: "Some description", color: '#ffffff'
+      profile2 = Profile.create! user_id: user1.id, name: "Cheater2", description: "Some description", color: '#111111'
+      report = Report.new(scenario_id: 1, reporter_id: profile1.id, confirmer_id: profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result: 1, calculated: false, confirmed: false)
+      expect(report).to be_invalid
+    end
 
 
     #

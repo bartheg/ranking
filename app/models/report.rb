@@ -9,19 +9,23 @@ class Report < ActiveRecord::Base
 
   attr_accessor :confirmers_name, :result_description
 
+  validates :scenario_id, presence: true
+  validates :reporter_id, presence: {message: "Your name can't be blank"}
+  validates :confirmer_id, presence: {message: "Name of your opponent can't be blank"}
+  validates :reporters_faction_id, presence: {message: "Your faction can't be blank"}
+  validates :confirmers_faction_id, presence: {message: "Faction of your opponent can't be blank"}
+  validates :result, presence: true
 
-  # COLOR_REGEX = /\A#([a-f]|[A-F]|[0-9]){3}(([a-f]|[A-F]|[0-9]){3})?\z/
-  # validates :user_id, presence: true
-  # validates :color, format: COLOR_REGEX, allow_nil: true
-  #
-  #
-  # NAME_REGEX = /\A(\w|\.|-)+\z/
-  # MUST_HAVE_LETTER_REGEX = /[a-zA-Z]+/
-  # # validates :profile_id, presence: true
-  # validates :name, presence: true
-  # validates :name, format: NAME_REGEX
-  # validates :name, format: MUST_HAVE_LETTER_REGEX
-  # validates :name, length: { maximum: 24, minimum: 3 }
+  validate :profiles_are_from_different_users
 
+
+  def profiles_are_from_different_users
+    if reporter_id and confirmer_id
+      if self.reporter.user_id == self.confirmer.user_id
+        # self.errors.add(:confirmer, "profile belongs to you. Are you trying to cheat?")
+        self.errors[:base] << "Your opponent's profile belongs to YOU!"
+      end
+    end
+  end
 
 end

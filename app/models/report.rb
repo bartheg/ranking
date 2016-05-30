@@ -10,10 +10,10 @@ class Report < ActiveRecord::Base
   attr_accessor :confirmers_name, :result_description
 
   validates :scenario_id, presence: true
-  validates :reporter_id, presence: true
-  validates :confirmer_id, presence: true
-  validates :reporters_faction_id, presence: true
-  validates :confirmers_faction_id, presence: true
+  validates :reporter_id, presence: {message: "Your name can't be blank"}
+  validates :confirmer_id, presence: {message: "Name of your opponent can't be blank"}
+  validates :reporters_faction_id, presence: {message: "Your faction can't be blank"}
+  validates :confirmers_faction_id, presence: {message: "Faction of your opponent can't be blank"}
   validates :result, presence: true
 
   validate :profiles_are_from_different_users

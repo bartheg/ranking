@@ -88,7 +88,7 @@ RSpec.describe Report, type: :model do
 
     it 'returns the previous report if all conditions are ok' do
       first_scenario_report = Report.create!(scenario_id: 1, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result: 1, calculated: false, confirmed: false)
-      first_scenario_report.created_at = 40.hours.ago
+      first_scenario_report.created_at = 48.hours.ago
       first_scenario_report.save!
       subject = Report.new(scenario_id: 1, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result: -1, calculated: false, confirmed: false)
 
@@ -104,6 +104,55 @@ RSpec.describe Report, type: :model do
       expect(subject.original_report).to be_nil
     end
 
+    it 'returns nil if the profiles don\'t match' do
+      first_scenario_report = Report.create!(scenario_id: 1, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result: 1, calculated: false, confirmed: false)
+      first_scenario_report.created_at = 47.hours.ago
+      first_scenario_report.save!
+      subject = Report.new(scenario_id: 1, reporter_id: @profile1.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result: -1, calculated: false, confirmed: false)
+
+      expect(subject.original_report).to be_nil
+    end
+
+    it 'returns nil if the factions don\'t match' do
+      first_scenario_report = Report.create!(scenario_id: 1, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result: 1, calculated: false, confirmed: false)
+      first_scenario_report.created_at = 48.hours.ago
+      first_scenario_report.save!
+      subject = Report.new(scenario_id: 1, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 1, confirmers_faction_id: 1, result: -1, calculated: false, confirmed: false)
+
+      expect(subject.original_report).to be_nil
+    end
+
+    it 'returns nil if the results don\'t match' do
+      first_scenario_report = Report.create!(scenario_id: 1, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result: 1, calculated: false, confirmed: false)
+      first_scenario_report.created_at = 48.hours.ago
+      first_scenario_report.save!
+      subject = Report.new(scenario_id: 1, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result: 1, calculated: false, confirmed: false)
+
+      expect(subject.original_report).to be_nil
+    end
+
+    it 'returns the older report if there are more than one ok reports' do
+      first_scenario_report = Report.create!(scenario_id: 1, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result: 1, calculated: false, confirmed: false)
+      first_scenario_report.created_at = 48.hours.ago
+      first_scenario_report.save!
+
+      second_scenario_report = Report.create!(scenario_id: 1, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result: 1, calculated: false, confirmed: false)
+      second_scenario_report.created_at = 46.hours.ago
+      second_scenario_report.save!
+
+      subject = Report.new(scenario_id: 1, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result: -1, calculated: false, confirmed: false)
+
+      expect(subject.original_report).to eql first_scenario_report
+    end
+
+    it 'cheks if confirmed is false' do
+      first_scenario_report = Report.create!(scenario_id: 1, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result: 1, calculated: false, confirmed: true)
+      first_scenario_report.created_at = 48.hours.ago
+      first_scenario_report.save!
+      subject = Report.new(scenario_id: 1, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result: -1, calculated: false, confirmed: false)
+
+      expect(subject.original_report).to be_nil
+    end
 
   end
 

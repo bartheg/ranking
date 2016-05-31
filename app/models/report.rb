@@ -30,7 +30,17 @@ class Report < ActiveRecord::Base
 
   def original_report
     number_of_hours = DefaultLadderConfig.first.hours_to_confirm
-    Report.where(scenario_id: scenario_id).where("created_at > ?", number_of_hours.hours.ago).first
+    Report.where(confirmed: false).where(scenario_id: scenario_id).where("created_at > ?", number_of_hours.hours.ago).where({reporter_id: confirmer_id, confirmer_id: reporter_id}).where({reporters_faction_id: confirmers_faction_id, confirmers_faction_id: reporters_faction_id}).where(result: add_inv(result)).first
+  end
+
+  private
+
+  def add_inv(number)
+    if number > 0
+      return number - (2 * number)
+    else
+      return number.abs
+    end
   end
 
 end

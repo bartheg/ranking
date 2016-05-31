@@ -28,4 +28,9 @@ class Report < ActiveRecord::Base
     end
   end
 
+  def original_report
+    number_of_hours = DefaultLadderConfig.first.hours_to_confirm
+    Report.where(scenario_id: scenario_id).where("created_at > ?", number_of_hours.hours.ago).first
+  end
+
 end

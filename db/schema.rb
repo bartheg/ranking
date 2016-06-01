@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160526184747) do
+ActiveRecord::Schema.define(version: 20160601162658) do
 
   create_table "default_ladder_configs", force: :cascade do |t|
     t.integer  "default_ranking"
@@ -85,6 +85,16 @@ ActiveRecord::Schema.define(version: 20160526184747) do
 
   add_index "languages_profiles", ["language_id", "profile_id"], name: "index_languages_profiles_on_language_id_and_profile_id"
 
+  create_table "possible_results", force: :cascade do |t|
+    t.integer  "score_factor"
+    t.string   "description"
+    t.integer  "game_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "possible_results", ["game_id"], name: "index_possible_results_on_game_id"
+
   create_table "profiles", force: :cascade do |t|
     t.integer  "user_id"
     t.text     "description"
@@ -139,6 +149,24 @@ ActiveRecord::Schema.define(version: 20160526184747) do
   add_index "reports", ["reporter_id"], name: "index_reports_on_reporter_id"
   add_index "reports", ["reporters_faction_id"], name: "index_reports_on_reporters_faction_id"
   add_index "reports", ["scenario_id"], name: "index_reports_on_scenario_id"
+
+  create_table "result_sets", force: :cascade do |t|
+    t.integer  "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "result_sets", ["game_id"], name: "index_result_sets_on_game_id"
+
+  create_table "results", force: :cascade do |t|
+    t.integer  "score"
+    t.string   "description"
+    t.integer  "result_set_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "results", ["result_set_id"], name: "index_results_on_result_set_id"
 
   create_table "scenarios", force: :cascade do |t|
     t.string   "full_name"

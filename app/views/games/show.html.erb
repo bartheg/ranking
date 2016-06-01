@@ -1,2 +1,26 @@
 <h1><%= @game.full_name %></h1>
 <p><%= @game.description %></p>
+
+<h4>Possible results of the game:</h4>
+<% if !@results.empty? %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Description</th>
+        <th>Score factor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @results.each do |result| %>
+        <tr>
+          <td><%= result.id %></td>
+          <td><%= result.description %></td>
+          <td><%= result.score_factor %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No possible results. Please make some or it will be impossible to report any results.</p>
+<% end %>

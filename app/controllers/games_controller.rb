@@ -6,6 +6,7 @@ class GamesController < ApplicationController
   end
 
   def show
+    @results = @game.possible_results
   end
 
   def new

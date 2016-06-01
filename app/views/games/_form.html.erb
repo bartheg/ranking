@@ -32,6 +32,16 @@
     <%= f.label :simultaneous_turns %>
   </div>
 
+  <h3>Possible results</h3>
+  <div class="">
+    <%= f.fields_for :possible_results do |result| %>
+      <%= render 'possible_result_fields', f: result %>
+    <% end %>
+    <div class="links">
+      <%= link_to_add_association 'add result', f, :possible_results %>
+    </div>
+  </div>
+
   <div class="actions">
     <%= f.submit(class: "btn btn-primary") %>
   </div>

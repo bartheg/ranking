@@ -33,12 +33,27 @@ class ReportsController < ApplicationController
       @report.result = 0
     end
 
-# todo rest of parameters
-    if @report.save
-      redirect_to reports_path, notice: 'Report was successfully created.'
+    @original_report = @report.original_report
+    pry
+    if @original_report
+      @original_report.confirmed = true
+      if @original_report.save
+        redirect_to reports_path, notice: 'Report was successfully confirmed.'
+      else
+        render :new
+      end
     else
-      render :new
+
+      @report.confirmed = false
+      @report.calculated = false
+      if @report.save
+        redirect_to reports_path, notice: 'Report was successfully created.'
+      else
+        render :new
+      end
     end
+
+
   end
 
   private

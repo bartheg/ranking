@@ -10,6 +10,7 @@
       <th>Reporter</th>
       <th>Confirmer</th>
       <th>Winner</th>
+      <th>Status</th>
     </tr>
   </thead>
 
@@ -29,6 +30,15 @@
             <%= report.reporter.name %> (<%= report.reporters_faction.full_name %>)
           <% else %>
             draw
+          <% end %>
+        </td>
+        <td>
+          <% if report.confirmed %>
+            <% if report.calculated %>
+              Calculated
+            <% else %>
+              Confirmed
+            <% end %>
           <% end %>
         </td>
       </tr>

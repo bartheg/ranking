@@ -1,11 +1,13 @@
-<div class="nested-fields">
-  <div class="field">
-    <%= f.label :description %>
-    <%= f.text_field :description %>
-  </div>
-  <div class="field">
-    <%= f.label :score_factor %>
-    <%= f.number_field :score_factor %>
-  </div>
-  <%= link_to_remove_association "remove possible result", f %>
-</div>
+  <!-- <div class="row"> -->
+    <div class="panel panel-default col-xm-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="form-group">
+        <%= f.label :description %>
+        <%= f.text_field :description, class: 'form-control, input-control-sm' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :score_factor %>
+        <%= f.number_field :score_factor, class: 'form-control, input-control-sm' %>
+      </div>
+      <%= link_to_remove_association "Remove", f %>
+    </div>
+  <!-- </div> -->

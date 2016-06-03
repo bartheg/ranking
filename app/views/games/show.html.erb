@@ -9,6 +9,7 @@
         <th>ID</th>
         <th>Description</th>
         <th>Score factor</th>
+        <th>Edit</th>
       </tr>
     </thead>
     <tbody>
@@ -17,6 +18,8 @@
           <td><%= result.id %></td>
           <td><%= result.description %></td>
           <td><%= result.score_factor %></td>
+          <td><%= link_to "Edit", edit_possible_result_path(result) %></td>
+
         </tr>
       <% end %>
     </tbody>

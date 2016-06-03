@@ -22,6 +22,8 @@ Rails.application.routes.draw do
 
   resources :reports
 
+  resources :possible_results
+
   get 'pages/home'
   get 'pages/about'
 

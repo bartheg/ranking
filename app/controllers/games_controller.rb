@@ -6,10 +6,15 @@ class GamesController < ApplicationController
   end
 
   def show
+    @results = @game.possible_results
   end
 
   def new
     @game = Game.new
+    @game.description = "Type here something about the game."
+    @game.possible_results << PossibleResult.new(description: "Victory", score_factor: 100)
+    @game.possible_results << PossibleResult.new(description: "Defeat", score_factor: 0)
+    @game.possible_results << PossibleResult.new(description: "Draw", score_factor: 50)
   end
 
   def create
@@ -29,7 +34,7 @@ class GamesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def game_params
-    params.require(:game).permit(:full_name, :short_name, :description, :simultaneous_turns)
+    params.require(:game).permit(:full_name, :short_name, :description, :simultaneous_turns, possible_results_attributes: [:id, :description, :score_factor, :_destroy])
   end
 
 end

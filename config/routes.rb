@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   resources :games do
     resources :ladders, only: [:index, :new, :create]
+    resources :possible_results
+
   end
 
   resources :scenarios do
@@ -22,7 +24,6 @@ Rails.application.routes.draw do
 
   resources :reports, only: [:index, :edit, :update]
 
-  resources :possible_results
 
   get 'pages/home'
   get 'pages/about'

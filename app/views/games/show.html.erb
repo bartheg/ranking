@@ -18,7 +18,7 @@
           <td><%= result.id %></td>
           <td><%= result.description %></td>
           <td><%= result.score_factor %></td>
-          <td><%= link_to "Edit", edit_possible_result_path(result) %></td>
+          <td><%= link_to "Edit", edit_game_possible_result_path(game_id: @game, id: result) %></td>
 
         </tr>
       <% end %>

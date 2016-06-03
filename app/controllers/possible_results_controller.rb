@@ -1,6 +1,7 @@
 class PossibleResultsController < ApplicationController
 
   def edit
+    @game = Game.find(params[:game_id])
     @possible_result = PossibleResult.find(params[:id])
   end
 

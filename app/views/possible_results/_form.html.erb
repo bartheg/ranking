@@ -1,4 +1,4 @@
-<%= form_for(@possible_result) do |f| %>
+<%= form_for([@game, @possible_result]) do |f| %>
 
   <% if @possible_result.errors.any? %>
     <div id="error_explanation">

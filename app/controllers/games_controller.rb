@@ -11,6 +11,10 @@ class GamesController < ApplicationController
 
   def new
     @game = Game.new
+    @game.description = "Type here something about the game."
+    @game.possible_results << PossibleResult.new(description: "Victory", score_factor: 100)
+    @game.possible_results << PossibleResult.new(description: "Defeat", score_factor: 0)
+    @game.possible_results << PossibleResult.new(description: "Draw", score_factor: 50)
   end
 
   def create

@@ -4,4 +4,6 @@ class Game < ActiveRecord::Base
   has_many :factions
   has_many :possible_results
 
+  accepts_nested_attributes_for :possible_results, reject_if: :all_blank, allow_destroy: true
+
 end

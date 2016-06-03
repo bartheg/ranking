@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     resources :scenarios, only: [:index, :new, :create]
   end
 
-  resources :reports
+  resources :reports, only: [:index, :edit, :update]
 
   resources :possible_results
 

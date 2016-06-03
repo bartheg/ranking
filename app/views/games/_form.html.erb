@@ -33,15 +33,17 @@
   </div>
 
   <h3>Possible results</h3>
-  <div class="form-group">
+  <div class="">
     <%= f.fields_for :possible_results do |result| %>
       <%= render 'possible_result_fields', f: result %>
     <% end %>
+    <div class="links">
+      <%= link_to_add_association 'add result', f, :possible_results %>
+    </div>
   </div>
 
-  <div class="row">
-    <%= link_to_add_association 'Add a result', f, :possible_results, class: "btn btn-default" %>
-  </div>
+  <div class="actions">
     <%= f.submit(class: "btn btn-primary") %>
+  </div>
 
 <% end %>

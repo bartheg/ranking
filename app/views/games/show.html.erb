@@ -27,3 +27,6 @@
 <% else %>
   <p>No possible results. Please make some or it will be impossible to report any results.</p>
 <% end %>
+<% if user_signed_in? %>
+  <%= link_to 'Create a new possible result', new_game_possible_result_path(game_id: @game), class: "btn btn-danger" %>
+<% end %>

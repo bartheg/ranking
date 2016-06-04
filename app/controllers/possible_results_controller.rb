@@ -1,5 +1,22 @@
 class PossibleResultsController < ApplicationController
 
+  def new
+    @game = Game.find(params[:game_id].to_i)
+    @possible_result = PossibleResult.new
+    @possible_result.game = @game
+  end
+
+  def create
+    @game = Game.find(params[:game_id])
+    @possible_result = PossibleResult.new(possible_result_params)
+    @possible_result.game = @game
+    if @possible_result.save
+      redirect_to @game, notice: 'Possible result was successfully created.'
+    else
+      render :new
+    end
+  end
+
   def edit
     @game = Game.find(params[:game_id])
     @possible_result = PossibleResult.find(params[:id])

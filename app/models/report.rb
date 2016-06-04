@@ -37,8 +37,9 @@ class Report < ActiveRecord::Base
     puts "inv score"
     puts add_inv(result.score_factor)
     puts
-    r = Report.where(confirmed: false).where(scenario_id: scenario_id).where("created_at > ?", number_of_hours.hours.ago).where({reporter_id: confirmer_id, confirmer_id: reporter_id}).where({reporters_faction_id: confirmers_faction_id, confirmers_faction_id: reporters_faction_id}).where(result_id: add_inv(result.score_factor)).first
+    opposite_results = PossibleResult.where(game_id: scenario.ladder.game).where(score_factor: add_inv(result.score_factor))
 
+    Report.where(confirmed: false).where(scenario_id: scenario_id).where("created_at > ?", number_of_hours.hours.ago).where({reporter_id: confirmer_id, confirmer_id: reporter_id}).where({reporters_faction_id: confirmers_faction_id, confirmers_faction_id: reporters_faction_id}).where(result: opposite_results).first
   end
 
   private

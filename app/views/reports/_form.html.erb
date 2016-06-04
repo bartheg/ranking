@@ -1,4 +1,4 @@
-<%= form_for(@report) do |f| %>
+<%= form_for([@scenario, @report]) do |f| %>
 
   <% if @report.errors.any? %>
     <div id="error_explanation">
@@ -42,8 +42,10 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :result_description, "Result" %><br />
-    <%= f.collection_select(:result_description, [ 'I won', 'I lost', 'Draw'], :to_s, :to_s, include_blank: true) %>
+    <%= f.label :result %><br />
+    <% if @report.scenario.ladder.game %>
+      <%= f.collection_select(:result_id, @report.scenario.ladder.game.possible_results, :id, :description, include_blank: true) %>
+    <% end %>
   </div>
 
   <div class="actions">

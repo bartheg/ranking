@@ -1,0 +1,2 @@
+module PossibleResultsHelper
+end

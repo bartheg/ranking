@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160611171007) do
+ActiveRecord::Schema.define(version: 20160611172120) do
 
   create_table "default_ladder_configs", force: :cascade do |t|
     t.integer  "default_ranking"
@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(version: 20160611171007) do
     t.integer  "result_id"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.integer  "status"
   end
 
   add_index "reports", ["confirmer_id"], name: "index_reports_on_confirmer_id"

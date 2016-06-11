@@ -41,10 +41,12 @@
     </ul>
   </div>
 <% else %>
-  <ul class="nav nav-pills">
-    <li role="presentation" class="pull-right <%= "active" if current_page?(new_user_session_path) %>"><%= link_to 'Log in', new_user_session_path %></li>
-    <li role="presentation" class="pull-right <%= "active" if current_page?(new_user_registration_path) %>"><%= link_to 'Join', new_user_registration_path %></li>
-  </ul>
+  <div class="well well-sm profile-color">
+    <ul class="nav nav-pills">
+      <li role="presentation" class="pull-right <%= "active" if current_page?(new_user_session_path) %>"><%= link_to 'Log in', new_user_session_path%></li>
+      <li role="presentation" class="pull-right <%= "active" if current_page?(new_user_registration_path) %>"><%= link_to 'Join', new_user_registration_path%></li>
+    </ul>
+  </div>
 <% end %>
 
 <!--  TABS  -->

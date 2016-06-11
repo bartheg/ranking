@@ -3,4 +3,5 @@ class Ladder < ActiveRecord::Base
   has_many :scenarios
   has_many :rankings
   has_many :reports, through: :scenario
+  has_one :default_ladder_config
 end

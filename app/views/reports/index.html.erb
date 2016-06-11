@@ -24,22 +24,16 @@
         <td><%= report.reporter.name %> (<%= report.reporters_faction.full_name %>)</td>
         <td><%= report.confirmer.name %> (<%= report.confirmers_faction.full_name %>)</td>
         <td>
-          <% if report.result < 0 %>
+          <% if report.result.score_factor < 50 %>
             <%= report.confirmer.name %> (<%= report.confirmers_faction.full_name %>)
-          <% elsif report.result > 0 %>
+          <% elsif report.result.score_factor > 50 %>
             <%= report.reporter.name %> (<%= report.reporters_faction.full_name %>)
           <% else %>
             draw
           <% end %>
         </td>
         <td>
-          <% if report.confirmed %>
-            <% if report.calculated %>
-              Calculated
-            <% else %>
-              Confirmed
-            <% end %>
-          <% end %>
+          <%= report.status %>
         </td>
       </tr>
     <% end %>

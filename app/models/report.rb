@@ -8,14 +8,16 @@ class Report < ActiveRecord::Base
   has_many :report_comments
   belongs_to :result, foreign_key: 'result_id', class_name: 'PossibleResult'
 
-  attr_accessor :confirmers_name, :result_description
+  attr_accessor :confirmers_name
+
+  enum status: { unconfirmed: 0, confirmed: 1, calculated: 2 }
 
   validates :scenario_id, presence: true
   validates :reporter_id, presence: {message: "Your name can't be blank"}
   validates :confirmer_id, presence: {message: "Name of your opponent can't be blank"}
   validates :reporters_faction_id, presence: {message: "Your faction can't be blank"}
   validates :confirmers_faction_id, presence: {message: "Faction of your opponent can't be blank"}
-  validates :result, presence: true
+  validates :result_id, presence: true
 
   validate :profiles_are_from_different_users
 
@@ -31,17 +33,16 @@ class Report < ActiveRecord::Base
 
   def original_report
     number_of_hours = DefaultLadderConfig.first.hours_to_confirm
-    Report.where(confirmed: false).where(scenario_id: scenario_id).where("created_at > ?", number_of_hours.hours.ago).where({reporter_id: confirmer_id, confirmer_id: reporter_id}).where({reporters_faction_id: confirmers_faction_id, confirmers_faction_id: reporters_faction_id}).where(result: add_inv(result)).first
+    opposite_results = PossibleResult.where(game_id: scenario.ladder.game).where(score_factor: add_inv(result.score_factor))
+
+    Report.where(status: "unconfirmed").where(scenario_id: scenario_id).where("created_at > ?", number_of_hours.hours.ago).where({reporter_id: confirmer_id, confirmer_id: reporter_id}).where({reporters_faction_id: confirmers_faction_id, confirmers_faction_id: reporters_faction_id}).where(result: opposite_results).first
   end
 
   private
 
   def add_inv(number)
-    if number > 0
-      return number - (2 * number)
-    else
-      return number.abs
-    end
+    hundred_percent = 100
+    hundred_percent - number
   end
 
 end

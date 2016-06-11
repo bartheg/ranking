@@ -31,15 +31,13 @@ class ReportsController < ApplicationController
     @original_report = @report.original_report
 
     if @original_report
-      @original_report.confirmed = true
+      @original_report.status = "confirmed"
       if @original_report.save
         redirect_to reports_path, notice: 'Report was successfully confirmed.'
       else
         render :new
       end
     else
-      @report.confirmed = false
-      @report.calculated = false
       if @report.save
         redirect_to reports_path, notice: 'Report was successfully created.'
       else

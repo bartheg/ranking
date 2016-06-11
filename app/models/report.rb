@@ -10,6 +10,8 @@ class Report < ActiveRecord::Base
 
   attr_accessor :confirmers_name
 
+  enum status: { unconfirmed: 0, confirmed: 1, calculated: 2 }
+
   validates :scenario_id, presence: true
   validates :reporter_id, presence: {message: "Your name can't be blank"}
   validates :confirmer_id, presence: {message: "Name of your opponent can't be blank"}
@@ -39,7 +41,7 @@ class Report < ActiveRecord::Base
     puts
     opposite_results = PossibleResult.where(game_id: scenario.ladder.game).where(score_factor: add_inv(result.score_factor))
 
-    Report.where(confirmed: false).where(scenario_id: scenario_id).where("created_at > ?", number_of_hours.hours.ago).where({reporter_id: confirmer_id, confirmer_id: reporter_id}).where({reporters_faction_id: confirmers_faction_id, confirmers_faction_id: reporters_faction_id}).where(result: opposite_results).first
+    Report.where(status: "unconfirmed").where(scenario_id: scenario_id).where("created_at > ?", number_of_hours.hours.ago).where({reporter_id: confirmer_id, confirmer_id: reporter_id}).where({reporters_faction_id: confirmers_faction_id, confirmers_faction_id: reporters_faction_id}).where(result: opposite_results).first
   end
 
   private

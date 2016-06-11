@@ -33,13 +33,7 @@
           <% end %>
         </td>
         <td>
-          <% if report.confirmed %>
-            <% if report.calculated %>
-              Calculated
-            <% else %>
-              Confirmed
-            <% end %>
-          <% end %>
+          <%= report.status %>
         </td>
       </tr>
     <% end %>

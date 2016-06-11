@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160611202556) do
+ActiveRecord::Schema.define(version: 20160611210530) do
 
   create_table "default_ladder_configs", force: :cascade do |t|
     t.integer  "default_ranking"
@@ -23,7 +23,10 @@ ActiveRecord::Schema.define(version: 20160611202556) do
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.boolean  "is_default",           default: false, null: false
+    t.integer  "ladder_id"
   end
+
+  add_index "default_ladder_configs", ["ladder_id"], name: "index_default_ladder_configs_on_ladder_id", unique: true
 
   create_table "faction_to_scenario_assignments", force: :cascade do |t|
     t.integer  "faction_id"

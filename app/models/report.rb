@@ -33,12 +33,6 @@ class Report < ActiveRecord::Base
 
   def original_report
     number_of_hours = DefaultLadderConfig.first.hours_to_confirm
-    puts
-    puts "score"
-    puts result.score_factor
-    puts "inv score"
-    puts add_inv(result.score_factor)
-    puts
     opposite_results = PossibleResult.where(game_id: scenario.ladder.game).where(score_factor: add_inv(result.score_factor))
 
     Report.where(status: "unconfirmed").where(scenario_id: scenario_id).where("created_at > ?", number_of_hours.hours.ago).where({reporter_id: confirmer_id, confirmer_id: reporter_id}).where({reporters_faction_id: confirmers_faction_id, confirmers_faction_id: reporters_faction_id}).where(result: opposite_results).first

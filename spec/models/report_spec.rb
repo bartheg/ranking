@@ -92,22 +92,30 @@ RSpec.describe Report, type: :model do
       @user2 = User.create!(email:"1212qweasd@qwe.pl", password:'wasdqwe123123')
       @profile1 = Profile.create! user_id: @user1.id, name: "Profile1", description: "Some description", color: '#ffffff'
       @profile2 = Profile.create! user_id: @user2.id, name: "Profile2", description: "Some description", color: '#ffffff'
-      @config = DefaultLadderConfig.create!(default_ranking: 1500, loot_factor: 10, loot_constant: 10, disproportion_factor: 10, draw_factor: 50, hours_to_confirm: 49)
+      @config = DefaultLadderConfig.create!(default_ranking: 1500, loot_factor: 10, loot_constant: 10, disproportion_factor: 10, draw_factor: 50, hours_to_confirm: 49, ladder_id: @ladder.id)
     end
 
     after(:context) do
-      @config.destroy
-      @profile1.destroy
-      @profile2.destroy
-      @user1.destroy
-      @user2.destroy
-      @victory.destroy
-      @defeat.destroy
-      @draw.destroy
-      @scenario1.destroy
-      @scenario2.destroy
-      @ladder.destroy
-      @game.destroy
+      @config.destroy if @config
+      @profile1.destroy if @profile1
+      @profile2.destroy if @profile2
+      @user1.destroy if @user1
+      @user2.destroy if @user2
+      @victory.destroy if @victory
+      @defeat.destroy if @defeat
+      @draw.destroy if @draw
+      @scenario1.destroy if @scenario1
+      @scenario2.destroy if @scenario2
+      @ladder.destroy if @ladder
+      @game.destroy if @game
+      # DefaultLadderConfig.destroy_all
+      # Profile.destroy_all
+      # User.destroy_all
+      # PossibleResult.destroy_all
+      # Scenario.destroy_all
+      # Ladder.destroy_all
+      # Game.destroy_all
+
     end
 
     it 'returns nil if the scenarios are different' do

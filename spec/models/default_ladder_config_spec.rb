@@ -29,6 +29,30 @@ RSpec.describe DefaultLadderConfig, type: :model do
       expect(subject).to be_invalid
     end
 
+    it 'is valid when is_default is not set' do
+      config = DefaultLadderConfig.new(
+       default_ranking: 1500,
+       loot_factor: 10,
+       loot_constant: 5,
+       disproportion_factor: 50,
+       draw_factor: 50,
+       hours_to_confirm: 48,
+       ladder_id: 1)
+      expect(config).to be_valid
+    end
+
+    it 'is invalid when is_default is true and ladder_id is not nil' do
+      subject.is_default = true
+      subject.ladder_id = 1
+      expect(subject).to be_invalid
+    end
+
+    it 'is invalid when is_default is false and ladder_id is nil' do
+      subject.is_default = false
+      subject.ladder_id = nil
+      expect(subject).to be_invalid
+    end
+
 
   end
 

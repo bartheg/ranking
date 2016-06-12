@@ -6,11 +6,20 @@ class DefaultLadderConfig < ActiveRecord::Base
 
   validate :invalid_when_is_default_and_has_ladder_id
   validate :invalid_when_is_not_default_and_without_ladder_id
+  validate :invalid_with_not_existing_ladder_id
 
 
 
 
   private
+
+  def invalid_with_not_existing_ladder_id
+    if ladder_id
+      unless ladder
+        self.errors[:base] << "The given ladder does not exist"
+      end
+    end
+  end
 
   def invalid_when_is_not_default_and_without_ladder_id
     if !is_default and !ladder_id

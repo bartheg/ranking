@@ -61,6 +61,14 @@ RSpec.describe DefaultLadderConfig, type: :model do
       expect(subject).to be_invalid
     end
 
+    it 'is invalid when ladder is not in the base' do
+      @not_existing_ladder = Ladder.create!(name: "Useless", description: "I will be deleted.", game_id: 1)
+      subject.is_default = false
+      subject.ladder_id = @not_existing_ladder.id
+      @not_existing_ladder.destroy
+      expect(subject).to be_invalid
+    end
+
 
   end
 

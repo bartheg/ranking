@@ -19,6 +19,17 @@ RSpec.describe DefaultLadderConfig, type: :model do
       expect(subject).to be_valid
     end
 
+    it 'is invalid without default_ranking' do
+      subject.default_ranking = nil
+      expect(subject).to be_invalid
+    end
+
+    it 'is invalid without hours_to_confirm' do
+      subject.hours_to_confirm = nil
+      expect(subject).to be_invalid
+    end
+
+
   end
 
 end

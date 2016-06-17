@@ -153,37 +153,17 @@ ActiveRecord::Schema.define(version: 20160617174243) do
   add_index "reports", ["reporters_faction_id"], name: "index_reports_on_reporters_faction_id"
   add_index "reports", ["scenario_id"], name: "index_reports_on_scenario_id"
 
-  create_table "result_sets", force: :cascade do |t|
-    t.integer  "game_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "result_sets", ["game_id"], name: "index_result_sets_on_game_id"
-
-  create_table "results", force: :cascade do |t|
-    t.integer  "score"
-    t.string   "description"
-    t.integer  "result_set_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
-
-  add_index "results", ["result_set_id"], name: "index_results_on_result_set_id"
-
   create_table "scenarios", force: :cascade do |t|
     t.string   "full_name"
     t.string   "short_name"
     t.text     "description"
     t.boolean  "mirror_matchups_allowed"
-    t.integer  "ladder_id"
-    t.string   "map_size"
-    t.boolean  "map_random_generated"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.string   "map_size"
+    t.boolean  "map_random_generated"
+    t.integer  "ladder_id"
   end
-
-  add_index "scenarios", ["ladder_id"], name: "index_scenarios_on_ladder_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

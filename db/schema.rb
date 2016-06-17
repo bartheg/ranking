@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160617171101) do
+ActiveRecord::Schema.define(version: 20160617174243) do
 
   create_table "default_ladder_configs", force: :cascade do |t|
     t.integer  "default_ranking"
     t.integer  "max_distance_between_players"
-    t.integer  "loot_constant"
+    t.integer  "min_points_to_gain"
     t.integer  "disproportion_factor"
     t.integer  "unexpected_result_bonus"
     t.integer  "hours_to_confirm"

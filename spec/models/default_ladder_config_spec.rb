@@ -15,7 +15,7 @@ RSpec.describe DefaultLadderConfig, type: :model do
     subject { DefaultLadderConfig.new(
       default_ranking: 1500,
       max_distance_between_players: 10,
-      loot_constant: 5,
+      min_points_to_gain: 5,
       disproportion_factor: 50,
       unexpected_result_bonus: 50,
       hours_to_confirm: 48,
@@ -41,7 +41,7 @@ RSpec.describe DefaultLadderConfig, type: :model do
       config = DefaultLadderConfig.new(
        default_ranking: 1500,
        max_distance_between_players: 10,
-       loot_constant: 5,
+       min_points_to_gain: 5,
        disproportion_factor: 50,
        unexpected_result_bonus: 50,
        hours_to_confirm: 48,

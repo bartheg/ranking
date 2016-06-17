@@ -108,6 +108,9 @@ Game.create(full_name: 'The Battle for Wesnoth',
             description: 'The Battle for Wesnoth is a Free, turn-based tactical strategy game with a high fantasy theme, featuring both single-player, and online/hotseat multiplayer combat. More on www.wesnoth.org',
             simultaneous_turns: false)
 
+PossibleResult.create(game_id: 1, score_factor: 100, description: "Well-deserved Victory!")
+PossibleResult.create(game_id: 1, score_factor: 0, description: "Unlucky Defeat")
+
 # ladder id 1
 Ladder.create(name: 'Wesnoth Blitz Test Ladder',
             description: 'This is fake Ladder. All results are fake here',
@@ -229,6 +232,12 @@ Game.create(full_name: 'Field of Glory',
             short_name: 'FoG',
             description: 'Field of Glory is an approachable and fun wargame system for your PC that covers the ancient and medieval worlds.',
             simultaneous_turns: false)
+
+PossibleResult.create(game_id: 2, score_factor: 100, description: "Decisive Victory!")
+PossibleResult.create(game_id: 2, score_factor: 75, description: "Marginal Victory")
+PossibleResult.create(game_id: 2, score_factor: 50, description: "Draw")
+PossibleResult.create(game_id: 2, score_factor: 25, description: "Marginal Defeat")
+PossibleResult.create(game_id: 2, score_factor: 0, description: "Decisive Defeat")
 
 # ladder id 2
 Ladder.create(name: 'FoG Test Ladder 500 points',

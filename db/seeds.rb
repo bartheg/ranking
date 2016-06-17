@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-DefaultLadderConfig.create(default_ranking: 1500, loot_factor: 10, loot_constant: 10, disproportion_factor: 10, unexpected_result_bonus: 50, hours_to_confirm: 49)
+DefaultLadderConfig.create(default_ranking: 1500, max_distance_between_players: 10, loot_constant: 10, disproportion_factor: 10, unexpected_result_bonus: 50, hours_to_confirm: 49)
 
 languages = [
   # most used on the internet

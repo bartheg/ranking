@@ -14,7 +14,7 @@ RSpec.describe DefaultLadderConfig, type: :model do
 
     subject { DefaultLadderConfig.new(
       default_ranking: 1500,
-      loot_factor: 10,
+      max_distance_between_players: 10,
       loot_constant: 5,
       disproportion_factor: 50,
       unexpected_result_bonus: 50,
@@ -40,7 +40,7 @@ RSpec.describe DefaultLadderConfig, type: :model do
     it 'is valid when is_default is not set' do
       config = DefaultLadderConfig.new(
        default_ranking: 1500,
-       loot_factor: 10,
+       max_distance_between_players: 10,
        loot_constant: 5,
        disproportion_factor: 50,
        unexpected_result_bonus: 50,

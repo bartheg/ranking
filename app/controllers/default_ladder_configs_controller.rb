@@ -19,7 +19,7 @@ class DefaultLadderConfigsController < ApplicationController
   private
 
   def default_ladder_config_params
-    params.require(:default_ladder_config).permit(:default_ranking, :loot_factor,
+    params.require(:default_ladder_config).permit(:default_ranking, :max_distance_between_players,
       :loot_constant, :disproportion_factor, :unexpected_result_bonus, :hours_to_confirm)
   end
 

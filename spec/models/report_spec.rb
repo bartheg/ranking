@@ -92,7 +92,7 @@ RSpec.describe Report, type: :model do
       @user2 = User.create!(email:"1212qweasd@qwe.pl", password:'wasdqwe123123')
       @profile1 = Profile.create! user_id: @user1.id, name: "Profile1", description: "Some description", color: '#ffffff'
       @profile2 = Profile.create! user_id: @user2.id, name: "Profile2", description: "Some description", color: '#ffffff'
-      @config = DefaultLadderConfig.create!(default_ranking: 1500, loot_factor: 10, loot_constant: 10, disproportion_factor: 10, draw_factor: 50, hours_to_confirm: 49, ladder_id: @ladder.id)
+      @config = DefaultLadderConfig.create!(default_ranking: 1500, loot_factor: 10, loot_constant: 10, disproportion_factor: 10, unexpected_result_bonus: 50, hours_to_confirm: 49, ladder_id: @ladder.id)
     end
 
     after(:context) do

@@ -11,18 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160611210530) do
+ActiveRecord::Schema.define(version: 20160617165306) do
 
   create_table "default_ladder_configs", force: :cascade do |t|
     t.integer  "default_ranking"
     t.integer  "loot_factor"
     t.integer  "loot_constant"
     t.integer  "disproportion_factor"
-    t.integer  "draw_factor"
+    t.integer  "unexpected_result_bonus"
     t.integer  "hours_to_confirm"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.boolean  "is_default",           default: false, null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.boolean  "is_default",              default: false, null: false
     t.integer  "ladder_id"
   end
 

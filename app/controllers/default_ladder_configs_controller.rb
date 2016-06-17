@@ -20,7 +20,7 @@ class DefaultLadderConfigsController < ApplicationController
 
   def default_ladder_config_params
     params.require(:default_ladder_config).permit(:default_ranking, :loot_factor,
-      :loot_constant, :disproportion_factor, :draw_factor, :hours_to_confirm)
+      :loot_constant, :disproportion_factor, :unexpected_result_bonus, :hours_to_confirm)
   end
 
 end

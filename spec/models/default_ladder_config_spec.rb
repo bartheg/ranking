@@ -17,7 +17,7 @@ RSpec.describe DefaultLadderConfig, type: :model do
       loot_factor: 10,
       loot_constant: 5,
       disproportion_factor: 50,
-      draw_factor: 50,
+      unexpected_result_bonus: 50,
       hours_to_confirm: 48,
       is_default: false,
       ladder_id: @ladder.id)
@@ -43,7 +43,7 @@ RSpec.describe DefaultLadderConfig, type: :model do
        loot_factor: 10,
        loot_constant: 5,
        disproportion_factor: 50,
-       draw_factor: 50,
+       unexpected_result_bonus: 50,
        hours_to_confirm: 48,
        ladder_id: @ladder.id)
       expect(config).to be_valid

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
   resources :ladders do
     resources :scenarios, only: [:index, :new, :create]
+    resources :rankings, only: [:index]
   end
 
   resources :reports, only: [:index, :edit, :update]

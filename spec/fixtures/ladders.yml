@@ -1,0 +1,9 @@
+wesnoth_ladder:
+  name: 'Wesnoth Test Ladder'
+  description: 'This is fake Ladder. All results are fake here'
+  game: wesnoth
+
+wesnoth_ladder_blitz:
+  name: 'Wesnoth Blitz Test Ladder'
+  description: 'This is fake Blitz Ladder. All results are fake here'
+  game: wesnoth

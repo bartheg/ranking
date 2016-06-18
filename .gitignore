@@ -13,6 +13,7 @@
 
 README.rdoc
 mind_map.vym
+App.xmind
 
 # Ignore the default SQLite database.
 /db/*.sqlite3

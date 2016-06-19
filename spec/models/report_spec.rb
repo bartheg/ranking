@@ -58,7 +58,6 @@ RSpec.describe Report, type: :model do
 
   end
 
-
   describe '#original_report' do
 
     before(:context) do
@@ -195,6 +194,40 @@ RSpec.describe Report, type: :model do
       subject = Report.new(scenario_id: @scenario1.id, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result_id: @defeat.id, status: "unconfirmed")
 
       expect(subject.original_report).to be_nil
+    end
+
+  end
+
+  describe '#previous' do
+    before(:context) {
+      create :fog
+    }
+
+    after(:context) {
+      Game.destroy_all
+    }
+
+    it 'returns only previous report for that player' do
+      # profile1 = double("Fake profile 1")
+      # # profile1 = Profile.create! user_id: 1, name: "Profile1", description: "Some description", color: '#feffff'
+      # profile2 = double("Fake profile 2")
+      # # profile2 = Profile.create! user_id: 2, name: "Profile2", description: "Some description", color: '#ffffff'
+      # allow(profile1).to receive(:id) {1}
+      # allow(profile1).to receive(:user_id) {1}
+      # allow(profile1).to receive(:make_default_if_there_are_not_any)
+      # allow(profile2).to receive(:id) {2}
+      # allow(profile1).to receive(:user_id) {2}
+      # # allow(profile2).to receive(:make_default_if_there_are_not_any)
+      # firts_report = Report.create!(scenario_id: 1, reporter_id: profile1.id, confirmer_id: profile2.id,
+      #   reporters_faction_id: 1, confirmers_faction_id: 2,
+      #   result_id: 1, status: "unconfirmed")
+      # subject = Report.create!(scenario_id: 1, reporter_id: profile1.id, confirmer_id: profile2.id,
+      #   reporters_faction_id: 1, confirmers_faction_id: 2,
+      #   result_id: 1, status: "unconfirmed")
+      # allow(subject).to receive(:profiles_are_from_different_users) {}
+      game = create :wesnoth
+      expect(Game.all.size).to eq 2
+
     end
 
   end

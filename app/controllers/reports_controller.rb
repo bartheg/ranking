@@ -25,26 +25,42 @@ class ReportsController < ApplicationController
   def create
     @report = Report.new(report_params)
     @scenario = Scenario.find(report_params[:scenario_id])
-
     @report.confirmer = Profile.where(name: report_params[:confirmers_name]).first
 
-    @original_report = @report.original_report
+    # new code
 
-    if @original_report
-      @original_report.status = "confirmed"
-      if @original_report.save
-        redirect_to reports_path, notice: 'Report was successfully confirmed.'
-      else
-        render :new
-      end
-    else
+    @report.handle_possible_confirmation
+
+    unless @report.was_just_confirmation?
       if @report.save
         redirect_to reports_path, notice: 'Report was successfully created.'
       else
         render :new
       end
+    else
+      redirect_to reports_path, notice: 'Report was successfully confirmed.'
     end
 
+    # end of new code
+
+    #original code
+    # @original_report = @report.original_report
+    #
+    # if @original_report
+    #   @original_report.status = "confirmed"
+    #   if @original_report.save
+    #     redirect_to reports_path, notice: 'Report was successfully confirmed.'
+    #   else
+    #     render :new
+    #   end
+    # else
+    #   if @report.save
+    #     redirect_to reports_path, notice: 'Report was successfully created.'
+    #   else
+    #     render :new
+    #   end
+    # end
+    # end of original code
 
   end
 

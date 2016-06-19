@@ -21,7 +21,6 @@ class Report < ActiveRecord::Base
 
   validate :profiles_are_from_different_users
 
-
   def profiles_are_from_different_users
     if reporter_id and confirmer_id
       if self.reporter.user_id == self.confirmer.user_id
@@ -31,11 +30,8 @@ class Report < ActiveRecord::Base
     end
   end
 
-  def original_report
-    number_of_hours = DefaultLadderConfig.first.hours_to_confirm
-    opposite_results = PossibleResult.where(game_id: scenario.ladder.game).where(score_factor: add_inv(result.score_factor))
+  def handle_possible_confirmation
 
-    Report.where(status: "unconfirmed").where(scenario_id: scenario_id).where("created_at > ?", number_of_hours.hours.ago).where({reporter_id: confirmer_id, confirmer_id: reporter_id}).where({reporters_faction_id: confirmers_faction_id, confirmers_faction_id: reporters_faction_id}).where(result: opposite_results).first
   end
 
   def previous(player)
@@ -43,6 +39,13 @@ class Report < ActiveRecord::Base
   end
 
   private
+
+  def original_report
+    number_of_hours = DefaultLadderConfig.first.hours_to_confirm
+    opposite_results = PossibleResult.where(game_id: scenario.ladder.game).where(score_factor: add_inv(result.score_factor))
+
+    Report.where(status: "unconfirmed").where(scenario_id: scenario_id).where("created_at > ?", number_of_hours.hours.ago).where({reporter_id: confirmer_id, confirmer_id: reporter_id}).where({reporters_faction_id: confirmers_faction_id, confirmers_faction_id: reporters_faction_id}).where(result: opposite_results).first
+  end
 
   def add_inv(number)
     hundred_percent = 100

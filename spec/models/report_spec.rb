@@ -203,6 +203,42 @@ RSpec.describe Report, type: :model do
       expect(subject.previous(@profile1)).to eql firts_report
     end
 
+    it 'returns only previous report for that player even if the player is confirmer' do
+      firts_report = Report.create!(scenario: @scenario1, reporter: @profile1, confirmer: @profile2,
+        reporters_faction_id: 1, confirmers_faction_id: 2,
+        result: @victory, status: "unconfirmed")
+      subject = Report.create!(scenario: @scenario1, reporter: @profile1, confirmer: @profile2,
+        reporters_faction_id: 1, confirmers_faction_id: 2,
+        result: @victory, status: "unconfirmed")
+      expect(subject.previous(@profile2)).to eql firts_report
+    end
+
+    it 'returns only previous report for that player and ignores reports for another scenarios' do
+      another_scenario_report = Report.create!(scenario: @scenario2, reporter: @profile1, confirmer: @profile2,
+        reporters_faction_id: 1, confirmers_faction_id: 2,
+        result: @victory, status: "unconfirmed")
+      previous_report = Report.create!(scenario: @scenario1, reporter: @profile1, confirmer: @profile2,
+        reporters_faction_id: 1, confirmers_faction_id: 2,
+        result: @victory, status: "unconfirmed")
+      yet_another_another_scenario_report = Report.create!(scenario: @scenario2,
+        reporter: @profile1, confirmer: @profile2, reporters_faction_id: 1, confirmers_faction_id: 2,
+        result: @victory, status: "unconfirmed")
+      subject = Report.create!(scenario: @scenario1, reporter: @profile1, confirmer: @profile2,
+        reporters_faction_id: 1, confirmers_faction_id: 2,
+        result: @victory, status: "unconfirmed")
+      expect(subject.previous(@profile1)).to eql previous_report
+    end
+
+    it 'returns nil if no previous reports' do
+      subject = Report.create!(scenario: @scenario1, reporter: @profile1, confirmer: @profile2,
+        reporters_faction_id: 1, confirmers_faction_id: 2,
+        result: @victory, status: "unconfirmed")
+      next_report = Report.create!(scenario: @scenario1, reporter: @profile1, confirmer: @profile2,
+        reporters_faction_id: 1, confirmers_faction_id: 2,
+        result: @victory, status: "unconfirmed")
+      expect(subject.previous(@profile1)).to be_nil
+    end
+
   end
 
 end

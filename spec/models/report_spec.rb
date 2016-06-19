@@ -61,60 +61,28 @@ RSpec.describe Report, type: :model do
   describe '#original_report' do
 
     before(:context) do
-      @game = Game.create!(full_name: 'The Battle for Wesnoth',
-                  short_name: 'Wesnoth',
-                  description: 'The Battle for Wesnoth is a Free, turn-based tactical strategy game with a high fantasy theme, featuring both single-player, and online/hotseat multiplayer combat. More on www.wesnoth.org',
-                  simultaneous_turns: false)
-      @ladder = Ladder.create!(name: 'Wesnoth Blitz Test Ladder',
-                  description: 'This is fake Ladder. All results are fake here',
-                  game_id: @game.id)
-      @scenario1 = Scenario.create!(full_name: 'The Freelands',
-                      short_name: 'The Freelands',
-                      description: 'The Freelands is a map with three ways to the enemy castle.',
-                      mirror_matchups_allowed: true,
-                      ladder_id: @ladder.id,
-                      map_size: nil,
-                      map_random_generated: false)
-      @scenario2 = Scenario.create!(full_name: 'Caves of the Basilisk',
-                      short_name: 'Caves of the Basilisk',
-                      description: 'Caves of the Basilisk is a map.',
-                      mirror_matchups_allowed: true,
-                      ladder_id: @ladder.id,
-                      map_size: nil,
-                      map_random_generated: false)
-
-      @victory = PossibleResult.create!(description: "Victory!", score_factor: 100, game_id: @game.id)
-      @defeat = PossibleResult.create!(description: "Defeat!", score_factor: 0, game_id: @game.id)
-      @draw = PossibleResult.create!(description: "Draw!", score_factor: 50, game_id: @game.id)
-
-      @user1 = User.create!(email:"qweasd@qwe.pl", password:'asdqwe123123')
-      @user2 = User.create!(email:"1212qweasd@qwe.pl", password:'wasdqwe123123')
-      @profile1 = Profile.create! user_id: @user1.id, name: "Profile1", description: "Some description", color: '#ffffff'
-      @profile2 = Profile.create! user_id: @user2.id, name: "Profile2", description: "Some description", color: '#ffffff'
-      @config = DefaultLadderConfig.create!(default_ranking: 1500, max_distance_between_players: 10, min_points_to_gain: 10, disproportion_factor: 10, unexpected_result_bonus: 50, hours_to_confirm: 49, ladder_id: @ladder.id)
+      @game = create :wesnoth
+      @ladder = create :wesnoth_ladder, game: @game
+      @scenario1 = create :freelands, ladder: @ladder
+      @scenario2 = create :basilisk, ladder: @ladder
+      @victory = create :victory, game: @game
+      @defeat = create :defeat, game: @game
+      @draw = create :draw, game: @game
+      @user1 = create :user_from_china
+      @user2 = create :user_from_poland
+      @profile1 = create :sun_tzu, user: @user1
+      @profile2 = create :panther, user: @user2
+      @config = create :default_config, is_default: false, ladder: @ladder
     end
 
     after(:context) do
-      @config.destroy if @config
-      @profile1.destroy if @profile1
-      @profile2.destroy if @profile2
-      @user1.destroy if @user1
-      @user2.destroy if @user2
-      @victory.destroy if @victory
-      @defeat.destroy if @defeat
-      @draw.destroy if @draw
-      @scenario1.destroy if @scenario1
-      @scenario2.destroy if @scenario2
-      @ladder.destroy if @ladder
-      @game.destroy if @game
-      # DefaultLadderConfig.destroy_all
-      # Profile.destroy_all
-      # User.destroy_all
-      # PossibleResult.destroy_all
-      # Scenario.destroy_all
-      # Ladder.destroy_all
-      # Game.destroy_all
-
+      DefaultLadderConfig.destroy_all
+      Profile.destroy_all
+      User.destroy_all
+      PossibleResult.destroy_all
+      Scenario.destroy_all
+      Ladder.destroy_all
+      Game.destroy_all
     end
 
     it 'returns nil if the scenarios are different' do
@@ -200,11 +168,13 @@ RSpec.describe Report, type: :model do
 
   describe '#previous' do
     before(:context) {
-      create :fog
+      # wesnoth = create :wesnoth
+      # create :wesnoth_ladder, game: wesnoth
+      # create :wesnoth_blitz_ladder, game: wesnoth
     }
 
     after(:context) {
-      Game.destroy_all
+      # Game.destroy_all
     }
 
     it 'returns only previous report for that player' do
@@ -225,8 +195,13 @@ RSpec.describe Report, type: :model do
       #   reporters_faction_id: 1, confirmers_faction_id: 2,
       #   result_id: 1, status: "unconfirmed")
       # allow(subject).to receive(:profiles_are_from_different_users) {}
-      game = create :wesnoth
-      expect(Game.all.size).to eq 2
+
+      # game = create :wesnoth
+      # sun_tzu = create :sun_tzu
+      # create :mao, user: sun_tzu.user
+      #
+      #
+      # expect(User.all.size).to eq 1
 
     end
 

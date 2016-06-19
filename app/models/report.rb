@@ -38,6 +38,10 @@ class Report < ActiveRecord::Base
     Report.where(status: "unconfirmed").where(scenario_id: scenario_id).where("created_at > ?", number_of_hours.hours.ago).where({reporter_id: confirmer_id, confirmer_id: reporter_id}).where({reporters_faction_id: confirmers_faction_id, confirmers_faction_id: reporters_faction_id}).where(result: opposite_results).first
   end
 
+  def previous(player)
+    Report.where(scenario_id: scenario.id).where(["reporter_id = ? OR confirmer_id = ?", player.id, player.id]).where(["id < ?", id]).last
+  end
+
   private
 
   def add_inv(number)

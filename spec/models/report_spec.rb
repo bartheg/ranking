@@ -167,42 +167,40 @@ RSpec.describe Report, type: :model do
   end
 
   describe '#previous' do
-    before(:context) {
-      # wesnoth = create :wesnoth
-      # create :wesnoth_ladder, game: wesnoth
-      # create :wesnoth_blitz_ladder, game: wesnoth
-    }
 
-    after(:context) {
-      # Game.destroy_all
-    }
+    before(:context) do
+      @game = create :wesnoth
+      @ladder = create :wesnoth_ladder, game: @game
+      @scenario1 = create :freelands, ladder: @ladder
+      @scenario2 = create :basilisk, ladder: @ladder
+      @victory = create :victory, game: @game
+      @defeat = create :defeat, game: @game
+      @draw = create :draw, game: @game
+      @user1 = create :user_from_china
+      @user2 = create :user_from_poland
+      @profile1 = create :sun_tzu, user: @user1
+      @profile2 = create :panther, user: @user2
+      @config = create :default_config, is_default: false, ladder: @ladder
+    end
+
+    after(:context) do
+      DefaultLadderConfig.destroy_all
+      Profile.destroy_all
+      User.destroy_all
+      PossibleResult.destroy_all
+      Scenario.destroy_all
+      Ladder.destroy_all
+      Game.destroy_all
+    end
 
     it 'returns only previous report for that player' do
-      # profile1 = double("Fake profile 1")
-      # # profile1 = Profile.create! user_id: 1, name: "Profile1", description: "Some description", color: '#feffff'
-      # profile2 = double("Fake profile 2")
-      # # profile2 = Profile.create! user_id: 2, name: "Profile2", description: "Some description", color: '#ffffff'
-      # allow(profile1).to receive(:id) {1}
-      # allow(profile1).to receive(:user_id) {1}
-      # allow(profile1).to receive(:make_default_if_there_are_not_any)
-      # allow(profile2).to receive(:id) {2}
-      # allow(profile1).to receive(:user_id) {2}
-      # # allow(profile2).to receive(:make_default_if_there_are_not_any)
-      # firts_report = Report.create!(scenario_id: 1, reporter_id: profile1.id, confirmer_id: profile2.id,
-      #   reporters_faction_id: 1, confirmers_faction_id: 2,
-      #   result_id: 1, status: "unconfirmed")
-      # subject = Report.create!(scenario_id: 1, reporter_id: profile1.id, confirmer_id: profile2.id,
-      #   reporters_faction_id: 1, confirmers_faction_id: 2,
-      #   result_id: 1, status: "unconfirmed")
-      # allow(subject).to receive(:profiles_are_from_different_users) {}
-
-      # game = create :wesnoth
-      # sun_tzu = create :sun_tzu
-      # create :mao, user: sun_tzu.user
-      #
-      #
-      # expect(User.all.size).to eq 1
-
+      firts_report = Report.create!(scenario: @scenario1, reporter: @profile1, confirmer: @profile2,
+        reporters_faction_id: 1, confirmers_faction_id: 2,
+        result: @victory, status: "unconfirmed")
+      subject = Report.create!(scenario: @scenario1, reporter: @profile1, confirmer: @profile2,
+        reporters_faction_id: 1, confirmers_faction_id: 2,
+        result: @victory, status: "unconfirmed")
+      expect(subject.previous(@profile1)).to eql firts_report
     end
 
   end

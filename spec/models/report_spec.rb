@@ -88,6 +88,17 @@ RSpec.describe Report, type: :model do
 
 
     it 'does nothing if there is no report to confirm' do
+      subject = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
+      subject.created_at = 40.hours.ago
+      subject.save!
+      different_scenario_report = Report.new(scenario_id: @scenario2.id, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result_id: @defeat.id, status: "unconfirmed")
+
+      different_scenario_report.handle_possible_confirmation
+
+      expect(subject.unconfirmed?).to be true
+    end
+
+    it 'sets was_just_confirmation? to false if it does nothing' do
       different_scenario_report = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
       different_scenario_report.created_at = 40.hours.ago
       different_scenario_report.save!
@@ -95,19 +106,32 @@ RSpec.describe Report, type: :model do
 
       subject.handle_possible_confirmation
 
-      expect(different_scenario_report.status).to eq "unconfirmed"
+      expect(subject.was_just_confirmation?).to be false
     end
 
-    # it 'returns the previous report if all conditions are ok' do
-    #   first_scenario_report = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
-    #
-    #   first_scenario_report.created_at = 48.hours.ago
-    #   first_scenario_report.save!
-    #
-    #   subject = Report.new(scenario_id: @scenario1.id, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result_id: @defeat.id, status: "unconfirmed")
-    #
-    #   expect(subject.original_report).to eql first_scenario_report
-    # end
+    it 'changes status of the report to confirmed when all conditions are ok' do
+      subject = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
+      subject.created_at = 48.hours.ago
+      subject.save!
+      confirmation_report = Report.new(scenario_id: @scenario1.id, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result_id: @defeat.id, status: "unconfirmed")
+
+      confirmation_report.handle_possible_confirmation
+      subject.reload
+
+      expect(subject.confirmed?).to be true
+    end
+
+    it 'sets was_just_confirmation? to true when all conditions are ok' do
+      report_to_confirmed = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
+      report_to_confirmed.created_at = 48.hours.ago
+      report_to_confirmed.save!
+      subject = Report.new(scenario_id: @scenario1.id, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result_id: @defeat.id, status: "unconfirmed")
+
+      subject.handle_possible_confirmation
+
+      expect(subject.was_just_confirmation?).to be true
+    end
+
     #
     # it 'returns nil if the previous report is too old' do
     #   first_scenario_report = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")

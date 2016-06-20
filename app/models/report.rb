@@ -31,7 +31,19 @@ class Report < ActiveRecord::Base
   end
 
   def handle_possible_confirmation
+    @was_just_confirmation = false
+    report_to_confirm = original_report
 
+    if report_to_confirm
+      report_to_confirm.confirmed!
+      report_to_confirm.save
+      @was_just_confirmation = true
+    end
+
+  end
+
+  def was_just_confirmation?
+    @was_just_confirmation
   end
 
   def previous(player)

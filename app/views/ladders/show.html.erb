@@ -1,2 +1,6 @@
 <h1><%= @ladder.name %></h1>
 <p><%= @ladder.description %></p>
+
+<% if user_signed_in? %>
+  <%= link_to 'Create a new ladder ranking config', new_ladder_ladder_config_path(@ladder), class: "btn btn-danger" %>
+<% end %>

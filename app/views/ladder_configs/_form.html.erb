@@ -1,11 +1,11 @@
-<%= form_for(@default_ladder_config) do |f| %>
+<%= form_for(@ladder_config) do |f| %>
 
-  <% if @default_ladder_config.errors.any? %>
+  <% if @ladder_config.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@default_ladder_config.errors.count, "error") %> prohibited this report from being saved:</h2>
+      <h2><%= pluralize(@ladder_config.errors.count, "error") %> prohibited this report from being saved:</h2>
 
       <ul>
-        <% @default_ladder_config.errors.full_messages.each do |message| %>
+        <% @ladder_config.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>

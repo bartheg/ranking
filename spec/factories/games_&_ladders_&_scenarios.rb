@@ -60,7 +60,7 @@ FactoryGirl.define do
 
 # CONFIGS
 
-  factory :default_config, class: DefaultLadderConfig do
+  factory :default_config, class: LadderConfig do
     default_ranking 1500
     max_distance_between_players 1000
     min_points_to_gain 2

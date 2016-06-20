@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe DefaultLadderConfig, type: :model do
+RSpec.describe LadderConfig, type: :model do
 
   describe 'validations' do
 
@@ -12,7 +12,7 @@ RSpec.describe DefaultLadderConfig, type: :model do
       Ladder.destroy_all
     end
 
-    subject { DefaultLadderConfig.new(
+    subject { LadderConfig.new(
       default_ranking: 1500,
       max_distance_between_players: 10,
       min_points_to_gain: 5,
@@ -38,7 +38,7 @@ RSpec.describe DefaultLadderConfig, type: :model do
     end
 
     it 'is valid when is_default is not set' do
-      config = DefaultLadderConfig.new(
+      config = LadderConfig.new(
        default_ranking: 1500,
        max_distance_between_players: 10,
        min_points_to_gain: 5,

@@ -1,4 +1,4 @@
-class DefaultLadderConfig < ActiveRecord::Base
+class LadderConfig < ActiveRecord::Base
   belongs_to :ladder
 
   validates :default_ranking, presence: true

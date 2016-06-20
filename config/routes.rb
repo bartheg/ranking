@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :default_ladder_configs, only: [:edit, :update]
+  resources :ladder_configs, only: [:edit, :update]
 
   devise_for :users
 

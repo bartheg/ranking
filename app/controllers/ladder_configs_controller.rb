@@ -1,5 +1,26 @@
 class LadderConfigsController < ApplicationController
 
+
+
+  def new
+    @ladder = Ladder.find(params[:ladder_id].to_i)
+    @ladder_config = LadderConfig.new
+    @ladder_config.ladder = @ladder
+  end
+
+  def create
+    @ladder = Ladder.find(params[:ladder_id])
+    @ladder_config = LadderConfig.new(ladder_config_params)
+    @ladder_config.ladder = @ladder
+    if @ladder_config.save
+      redirect_to @ladder, notice: 'COnfiguration for the ladder was successfully created.'
+    else
+      render :new
+    end
+  end
+
+
+
   def edit
     @ladder_config = LadderConfig.find(params[:id])
   end

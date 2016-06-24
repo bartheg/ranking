@@ -1,4 +1,4 @@
-<%= form_for(@ladder_config) do |f| %>
+<%= form_for([@ladder, @ladder_config]) do |f| %>
 
   <% if @ladder_config.errors.any? %>
     <div id="error_explanation">

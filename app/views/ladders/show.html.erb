@@ -2,5 +2,9 @@
 <p><%= @ladder.description %></p>
 
 <% if user_signed_in? %>
-  <%= link_to 'Create a new ladder ranking config', new_ladder_ladder_config_path(@ladder), class: "btn btn-danger" %>
+  <% if @ladder.ladder_config %>
+    <%= link_to 'Edit the ladder ranking config', edit_ladder_ladder_config_path(@ladder, @ladder.ladder_config), class: "btn btn-danger" %>
+  <% else %>
+    <%= link_to 'Create a new ladder ranking config', new_ladder_ladder_config_path(@ladder), class: "btn btn-success" %>
+  <% end %>
 <% end %>

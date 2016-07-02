@@ -38,14 +38,23 @@ RSpec.describe ReportsToCalculateFinderService, type: :service do
     report = Report.create!(scenario: @scenario1, reporter: @profileA, confirmer: @profileB,
       reporters_faction_id: 1, confirmers_faction_id: 2,
       result: @victory, status: :confirmed)
-    # wrong_ladder_report = Report.create!(scenario: @scenario1, reporter: @profileA, confirmer: @profileB,
-    #   reporters_faction_id: 1, confirmers_faction_id: 2,
-    #   result: @victory, status: "confirmed")
     expect do
       ReportsToCalculateFinderService.new(@ladder).tag_reports
       report.reload
-    end.to change(report, :status).from('confirmed').to('to_calculate')
+    end.to change{report.status}.from('confirmed').to('to_calculate')
 
   end
+
+  it 'does\'t touch report in other ladder' do
+    wrong_ladder_report = Report.create!(scenario: @scenario1b, reporter: @profileA, confirmer: @profileB,
+      reporters_faction_id: 1, confirmers_faction_id: 2,
+      result: @victory, status: "confirmed")
+    expect do
+      ReportsToCalculateFinderService.new(@ladder).tag_reports
+      wrong_ladder_report.reload
+    end.to_not change{wrong_ladder_report.status}
+
+  end
+
 
 end

@@ -5,7 +5,7 @@ class ReportsToCalculateFinderService
   end
 
   def tag_reports
-    @ladder.reports.first.update(status: :to_calculate)
+    @ladder.reports.first.update(status: :to_calculate) if @ladder.reports.any?
   end
 
 end

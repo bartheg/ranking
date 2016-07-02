@@ -10,7 +10,7 @@ class Report < ActiveRecord::Base
 
   attr_accessor :confirmers_name
 
-  enum status: { unconfirmed: 0, confirmed: 1, calculated: 2 }
+  enum status: { unconfirmed: 0, confirmed: 1, to_calculate: 2, calculated:3 }
 
   validates :scenario_id, presence: true
   validates :reporter_id, presence: {message: "Your name can't be blank"}

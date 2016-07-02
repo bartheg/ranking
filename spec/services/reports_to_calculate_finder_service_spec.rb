@@ -5,8 +5,11 @@ RSpec.describe ReportsToCalculateFinderService, type: :service do
   before(:context) do
     @game = create :wesnoth
     @ladder = create :wesnoth_ladder, game: @game
+    @blitz_ladder = create :wesnoth_blitz_ladder, game: @game
     @scenario1 = create :freelands, ladder: @ladder
     @scenario2 = create :basilisk, ladder: @ladder
+    @scenario1b = create :freelands, ladder: @blitz_ladder
+    @scenario2b = create :basilisk, ladder: @blitz_ladder
     @victory = create :victory, game: @game
     @defeat = create :defeat, game: @game
     @draw = create :draw, game: @game
@@ -31,8 +34,18 @@ RSpec.describe ReportsToCalculateFinderService, type: :service do
     Game.destroy_all
   end
 
-  it 'is test' do
-    expect(true).to be true
+  it 'turns status to :to_calculate for the one given report if this report is the only one report for that ladder and the report is :confirmed' do
+    report = Report.create!(scenario: @scenario1, reporter: @profileA, confirmer: @profileB,
+      reporters_faction_id: 1, confirmers_faction_id: 2,
+      result: @victory, status: :confirmed)
+    # wrong_ladder_report = Report.create!(scenario: @scenario1, reporter: @profileA, confirmer: @profileB,
+    #   reporters_faction_id: 1, confirmers_faction_id: 2,
+    #   result: @victory, status: "confirmed")
+    expect do
+      ReportsToCalculateFinderService.new(@ladder).tag_reports
+      report.reload
+    end.to change(report, :status).from('confirmed').to('to_calculate')
+
   end
 
 end

@@ -77,7 +77,7 @@ RSpec.describe Report, type: :model do
     end
 
     after(:context) do
-      DefaultLadderConfig.destroy_all
+      LadderConfig.destroy_all
       Profile.destroy_all
       User.destroy_all
       PossibleResult.destroy_all
@@ -235,7 +235,7 @@ RSpec.describe Report, type: :model do
     end
 
     after(:context) do
-      DefaultLadderConfig.destroy_all
+      LadderConfig.destroy_all
       Profile.destroy_all
       User.destroy_all
       PossibleResult.destroy_all

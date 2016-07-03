@@ -59,134 +59,235 @@ RSpec.describe Report, type: :model do
   end
 
 
-  describe '#original_report' do
+  describe '#handle_possible_confirmation' do
 
     before(:context) do
-      @game = Game.create!(full_name: 'The Battle for Wesnoth',
-                  short_name: 'Wesnoth',
-                  description: 'The Battle for Wesnoth is a Free, turn-based tactical strategy game with a high fantasy theme, featuring both single-player, and online/hotseat multiplayer combat. More on www.wesnoth.org',
-                  simultaneous_turns: false)
-      @ladder = Ladder.create!(name: 'Wesnoth Blitz Test Ladder',
-                  description: 'This is fake Ladder. All results are fake here',
-                  game_id: @game.id)
-      @scenario1 = Scenario.create!(full_name: 'The Freelands',
-                      short_name: 'The Freelands',
-                      description: 'The Freelands is a map with three ways to the enemy castle.',
-                      mirror_matchups_allowed: true,
-                      ladder_id: @ladder.id,
-                      map_size: nil,
-                      map_random_generated: false)
-      @scenario2 = Scenario.create!(full_name: 'Caves of the Basilisk',
-                      short_name: 'Caves of the Basilisk',
-                      description: 'Caves of the Basilisk is a map.',
-                      mirror_matchups_allowed: true,
-                      ladder_id: @ladder.id,
-                      map_size: nil,
-                      map_random_generated: false)
-
-      @victory = PossibleResult.create!(description: "Victory!", score_factor: 100, game_id: @game.id)
-      @defeat = PossibleResult.create!(description: "Defeat!", score_factor: 0, game_id: @game.id)
-      @draw = PossibleResult.create!(description: "Draw!", score_factor: 50, game_id: @game.id)
-
-      @user1 = User.create!(email:"qweasd@qwe.pl", password:'asdqwe123123')
-      @user2 = User.create!(email:"1212qweasd@qwe.pl", password:'wasdqwe123123')
-      @profile1 = Profile.create! user_id: @user1.id, name: "Profile1", description: "Some description", color: '#ffffff'
-      @profile2 = Profile.create! user_id: @user2.id, name: "Profile2", description: "Some description", color: '#ffffff'
-      @config = DefaultLadderConfig.create!(default_ranking: 1500, loot_factor: 10, loot_constant: 10, disproportion_factor: 10, draw_factor: 50, hours_to_confirm: 49)
+      @game = create :wesnoth
+      @ladder = create :wesnoth_ladder, game: @game
+      @scenario1 = create :freelands, ladder: @ladder
+      @scenario2 = create :basilisk, ladder: @ladder
+      @victory = create :victory, game: @game
+      @defeat = create :defeat, game: @game
+      @draw = create :draw, game: @game
+      @user1 = create :user_from_china
+      @user2 = create :user_from_poland
+      @profile1 = create :sun_tzu, user: @user1
+      @profile2 = create :panther, user: @user2
+      @config = create :default_config, is_default: false, ladder: @ladder
     end
 
     after(:context) do
-      @config.destroy
-      @profile1.destroy
-      @profile2.destroy
-      @user1.destroy
-      @user2.destroy
-      @victory.destroy
-      @defeat.destroy
-      @draw.destroy
-      @scenario1.destroy
-      @scenario2.destroy
-      @ladder.destroy
-      @game.destroy
+      LadderConfig.destroy_all
+      Profile.destroy_all
+      User.destroy_all
+      PossibleResult.destroy_all
+      Scenario.destroy_all
+      Ladder.destroy_all
+      Game.destroy_all
     end
 
-    it 'returns nil if the scenarios are different' do
+
+    it 'does nothing when scenarios don\'t match' do
+      subject = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
+      subject.created_at = 40.hours.ago
+      subject.save!
+      different_scenario_report = Report.new(scenario_id: @scenario2.id, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result_id: @defeat.id, status: "unconfirmed")
+
+      different_scenario_report.handle_possible_confirmation
+      subject.reload
+
+      expect(subject.unconfirmed?).to be true
+    end
+
+    it 'sets was_just_confirmation? to false if it does nothing' do
       different_scenario_report = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
       different_scenario_report.created_at = 40.hours.ago
       different_scenario_report.save!
       subject = Report.new(scenario_id: @scenario2.id, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result_id: @defeat.id, status: "unconfirmed")
 
-      expect(subject.original_report).to be_nil
+      subject.handle_possible_confirmation
+
+      expect(subject.was_just_confirmation?).to be false
     end
 
-    it 'returns the previous report if all conditions are ok' do
-      first_scenario_report = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
+    it 'changes status of the report to confirmed when all conditions are ok' do
+      subject = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
+      subject.created_at = 48.hours.ago
+      subject.save!
+      confirmation_report = Report.new(scenario_id: @scenario1.id, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result_id: @defeat.id, status: "unconfirmed")
 
-      first_scenario_report.created_at = 48.hours.ago
-      first_scenario_report.save!
+      confirmation_report.handle_possible_confirmation
+      subject.reload
 
+      expect(subject.confirmed?).to be true
+    end
+
+    it 'sets was_just_confirmation? to true when all conditions are ok' do
+      report_to_confirmed = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
+      report_to_confirmed.created_at = 48.hours.ago
+      report_to_confirmed.save!
       subject = Report.new(scenario_id: @scenario1.id, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result_id: @defeat.id, status: "unconfirmed")
 
-      expect(subject.original_report).to eql first_scenario_report
+      subject.handle_possible_confirmation
+
+      expect(subject.was_just_confirmation?).to be true
     end
 
-    it 'returns nil if the previous report is too old' do
-      first_scenario_report = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
-      first_scenario_report.created_at = 50.hours.ago
-      first_scenario_report.save!
-      subject = Report.new(scenario_id: @scenario1.id, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result_id: @defeat.id, status: "unconfirmed")
+    it 'does nothing when the previous report is too old' do
+      subject = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
+      subject.created_at = 50.hours.ago
+      subject.save!
+      report_too_late = Report.new(scenario_id: @scenario1.id, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result_id: @defeat.id, status: "unconfirmed")
 
-      expect(subject.original_report).to be_nil
+      report_too_late.handle_possible_confirmation
+      subject.reload
+
+      expect(subject.unconfirmed?).to be true
     end
 
-    it 'returns nil if the profiles don\'t match' do
-      first_scenario_report = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
-      first_scenario_report.created_at = 47.hours.ago
-      first_scenario_report.save!
-      subject = Report.new(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result_id: @defeat.id, status: "unconfirmed")
+    it 'does nothing if the profiles don\'t match' do
+      subject = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
+      subject.created_at = 47.hours.ago
+      subject.save!
+      report_with_different_profiles = Report.new(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 2, confirmers_faction_id: 1, result_id: @defeat.id, status: "unconfirmed")
 
-      expect(subject.original_report).to be_nil
+      report_with_different_profiles.handle_possible_confirmation
+      subject.reload
+
+      expect(subject.unconfirmed?).to be true
     end
 
-    it 'returns nil if the factions don\'t match' do
-      first_scenario_report = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
-      first_scenario_report.created_at = 48.hours.ago
-      first_scenario_report.save!
-      subject = Report.new(scenario_id: @scenario1.id, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 1, confirmers_faction_id: 1, result_id: @defeat.id, status: "unconfirmed")
+    it 'does nothing if the factions don\'t match' do
+      subject = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
+      subject.created_at = 47.hours.ago
+      subject.save!
+      report_with_different_factions = Report.new(scenario_id: @scenario1.id, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @defeat.id, status: "unconfirmed")
 
-      expect(subject.original_report).to be_nil
+      report_with_different_factions.handle_possible_confirmation
+      subject.reload
+
+      expect(subject.unconfirmed?).to be true
     end
 
-    it 'returns nil if the results don\'t match' do
-      first_scenario_report = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
-      first_scenario_report.created_at = 48.hours.ago
-      first_scenario_report.save!
-      subject = Report.new(scenario_id: @scenario1.id, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result_id: @victory.id, status: "unconfirmed")
+    it 'does nothing when the results don\'t match' do
+      subject = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
+      subject.created_at = 47.hours.ago
+      subject.save!
+      report_with_different_result = Report.new(scenario_id: @scenario1.id, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result_id: @draw.id, status: "unconfirmed")
 
-      expect(subject.original_report).to be_nil
+      report_with_different_result.handle_possible_confirmation
+      subject.reload
+
+      expect(subject.unconfirmed?).to be true
     end
 
-    it 'returns the older report if there are more than one ok reports' do
-      first_scenario_report = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
-      first_scenario_report.created_at = 48.hours.ago
-      first_scenario_report.save!
+    it 'confirms the older report if there are more than one ok reports' do
+      first_report = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
+      first_report.created_at = 48.hours.ago
+      first_report.save!
 
-      second_scenario_report = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
-      second_scenario_report.created_at = 46.hours.ago
-      second_scenario_report.save!
+      second_report = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "unconfirmed")
+      second_report.created_at = 46.hours.ago
+      second_report.save!
 
-      subject = Report.new(scenario_id: @scenario1.id, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result_id: @defeat.id, status: "unconfirmed")
+      confirmation_report = Report.new(scenario_id: @scenario1.id, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result_id: @defeat.id, status: "unconfirmed")
 
-      expect(subject.original_report).to eql first_scenario_report
+      confirmation_report.handle_possible_confirmation
+      first_report.reload
+      second_report.reload
+
+      expect((first_report.confirmed? and second_report.unconfirmed?)).to be true
     end
 
-    it 'cheks if confirmed is false' do
-      first_scenario_report = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "confirmed")
-      first_scenario_report.created_at = 48.hours.ago
-      first_scenario_report.save!
-      subject = Report.new(scenario_id: @scenario1.id, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result_id: @defeat.id, status: "unconfirmed")
+    it 'doesnt update confirmed reports' do
+      subject = Report.create!(scenario_id: @scenario1.id, reporter_id: @profile1.id, confirmer_id: @profile2.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "confirmed")
+      subject.created_at = 48.hours.ago
+      subject.save!
+      confirmation_report = Report.new(scenario_id: @scenario1.id, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result_id: @defeat.id, status: "unconfirmed")
 
-      expect(subject.original_report).to be_nil
+      subject.reload
+      update_time_before = subject.updated_at
+      confirmation_report.handle_possible_confirmation
+      subject.reload
+      update_time_after = subject.updated_at
+
+      expect(update_time_before).to eq update_time_after
+    end
+
+  end
+
+
+  describe '#previous' do
+
+    before(:context) do
+      @game = create :wesnoth
+      @ladder = create :wesnoth_ladder, game: @game
+      @scenario1 = create :freelands, ladder: @ladder
+      @scenario2 = create :basilisk, ladder: @ladder
+      @victory = create :victory, game: @game
+      @defeat = create :defeat, game: @game
+      @draw = create :draw, game: @game
+      @user1 = create :user_from_china
+      @user2 = create :user_from_poland
+      @profile1 = create :sun_tzu, user: @user1
+      @profile2 = create :panther, user: @user2
+      @config = create :default_config, is_default: false, ladder: @ladder
+    end
+
+    after(:context) do
+      LadderConfig.destroy_all
+      Profile.destroy_all
+      User.destroy_all
+      PossibleResult.destroy_all
+      Scenario.destroy_all
+      Ladder.destroy_all
+      Game.destroy_all
+    end
+
+    it 'returns only previous report for that player' do
+      firts_report = Report.create!(scenario: @scenario1, reporter: @profile1, confirmer: @profile2,
+        reporters_faction_id: 1, confirmers_faction_id: 2,
+        result: @victory, status: "unconfirmed")
+      subject = Report.create!(scenario: @scenario1, reporter: @profile1, confirmer: @profile2,
+        reporters_faction_id: 1, confirmers_faction_id: 2,
+        result: @victory, status: "unconfirmed")
+      expect(subject.previous(@profile1)).to eql firts_report
+    end
+
+    it 'returns only previous report for that player even if the player is confirmer' do
+      firts_report = Report.create!(scenario: @scenario1, reporter: @profile1, confirmer: @profile2,
+        reporters_faction_id: 1, confirmers_faction_id: 2,
+        result: @victory, status: "unconfirmed")
+      subject = Report.create!(scenario: @scenario1, reporter: @profile1, confirmer: @profile2,
+        reporters_faction_id: 1, confirmers_faction_id: 2,
+        result: @victory, status: "unconfirmed")
+      expect(subject.previous(@profile2)).to eql firts_report
+    end
+
+    it 'returns only previous report for that player and ignores reports for another scenarios' do
+      another_scenario_report = Report.create!(scenario: @scenario2, reporter: @profile1, confirmer: @profile2,
+        reporters_faction_id: 1, confirmers_faction_id: 2,
+        result: @victory, status: "unconfirmed")
+      previous_report = Report.create!(scenario: @scenario1, reporter: @profile1, confirmer: @profile2,
+        reporters_faction_id: 1, confirmers_faction_id: 2,
+        result: @victory, status: "unconfirmed")
+      yet_another_another_scenario_report = Report.create!(scenario: @scenario2,
+        reporter: @profile1, confirmer: @profile2, reporters_faction_id: 1, confirmers_faction_id: 2,
+        result: @victory, status: "unconfirmed")
+      subject = Report.create!(scenario: @scenario1, reporter: @profile1, confirmer: @profile2,
+        reporters_faction_id: 1, confirmers_faction_id: 2,
+        result: @victory, status: "unconfirmed")
+      expect(subject.previous(@profile1)).to eql previous_report
+    end
+
+    it 'returns nil if no previous reports' do
+      subject = Report.create!(scenario: @scenario1, reporter: @profile1, confirmer: @profile2,
+        reporters_faction_id: 1, confirmers_faction_id: 2,
+        result: @victory, status: "unconfirmed")
+      next_report = Report.create!(scenario: @scenario1, reporter: @profile1, confirmer: @profile2,
+        reporters_faction_id: 1, confirmers_faction_id: 2,
+        result: @victory, status: "unconfirmed")
+      expect(subject.previous(@profile1)).to be_nil
     end
 
   end

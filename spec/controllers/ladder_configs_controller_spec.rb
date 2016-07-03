@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe DefaultLadderConfigsController, type: :controller do
+RSpec.describe LadderConfigsController, type: :controller do
 
   describe "GET #edit" do
     xit "returns http success" do

@@ -10,7 +10,7 @@ class Report < ActiveRecord::Base
 
   attr_accessor :confirmers_name
 
-  enum status: { unconfirmed: 0, confirmed: 1, calculated: 2 }
+  enum status: { unconfirmed: 0, confirmed: 1, to_calculate: 2, calculated:3 }
 
   validates :scenario_id, presence: true
   validates :reporter_id, presence: {message: "Your name can't be blank"}
@@ -21,7 +21,6 @@ class Report < ActiveRecord::Base
 
   validate :profiles_are_from_different_users
 
-
   def profiles_are_from_different_users
     if reporter_id and confirmer_id
       if self.reporter.user_id == self.confirmer.user_id
@@ -31,14 +30,34 @@ class Report < ActiveRecord::Base
     end
   end
 
+  def handle_possible_confirmation
+    @was_just_confirmation = false
+    report_to_confirm = original_report
+
+    if report_to_confirm
+      report_to_confirm.confirmed!
+      report_to_confirm.save
+      @was_just_confirmation = true
+    end
+
+  end
+
+  def was_just_confirmation?
+    @was_just_confirmation
+  end
+
+  def previous(player)
+    Report.where(scenario_id: scenario.id).where(["reporter_id = ? OR confirmer_id = ?", player.id, player.id]).where(["id < ?", id]).last
+  end
+
+  private
+
   def original_report
-    number_of_hours = DefaultLadderConfig.first.hours_to_confirm
+    number_of_hours = LadderConfig.first.hours_to_confirm
     opposite_results = PossibleResult.where(game_id: scenario.ladder.game).where(score_factor: add_inv(result.score_factor))
 
     Report.where(status: "unconfirmed").where(scenario_id: scenario_id).where("created_at > ?", number_of_hours.hours.ago).where({reporter_id: confirmer_id, confirmer_id: reporter_id}).where({reporters_faction_id: confirmers_faction_id, confirmers_faction_id: reporters_faction_id}).where(result: opposite_results).first
   end
-
-  private
 
   def add_inv(number)
     hundred_percent = 100

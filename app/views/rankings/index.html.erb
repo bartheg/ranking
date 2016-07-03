@@ -1,0 +1,30 @@
+<h1><%= @header %></h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Ranking id</th>
+      <th>Profile name</th>
+      <th>User id</th>
+      <th>Ranking</th>
+      <th>Created at</th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rankings.each do |ranking| %>
+      <tr>
+        <td><%= ranking.id %></td>
+        <td><%= link_to ranking.profile.name, ranking.profile %></td>
+        <td><%= ranking.profile.user_id %></td>
+        <td><%= ranking.value %></td>
+        <td><%= ranking.created_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Back to home', root_path %>

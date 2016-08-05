@@ -2,7 +2,7 @@
   <div class="btn-group" role="group" aria-label="...">
     <%= link_to 'All', reports_path, class: "btn" %>
     <% if user_signed_in? %>
-      <%= link_to 'Participated', '#', class: "btn" %>
+      <%= link_to 'Participated', reports_path(profile: current_user.current_profile), class: "btn" %>
     <% end %>
   </div>
 </div>

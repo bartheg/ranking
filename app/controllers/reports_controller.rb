@@ -6,6 +6,10 @@ class ReportsController < ApplicationController
       @header = "Reports of #{@ladder.name}"
       @reports = @ladder.reports
 
+    elsif params[:profile]
+      @profile = Profile.find(params[:profile])
+      @header = "Reports with #{@profile.name}"
+      @reports = Report.by_profile(@profile)
     else
       @header = "Reports"
       @reports = Report.all

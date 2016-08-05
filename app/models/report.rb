@@ -28,6 +28,7 @@ class Report < ActiveRecord::Base
         self.errors[:base] << "Your opponent's profile belongs to YOU!"
       end
     end
+    
   end
 
   def handle_possible_confirmation
@@ -39,7 +40,6 @@ class Report < ActiveRecord::Base
       report_to_confirm.save
       @was_just_confirmation = true
     end
-
   end
 
   def was_just_confirmation?
@@ -48,6 +48,10 @@ class Report < ActiveRecord::Base
 
   def previous(player)
     Report.where(scenario_id: scenario.id).where(["reporter_id = ? OR confirmer_id = ?", player.id, player.id]).where(["id < ?", id]).last
+  end
+
+  def self.by_profile(profile)
+    Report.where(["reporter_id = ? OR confirmer_id = ?", profile.id, profile.id])
   end
 
   private

@@ -1,6 +1,50 @@
 <h1><%= @ladder.name %></h1>
 <p><%= @ladder.description %></p>
 
+<h2>The ladder configuration</h2>
+
+
+t.integer  "default_ranking"
+t.integer  "max_distance_between_players"
+t.integer  "min_points_to_gain"
+t.integer  "disproportion_factor"
+t.integer  "unexpected_result_bonus"
+t.integer  "hours_to_confirm"
+t.datetime "created_at",                                   null: false
+t.datetime "updated_at",                                   null: false
+t.boolean  "is_default",                   default: false, null: false
+t.integer  "ladder_id"
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Ladder config ID</th>
+      <th>Ladder ID</th>
+      <th>Is default?</th>
+      <th>Starting ranking</th>
+      <th>Max dist. between players</th>
+      <th>Min points to gain</th>
+      <th>Disproportion factor</th>
+      <th>Unexpected result bonus</th>
+      <th>Hours to confirm</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td><%= @config.id %></td>
+      <td><%= @ladder.id %></td>
+      <td><%= @config.is_default? %></td>
+      <td><%= @config.default_ranking %></td>
+      <td><%= @config.max_distance_between_players %></td>
+      <td><%= @config.min_points_to_gain %></td>
+      <td><%= @config.disproportion_factor %></td>
+      <td><%= @config.unexpected_result_bonus %></td>
+      <td><%= @config.hours_to_confirm %></td>
+    </tr>
+  </tbody>
+</table>
+
 <% if user_signed_in? %>
   <% if @ladder.ladder_config %>
     <%= link_to 'Edit the ladder ranking config', edit_ladder_ladder_config_path(@ladder, @ladder.ladder_config), class: "btn btn-danger" %>

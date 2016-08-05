@@ -50,6 +50,11 @@ class Report < ActiveRecord::Base
     Report.where(scenario_id: scenario.id).where(["reporter_id = ? OR confirmer_id = ?", player.id, player.id]).where(["id < ?", id]).last
   end
 
+  def self.by_profile(profile)
+    Report.where(["reporter_id = ? OR confirmer_id = ?", profile.id, profile.id])
+
+  end
+
   private
 
   def original_report

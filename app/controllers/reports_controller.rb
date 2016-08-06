@@ -43,6 +43,8 @@ class ReportsController < ApplicationController
       end
     else
       redirect_to reports_path, notice: 'Report was successfully confirmed.'
+      ReportsToCalculateFinderService.new(@report).tag_to_calculate
+
     end
 
     # end of new code

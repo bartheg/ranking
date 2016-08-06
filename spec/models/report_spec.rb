@@ -2,6 +2,14 @@ require 'rails_helper'
 
 RSpec.describe Report, type: :model do
 
+  before(:context) do
+    create :default_config
+  end
+
+  after(:context) do
+    LadderConfig.destroy_all
+  end
+
   describe 'validations' do
     before do
       @user1 = User.create!(email:"qweasd@qwe.pl", password:'asdqwe123123')
@@ -62,6 +70,7 @@ RSpec.describe Report, type: :model do
   describe '#handle_possible_confirmation' do
 
     before(:context) do
+      create(:default_config)
       @game = create :wesnoth
       @ladder = create :wesnoth_ladder, game: @game
       @scenario1 = create :freelands, ladder: @ladder
@@ -73,7 +82,6 @@ RSpec.describe Report, type: :model do
       @user2 = create :user_from_poland
       @profile1 = create :sun_tzu, user: @user1
       @profile2 = create :panther, user: @user2
-      @config = create :default_config, is_default: false, ladder: @ladder
     end
 
     after(:context) do
@@ -220,6 +228,7 @@ RSpec.describe Report, type: :model do
   describe '#previous' do
 
     before(:context) do
+      create(:default_config)
       @game = create :wesnoth
       @ladder = create :wesnoth_ladder, game: @game
       @scenario1 = create :freelands, ladder: @ladder
@@ -231,7 +240,6 @@ RSpec.describe Report, type: :model do
       @user2 = create :user_from_poland
       @profile1 = create :sun_tzu, user: @user1
       @profile2 = create :panther, user: @user2
-      @config = create :default_config, is_default: false, ladder: @ladder
     end
 
     after(:context) do
@@ -295,6 +303,7 @@ RSpec.describe Report, type: :model do
   describe 'by_profile' do
 
     before(:context) do
+      create(:default_config)
       @game = create :wesnoth
       @ladder = create :wesnoth_ladder, game: @game
       @blitz_ladder = create :wesnoth_blitz_ladder, game: @game
@@ -315,7 +324,6 @@ RSpec.describe Report, type: :model do
       @profileC = create :sun_tzu, name: "Patton", user: @userC
       @profileD = create :sun_tzu, name: "Suvorov", user: @userD
       @profileE = create :sun_tzu, name: "Gandhi", user: @userE
-      @config = create :default_config, is_default: false, ladder: @ladder
     end
 
     after(:context) do

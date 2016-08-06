@@ -5,11 +5,13 @@ RSpec.describe LadderConfig, type: :model do
   describe 'validations' do
 
     before(:context) do
+      create(:default_config)
       @ladder = Ladder.create!(name: "Super Bowl", description: "Abracadabra.", game_id: 1)
     end
 
     after(:context) do
       Ladder.destroy_all
+      LadderConfig.destroy_all
     end
 
     subject { LadderConfig.new(
@@ -70,6 +72,15 @@ RSpec.describe LadderConfig, type: :model do
     end
 
 
+  end
+
+  describe 'default_config' do
+    it 'returns the default configuration' do
+      default_conf = create(:default_config)
+      ladder = Ladder.create!(name: "Super Bowl", description: "Abracadabra.", game_id: 1)
+      expect(LadderConfig.default_config).to eql default_conf
+
+    end
   end
 
 end

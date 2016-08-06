@@ -9,7 +9,9 @@ class LadderConfig < ActiveRecord::Base
   validate :invalid_with_not_existing_ladder_id
 
 
-
+  def self.default_config
+    LadderConfig.where(is_default: true).first
+  end
 
   private
 

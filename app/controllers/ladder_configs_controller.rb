@@ -28,10 +28,15 @@ class LadderConfigsController < ApplicationController
   def update
     @ladder_config = LadderConfig.find(params[:id])
     if @ladder_config.update_attributes(ladder_config_params)
-      flash[:notice] = "Default ladder config updated successfully."
-      redirect_to edit_ladder_config_path(@ladder_config)
+      if @ladder_config.is_default
+        flash[:notice] = "Default ladder config updated successfully."
+        redirect_to edit_ladder_config_path(@ladder_config)
+      else
+        flash[:notice] = "Ladder config updated successfully."
+        redirect_to @ladder_config.ladder
+      end
     else
-      # wtf was that?
+      # wtf was that
       # @pages = Page.order('position ASC')
       # @section_count = LadderConfig.count
       render 'edit'

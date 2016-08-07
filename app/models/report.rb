@@ -28,7 +28,7 @@ class Report < ActiveRecord::Base
         self.errors[:base] << "Your opponent's profile belongs to YOU!"
       end
     end
-    
+
   end
 
   def handle_possible_confirmation
@@ -57,7 +57,7 @@ class Report < ActiveRecord::Base
   private
 
   def original_report
-    number_of_hours = LadderConfig.first.hours_to_confirm
+    number_of_hours = scenario.ladder.ladder_config.hours_to_confirm
     opposite_results = PossibleResult.where(game_id: scenario.ladder.game).where(score_factor: add_inv(result.score_factor))
 
     Report.where(status: "unconfirmed").where(scenario_id: scenario_id).where("created_at > ?", number_of_hours.hours.ago).where({reporter_id: confirmer_id, confirmer_id: reporter_id}).where({reporters_faction_id: confirmers_faction_id, confirmers_faction_id: reporters_faction_id}).where(result: opposite_results).first

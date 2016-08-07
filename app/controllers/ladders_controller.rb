@@ -15,7 +15,7 @@ class LaddersController < ApplicationController
   end
 
   def show
-
+    @config = @ladder.ladder_config
   end
 
   def new

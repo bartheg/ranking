@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe ReportsToCalculateFinderService, type: :service do
 
   before(:context) do
+    create :default_config
     @game = create :wesnoth
     @ladder = create :wesnoth_ladder, game: @game
     @blitz_ladder = create :wesnoth_blitz_ladder, game: @game
@@ -25,7 +26,7 @@ RSpec.describe ReportsToCalculateFinderService, type: :service do
     @profileD = create :sun_tzu, name: "Suvorov", user: @userD
     @profileE = create :sun_tzu, name: "Gandhi", user: @userE
     @profileF = create :sun_tzu, name: "Hitler", user: @userF
-    @config = create :default_config, is_default: false, ladder: @ladder
+    # @config = create :default_config, is_default: false, ladder: @ladder
   end
 
   after(:context) do

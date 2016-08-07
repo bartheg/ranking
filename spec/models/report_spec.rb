@@ -2,6 +2,14 @@ require 'rails_helper'
 
 RSpec.describe Report, type: :model do
 
+  before(:context) do
+    create :default_config
+  end
+
+  after(:context) do
+    LadderConfig.destroy_all
+  end
+
   describe 'validations' do
     before do
       @user1 = User.create!(email:"qweasd@qwe.pl", password:'asdqwe123123')
@@ -62,6 +70,7 @@ RSpec.describe Report, type: :model do
   describe '#handle_possible_confirmation' do
 
     before(:context) do
+      create(:default_config)
       @game = create :wesnoth
       @ladder = create :wesnoth_ladder, game: @game
       @scenario1 = create :freelands, ladder: @ladder
@@ -73,7 +82,6 @@ RSpec.describe Report, type: :model do
       @user2 = create :user_from_poland
       @profile1 = create :sun_tzu, user: @user1
       @profile2 = create :panther, user: @user2
-      @config = create :default_config, is_default: false, ladder: @ladder
     end
 
     after(:context) do
@@ -220,6 +228,7 @@ RSpec.describe Report, type: :model do
   describe '#previous' do
 
     before(:context) do
+      create(:default_config)
       @game = create :wesnoth
       @ladder = create :wesnoth_ladder, game: @game
       @scenario1 = create :freelands, ladder: @ladder
@@ -231,7 +240,6 @@ RSpec.describe Report, type: :model do
       @user2 = create :user_from_poland
       @profile1 = create :sun_tzu, user: @user1
       @profile2 = create :panther, user: @user2
-      @config = create :default_config, is_default: false, ladder: @ladder
     end
 
     after(:context) do
@@ -292,4 +300,56 @@ RSpec.describe Report, type: :model do
 
   end
 
+  describe 'by_profile' do
+
+    before(:context) do
+      create(:default_config)
+      @game = create :wesnoth
+      @ladder = create :wesnoth_ladder, game: @game
+      @blitz_ladder = create :wesnoth_blitz_ladder, game: @game
+      @scenario1 = create :freelands, ladder: @ladder
+      @scenario2 = create :basilisk, ladder: @ladder
+      @scenario1b = create :freelands, ladder: @blitz_ladder
+      @scenario2b = create :basilisk, ladder: @blitz_ladder
+      @victory = create :victory, game: @game
+      @defeat = create :defeat, game: @game
+      @draw = create :draw, game: @game
+      @userA = create :user_from_china
+      @userB = create :user_from_poland
+      @userC = create :user_from_china, email: "usa@usa.us", password: "usa23edwjeio23"
+      @userD = create :user_from_china, email: "russia@russia.ru", password: "russia23fdweiofj23"
+      @userE = create :user_from_china, email: "indoa@india.id", password: "india23edwjeio23"
+      @profileA = create :sun_tzu, user: @userA
+      @profileB = create :panther, user: @userB
+      @profileC = create :sun_tzu, name: "Patton", user: @userC
+      @profileD = create :sun_tzu, name: "Suvorov", user: @userD
+      @profileE = create :sun_tzu, name: "Gandhi", user: @userE
+    end
+
+    after(:context) do
+      LadderConfig.destroy_all
+      Profile.destroy_all
+      User.destroy_all
+      PossibleResult.destroy_all
+      Scenario.destroy_all
+      Ladder.destroy_all
+      Game.destroy_all
+    end
+
+    before(:example) do
+      @reportAB =  Report.create!(scenario: @scenario1, reporter: @profileA, confirmer: @profileB, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :calculated)
+      @reportCD = Report.create!(scenario: @scenario2b, reporter: @profileC, confirmer: @profileD, reporters_faction_id: 1, confirmers_faction_id: 2, result: @defeat, status: :confirmed)
+      @reportAD =  Report.create!(scenario_id: @scenario1.id, reporter: @profileA, confirmer: @profileD, reporters_faction_id: 1, confirmers_faction_id: 2, result: @draw, status: :unconfirmed)
+    end
+
+    it 'returns empty collection if no reports by given profile' do
+      expect(Report.by_profile(@profileE)).to be_empty
+    end
+
+    it 'returns collection of 2 reports for profileD' do
+      expect(Report.by_profile(@profileD)).to include(@reportAD, @reportCD)
+    end
+
+
+  end
 end

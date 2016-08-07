@@ -31,8 +31,9 @@ class LadderConfigsController < ApplicationController
       flash[:notice] = "Default ladder config updated successfully."
       redirect_to edit_ladder_config_path(@ladder_config)
     else
-      @pages = Page.order('position ASC')
-      @section_count = LadderConfig.count
+      # wtf was that?
+      # @pages = Page.order('position ASC')
+      # @section_count = LadderConfig.count
       render 'edit'
     end
   end

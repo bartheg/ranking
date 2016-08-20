@@ -160,13 +160,6 @@ RSpec.describe ReportsCalculatingService, type: :service do
         Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
       end
 
-      # after do
-      #   report.to_calculate!
-      #   report.save
-      #   @ladder.reload
-      #   report.reload
-      # end
-
       it 'creates two rankings' do
         expect {
           ReportsCalculatingService.new(@ladder).calculate
@@ -224,36 +217,13 @@ RSpec.describe ReportsCalculatingService, type: :service do
         Report.destroy_all
       end
 
-      # before do
-      #
-      # end
-
-      # after do
-      #   puts 'after do begin'
-      #   p @second_report
-      #   @second_report.to_calculate!
-      #   @second_report.save
-      #   @second_report.reload
-      #   @ladder.reload
-      #   puts 'after do end'
-      #   p @second_report
-      # end
-
       it 'creates two rankings' do
-        # @ladder.reload
-        # @second_report.reload
-        # @ladder.reload
         expect {
           ReportsCalculatingService.new(@ladder).calculate
         }.to change{Ranking.count}.by 2
       end
 
       it 'changes report status from to_calculate to calculated' do
-        # puts 'changes report status from to_calculate to calculated'
-        # p @second_report
-        # @ladder.reload
-        # @second_report.reload
-        # @ladder.reload
         expect {
           ReportsCalculatingService.new(@ladder).calculate
           @second_report.reload
@@ -289,7 +259,6 @@ RSpec.describe ReportsCalculatingService, type: :service do
       end
 
     end
-
 
 
   end

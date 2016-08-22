@@ -47,110 +47,110 @@ RSpec.describe ReportsCalculatingService, type: :service do
   end
 
   #private to deleting
-  describe '#collect' do
-
-    before(:context) do
-      @first_report =  Report.create!(scenario: @scenario1, reporter: @profileA, confirmer: @profileB, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
-      @second_report = Report.create!(scenario: @scenario2, reporter: @profileC, confirmer: @profileD, reporters_faction_id: 1, confirmers_faction_id: 2, result: @defeat, status: :to_calculate)
-      @third_report =  Report.create!(scenario_id: @scenario1b.id, reporter: @profileB, confirmer: @profileC, reporters_faction_id: 1, confirmers_faction_id: 2, result: @draw, status: :unconfirmed)
-      @fourth_report =  Report.create!(scenario: @scenario2b, reporter: @profileD, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :unconfirmed)
-      @fifth_report = Report.create!(scenario: @scenario2, reporter: @profileA, confirmer: @profileC, reporters_faction_id: 1, confirmers_faction_id: 2, result: @defeat, status: :unconfirmed)
-      @sixth_report =  Report.create!(scenario_id: @scenario2.id, reporter: @profileB, confirmer: @profileD, reporters_faction_id: 1, confirmers_faction_id: 2, result: @draw, status: :to_calculate)
-    end
-
-    after(:context) do
-      Report.destroy_all
-    end
-
-    it 'collect every to_calculate report in to the array' do
-      result = ReportsCalculatingService.new(@ladder).collect
-      expect(result.map {|r| r.id}).to contain_exactly(@sixth_report.id, @first_report.id, @second_report.id)
-    end
-
-    it 'returns empty Relation if no proper reports' do
-      result = ReportsCalculatingService.new(@blitz_ladder).collect
-      expect(result.map {|r| r.id}).to be_empty
-    end
-
-  end
-
-  describe '#calculate_points' do
-
-    context 'input: reporter rank: 234, confirmer rank: 432, result: 20 (reporter 20%, confirmer 80%, so confirmer won)' do
-      it 'returns -20' do
-        result = ReportsCalculatingService.new(@ladder).calculate_points(234, 432, 20)
-        expect(result).to eq -20
-      end
-    end
-
-    context 'input: reporter rank: -2200, confirmer rank: 700, result: 90 (reporter 90%, confirmer 10%, so reporter won)' do
-      it 'returns 524' do
-        result = ReportsCalculatingService.new(@ladder).calculate_points(-2200, 700, 90)
-        expect(result).to eq 524
-      end
-    end
-
-  end
-
-  describe '#from_report_to_rankings' do
-
-    it 'returns two rankings' do
-      first_report =  Report.create!(scenario: @scenario1, reporter: @profileA, confirmer: @profileB, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
-      result = ReportsCalculatingService.new(@ladder).from_report_to_rankings(first_report)
-      result.map! {|r| r.class}
-      expect(result).to eq [Ranking, Ranking]
-    end
-
-    it 'returns rankings for reporting and confirming profiles' do
-      first_report =  Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
-      result = ReportsCalculatingService.new(@ladder).from_report_to_rankings(first_report)
-      result.map! {|r| r.profile}
-      expect(result).to eq [@profileB, @profileA]
-    end
-
-    it 'returns valid rankings' do
-      first_report =  Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
-      result = ReportsCalculatingService.new(@ladder).from_report_to_rankings(first_report)
-      result.map! {|r| r.valid?}
-      expect(result).to eq [true, true]
-    end
-
-    it 'returns rankings for correct ladder' do
-      first_report =  Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
-      result = ReportsCalculatingService.new(@ladder).from_report_to_rankings(first_report)
-      result.map! {|r| r.ladder}
-      expect(result).to eq [@ladder, @ladder]
-    end
-
-    context 'unranked profiles' do
-      it 'returns rankings with correct values' do
-        first_report =  Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
-        result = ReportsCalculatingService.new(@ladder).from_report_to_rankings(first_report)
-        # default ranking is 1300
-        # so it is rank 1300 vs rank 1300, result 100
-        # points 50
-        result.map! {|r| r.value}
-        expect(result).to eq [1350, 1250]
-      end
-    end
-    context 'profiles are ranked' do
-      before(:example) do
-        report = Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :calculated)
-        Ranking.create!(ladder: @ladder, profile: @profileB, value: 1350, report: report)
-        Ranking.create!(ladder: @ladder, profile: @profileA, value: 1250, report: report)
-      end
-
-      it 'returns rankings with correct values' do
-        second_report = Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
-        result = ReportsCalculatingService.new(@ladder).from_report_to_rankings(second_report)
-        # it is rank 1350 vs rank 1250, result 100
-        # points 45
-        result.map! {|r| r.value}
-        expect(result).to eq [1395, 1205]
-      end
-    end
-
-  end
+  # describe '#collect' do
+  #
+  #   before(:context) do
+  #     @first_report =  Report.create!(scenario: @scenario1, reporter: @profileA, confirmer: @profileB, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
+  #     @second_report = Report.create!(scenario: @scenario2, reporter: @profileC, confirmer: @profileD, reporters_faction_id: 1, confirmers_faction_id: 2, result: @defeat, status: :to_calculate)
+  #     @third_report =  Report.create!(scenario_id: @scenario1b.id, reporter: @profileB, confirmer: @profileC, reporters_faction_id: 1, confirmers_faction_id: 2, result: @draw, status: :unconfirmed)
+  #     @fourth_report =  Report.create!(scenario: @scenario2b, reporter: @profileD, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :unconfirmed)
+  #     @fifth_report = Report.create!(scenario: @scenario2, reporter: @profileA, confirmer: @profileC, reporters_faction_id: 1, confirmers_faction_id: 2, result: @defeat, status: :unconfirmed)
+  #     @sixth_report =  Report.create!(scenario_id: @scenario2.id, reporter: @profileB, confirmer: @profileD, reporters_faction_id: 1, confirmers_faction_id: 2, result: @draw, status: :to_calculate)
+  #   end
+  #
+  #   after(:context) do
+  #     Report.destroy_all
+  #   end
+  #
+  #   it 'collect every to_calculate report in to the array' do
+  #     result = ReportsCalculatingService.new(@ladder).collect
+  #     expect(result.map {|r| r.id}).to contain_exactly(@sixth_report.id, @first_report.id, @second_report.id)
+  #   end
+  #
+  #   it 'returns empty Relation if no proper reports' do
+  #     result = ReportsCalculatingService.new(@blitz_ladder).collect
+  #     expect(result.map {|r| r.id}).to be_empty
+  #   end
+  #
+  # end
+  #
+  # describe '#calculate_points' do
+  #
+  #   context 'input: reporter rank: 234, confirmer rank: 432, result: 20 (reporter 20%, confirmer 80%, so confirmer won)' do
+  #     it 'returns -20' do
+  #       result = ReportsCalculatingService.new(@ladder).calculate_points(234, 432, 20)
+  #       expect(result).to eq -20
+  #     end
+  #   end
+  #
+  #   context 'input: reporter rank: -2200, confirmer rank: 700, result: 90 (reporter 90%, confirmer 10%, so reporter won)' do
+  #     it 'returns 524' do
+  #       result = ReportsCalculatingService.new(@ladder).calculate_points(-2200, 700, 90)
+  #       expect(result).to eq 524
+  #     end
+  #   end
+  #
+  # end
+  #
+  # describe '#from_report_to_rankings' do
+  #
+  #   it 'returns two rankings' do
+  #     first_report =  Report.create!(scenario: @scenario1, reporter: @profileA, confirmer: @profileB, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
+  #     result = ReportsCalculatingService.new(@ladder).from_report_to_rankings(first_report)
+  #     result.map! {|r| r.class}
+  #     expect(result).to eq [Ranking, Ranking]
+  #   end
+  #
+  #   it 'returns rankings for reporting and confirming profiles' do
+  #     first_report =  Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
+  #     result = ReportsCalculatingService.new(@ladder).from_report_to_rankings(first_report)
+  #     result.map! {|r| r.profile}
+  #     expect(result).to eq [@profileB, @profileA]
+  #   end
+  #
+  #   it 'returns valid rankings' do
+  #     first_report =  Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
+  #     result = ReportsCalculatingService.new(@ladder).from_report_to_rankings(first_report)
+  #     result.map! {|r| r.valid?}
+  #     expect(result).to eq [true, true]
+  #   end
+  #
+  #   it 'returns rankings for correct ladder' do
+  #     first_report =  Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
+  #     result = ReportsCalculatingService.new(@ladder).from_report_to_rankings(first_report)
+  #     result.map! {|r| r.ladder}
+  #     expect(result).to eq [@ladder, @ladder]
+  #   end
+  #
+  #   context 'unranked profiles' do
+  #     it 'returns rankings with correct values' do
+  #       first_report =  Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
+  #       result = ReportsCalculatingService.new(@ladder).from_report_to_rankings(first_report)
+  #       # default ranking is 1300
+  #       # so it is rank 1300 vs rank 1300, result 100
+  #       # points 50
+  #       result.map! {|r| r.value}
+  #       expect(result).to eq [1350, 1250]
+  #     end
+  #   end
+  #   context 'profiles are ranked' do
+  #     before(:example) do
+  #       report = Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :calculated)
+  #       Ranking.create!(ladder: @ladder, profile: @profileB, value: 1350, report: report)
+  #       Ranking.create!(ladder: @ladder, profile: @profileA, value: 1250, report: report)
+  #     end
+  #
+  #     it 'returns rankings with correct values' do
+  #       second_report = Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
+  #       result = ReportsCalculatingService.new(@ladder).from_report_to_rankings(second_report)
+  #       # it is rank 1350 vs rank 1250, result 100
+  #       # points 45
+  #       result.map! {|r| r.value}
+  #       expect(result).to eq [1395, 1205]
+  #     end
+  #   end
+  #
+  # end
 
   describe '#calculate' do
   #this is full main method that is doing all job

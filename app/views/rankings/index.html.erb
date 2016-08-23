@@ -5,7 +5,7 @@
     <tr>
       <th>Ranking id</th>
       <th>Profile name</th>
-      <th>User id</th>
+      <th>Ladder</th>
       <th>Ranking</th>
       <th>Created at</th>
 
@@ -17,7 +17,7 @@
       <tr>
         <td><%= ranking.id %></td>
         <td><%= link_to ranking.profile.name, ranking.profile %></td>
-        <td><%= ranking.profile.user_id %></td>
+        <td><%= ranking.ladder.name %></td>
         <td><%= ranking.value %></td>
         <td><%= ranking.created_at %></td>
       </tr>

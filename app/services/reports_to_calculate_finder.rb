@@ -1,4 +1,4 @@
-class ReportsToCalculateFinderService
+class ReportsToCalculateFinder
 
   def initialize(report)
     @starting_report = report

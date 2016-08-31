@@ -48,7 +48,7 @@ class ReportsController < ApplicationController
       end
     else
       @report.reload
-      ReportsToCalculateFinderService.new(@report).tag_to_calculate
+      ReportsToCalculateFinder.new(@report).tag_to_calculate
       ReportsCalculating.new(@scenario.ladder).calculate
       redirect_to reports_path, notice: 'Report was successfully confirmed.'
     end

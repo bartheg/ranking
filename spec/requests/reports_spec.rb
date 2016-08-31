@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Report management", type: :request do
+RSpec.describe "Adding reports", type: :request do
 
   before(:context) do
     create :default_config, default_ranking: 1400
@@ -43,19 +43,17 @@ RSpec.describe "Report management", type: :request do
     get "/users/sign_in"
     expect(response).to render_template(:new)
     post "/users/sign_in", user: {email: @userA.email, password: "asdqwe123ASD", remember_me: 1}
-    expect(response).to redirect_to(root_url)
+    expect(response).to redirect_to(root_path)
 
-    # scenario_id = @scenario1.id
-    # get "/scenarios/#{scenario_id}/reports/new"
-    # expect(response).to render_template(:new)
-    #
-    # post "/widgets", :widget => {:name => "My Widget"}
-    #
-    # expect(response).to redirect_to(assigns(:widget))
-    # follow_redirect!
-    #
-    # expect(response).to render_template(:show)
-    # expect(response.body).to include("Widget was successfully created.")
+    scenario_id = @scenario1.id
+    get "/scenarios/#{scenario_id}/reports/new"
+    expect(response).to render_template(:new)
+
+    expect {
+      post "/scenarios/#{scenario_id}/reports", report: {scenario_id: scenario_id, reporter_id: @profileA.id, reporters_faction_id: 3, confirmers_name: "pantherSS-88", confirmers_faction_id: 1, result_id: @victory.id}
+    }.to change{Report.count}.from(0).to(1)
+    expect(response).to redirect_to(reports_path)
+
   end
 
 end

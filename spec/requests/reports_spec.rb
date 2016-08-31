@@ -38,8 +38,15 @@ RSpec.describe "Report management", type: :request do
     LadderConfig.destroy_all
   end
 
-  it "creates a Report and redirects to the Widget's page" do
-    # get "/widgets/new"
+
+  it "creates a Report" do
+    get "/users/sign_in"
+    expect(response).to render_template(:new)
+    post "/users/sign_in", user: {email: @userA.email, password: "asdqwe123ASD", remember_me: 1}
+    expect(response).to redirect_to(root_url)
+
+    # scenario_id = @scenario1.id
+    # get "/scenarios/#{scenario_id}/reports/new"
     # expect(response).to render_template(:new)
     #
     # post "/widgets", :widget => {:name => "My Widget"}

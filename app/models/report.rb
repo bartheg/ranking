@@ -39,7 +39,9 @@ class Report < ActiveRecord::Base
       report_to_confirm.confirmed!
       report_to_confirm.save
       @was_just_confirmation = true
+      return report_to_confirm
     end
+    self
   end
 
   def was_just_confirmation?

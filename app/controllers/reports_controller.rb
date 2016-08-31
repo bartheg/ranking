@@ -7,9 +7,14 @@ class ReportsController < ApplicationController
       @reports = @ladder.reports
 
     elsif params[:profile]
-      @profile = Profile.find(params[:profile])
-      @header = "Reports with #{@profile.name}"
-      @reports = Report.by_profile(@profile)
+      begin
+        @profile = Profile.find(params[:profile])
+        @header = "Reports for #{@profile.name}"
+        @reports = Report.by_profile(@profile)
+      rescue ActiveRecord::RecordNotFound
+        @header = "Reports for profile ID #{params[:profile]}"
+        render :no_profile_error
+      end
     else
       @header = "Reports"
       @reports = Report.all
@@ -33,7 +38,7 @@ class ReportsController < ApplicationController
 
     # new code
 
-    @report.handle_possible_confirmation
+    @report = @report.handle_possible_confirmation
 
     unless @report.was_just_confirmation?
       if @report.save
@@ -42,31 +47,11 @@ class ReportsController < ApplicationController
         render :new
       end
     else
-      redirect_to reports_path, notice: 'Report was successfully confirmed.'
+      @report.reload
       ReportsToCalculateFinderService.new(@report).tag_to_calculate
-
+      ReportsCalculatingService.new(@scenario.ladder).calculate
+      redirect_to reports_path, notice: 'Report was successfully confirmed.'
     end
-
-    # end of new code
-
-    #original code
-    # @original_report = @report.original_report
-    #
-    # if @original_report
-    #   @original_report.status = "confirmed"
-    #   if @original_report.save
-    #     redirect_to reports_path, notice: 'Report was successfully confirmed.'
-    #   else
-    #     render :new
-    #   end
-    # else
-    #   if @report.save
-    #     redirect_to reports_path, notice: 'Report was successfully created.'
-    #   else
-    #     render :new
-    #   end
-    # end
-    # end of original code
 
   end
 

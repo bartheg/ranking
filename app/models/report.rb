@@ -8,7 +8,7 @@ class Report < ActiveRecord::Base
   has_many :report_comments
   belongs_to :result, foreign_key: 'result_id', class_name: 'PossibleResult'
 
-  attr_accessor :confirmers_name
+  attr_accessor :confirmers_name, :was_just_confirmation
 
   enum status: { unconfirmed: 0, confirmed: 1, to_calculate: 2, calculated:3 }
 
@@ -37,8 +37,8 @@ class Report < ActiveRecord::Base
 
     if report_to_confirm
       report_to_confirm.confirmed!
+      report_to_confirm.was_just_confirmation = true
       report_to_confirm.save
-      @was_just_confirmation = true
       return report_to_confirm
     end
     self

@@ -36,8 +36,6 @@ class ReportsController < ApplicationController
     @scenario = Scenario.find(report_params[:scenario_id])
     @report.confirmer = Profile.where(name: report_params[:confirmers_name]).first
 
-    # new code
-
     @report = @report.handle_possible_confirmation
 
     unless @report.was_just_confirmation?
@@ -56,6 +54,8 @@ class ReportsController < ApplicationController
   end
 
   private
+
+
 
   def report_params
     params.require(:report).permit(:scenario_id, :reporter_id, :confirmers_name, :reporters_faction_id, :confirmers_faction_id, :result_id)

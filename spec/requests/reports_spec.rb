@@ -40,19 +40,59 @@ RSpec.describe "Adding reports", type: :request do
 
 
   it "creates a Report" do
+    # user signs in
     get "/users/sign_in"
     expect(response).to render_template(:new)
     post "/users/sign_in", user: {email: @userA.email, password: "asdqwe123ASD", remember_me: 1}
     expect(response).to redirect_to(root_path)
 
+    # user goes to new report page
     scenario_id = @scenario1.id
     get "/scenarios/#{scenario_id}/reports/new"
     expect(response).to render_template(:new)
 
+    # user creates a new report
     expect {
       post "/scenarios/#{scenario_id}/reports", report: {scenario_id: scenario_id, reporter_id: @profileA.id, reporters_faction_id: 3, confirmers_name: "pantherSS-88", confirmers_faction_id: 1, result_id: @victory.id}
     }.to change{Report.count}.from(0).to(1)
     expect(response).to redirect_to(reports_path)
+    expect(Report.last.status).to eq "unconfirmed"
+
+    # user signs out
+    delete "/users/sign_out"
+    expect(response).to redirect_to(root_path)
+
+    # another user signs in
+    get "/users/sign_in"
+    expect(response).to render_template(:new)
+    post "/users/sign_in", user: {email: @userB.email, password: "asd3we12ASD", remember_me: 1}
+    expect(response).to redirect_to(root_path)
+
+    # user goes to new report page (different scenario)
+    scenario_id = @scenario2.id
+    get "/scenarios/#{scenario_id}/reports/new"
+    expect(response).to render_template(:new)
+
+    # user creates a another report
+    expect {
+      post "/scenarios/#{scenario_id}/reports", report: {scenario_id: scenario_id, reporter_id: @profileB.id, reporters_faction_id: 2, confirmers_name: "Suvorov", confirmers_faction_id: 3, result_id: @victory.id}
+    }.to change{Report.count}.from(1).to(2)
+    expect(response).to redirect_to(reports_path)
+    expect(Report.last.status).to eq "unconfirmed"
+
+    # user goes to new report page (same scenario as the first user)
+    scenario_id = @scenario1.id
+    get "/scenarios/#{scenario_id}/reports/new"
+    expect(response).to render_template(:new)
+
+    # user creates a report that should be confirmation instead of a new report
+    expect {
+      post "/scenarios/#{scenario_id}/reports", report: {scenario_id: scenario_id, reporter_id: @profileB.id, reporters_faction_id: 1, confirmers_name: "Sun_Tzu", confirmers_faction_id: 3, result_id: @defeat.id}
+    }.to_not change{Report.count}
+    expect(response).to redirect_to(reports_path)
+    expect(Report.first.status).to eq "calculated"
+    expect(Ranking.count).to eq 2
+
 
   end
 

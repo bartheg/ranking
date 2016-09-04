@@ -4,9 +4,10 @@ class PagesController < ApplicationController
   end
 
   def about
+    render :about
   end
 
   def admin
   end
-  
+
 end

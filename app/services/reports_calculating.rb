@@ -1,4 +1,4 @@
-class ReportsCalculatingService
+class ReportsCalculating
 
   def initialize(ladder)
     @ladder = ladder

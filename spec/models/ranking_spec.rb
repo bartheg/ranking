@@ -68,5 +68,22 @@ RSpec.describe Ranking, type: :model do
 
   end
 
+  describe ':create' do
+    context 'when no rankings yet' do
+      it 'creates two ranked positions' do
+      report = Report.create!(scenario_id: @scenario1.id, reporter_id: @profileA.id, confirmer_id: @profileB.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "calculated")
+
+      expect {
+        Ranking.create!(report_id: report.id, value: 1450, profile_id: @profileA.id, ladder_id: @ladder.id)
+        Ranking.create!(report_id: report.id, value: 1350, profile_id: @profileB.id, ladder_id: @ladder.id)
+      }.to change{RankedPosition.count}.from(0).to(2)
+      end
+
+    end
+
+
+
+  end
+
 
 end

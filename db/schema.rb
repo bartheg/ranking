@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160620153149) do
+ActiveRecord::Schema.define(version: 20160905154300) do
 
   create_table "faction_to_scenario_assignments", force: :cascade do |t|
     t.integer  "faction_id"
@@ -110,6 +110,27 @@ ActiveRecord::Schema.define(version: 20160620153149) do
 
   add_index "profiles", ["name"], name: "index_profiles_on_name", unique: true
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id"
+
+  create_table "ranked_positions", force: :cascade do |t|
+    t.integer  "ladder_id"
+    t.integer  "profile_id"
+    t.integer  "last_score"
+    t.integer  "last_score_change"
+    t.datetime "last_match_at"
+    t.integer  "number_of_confirmed_matches"
+    t.integer  "number_of_won_matches"
+    t.integer  "scores_from_wins"
+    t.integer  "average_win_score"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "ranked_positions", ["average_win_score"], name: "index_ranked_positions_on_average_win_score"
+  add_index "ranked_positions", ["ladder_id"], name: "index_ranked_positions_on_ladder_id"
+  add_index "ranked_positions", ["last_score"], name: "index_ranked_positions_on_last_score"
+  add_index "ranked_positions", ["number_of_confirmed_matches"], name: "index_ranked_positions_on_number_of_confirmed_matches"
+  add_index "ranked_positions", ["number_of_won_matches"], name: "index_ranked_positions_on_number_of_won_matches"
+  add_index "ranked_positions", ["profile_id"], name: "index_ranked_positions_on_profile_id"
 
   create_table "rankings", force: :cascade do |t|
     t.integer  "ladder_id"

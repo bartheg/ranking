@@ -1,28 +1,11 @@
 class LeaderboardUpdater
 
   def self.update
-    profile1 = Ranking.first.profile
-    profile2 = Ranking.last.profile
-    score_gained1 = getChange(Ranking.first)
-    score_gained2 = getChange(Ranking.last)
+    rankings = Ranking.last 2
 
-    RankedPosition.create(profile: profile1, current_score: Ranking.first.value,
-      ladder: Ranking.first.ladder, last_score_gained: score_gained1,
-      last_match_at: profile1.rankings.last.report.created_at,
-      number_of_confirmed_matches: 1,
-      number_of_won_matches: (1 if profile1.rankings.last.report.result.score_factor > 50),
-      scores_from_wins: (score_gained1 > 0)? score_gained1 : 0,
-      average_win_score: ((score_gained1 > 0)? score_gained1 : 0)/1
-      )
-
-    RankedPosition.create(profile: profile2, current_score: Ranking.last.value,
-      ladder: Ranking.last.ladder, last_score_gained: score_gained2,
-      last_match_at: profile2.rankings.last.report.created_at,
-      number_of_confirmed_matches: 1,
-      number_of_won_matches: ((profile2.rankings.last.report.result.score_factor < 50)? 1 : 0),
-      scores_from_wins: (score_gained2 > 0)? score_gained2 : 0,
-      average_win_score: ((score_gained2 > 0)? score_gained2 : 0)/1
-      )
+    rankings.each do |ranking|
+      update_position(old_position(ranking), ranking)
+    end
 
   end
 
@@ -36,6 +19,64 @@ class LeaderboardUpdater
     else
       return current_score - ranking.ladder.ladder_config.default_ranking
     end
+  end
+
+  def self.old_position(ranking)
+    RankedPosition.where(profile: ranking.profile).where(ladder: ranking.ladder).first
+  end
+
+  def self.won?(profile, ranking)
+    score_factor = ranking.report.result.score_factor
+    if profile == ranking.report.reporter
+      (score_factor > 50)? true : false
+    else
+      (score_factor < 50)? true : false
+    end
+
+  end
+
+  def self.update_position(old_position, ranking)
+    profile = ranking.profile
+    score = ranking.value
+    score_gained = getChange(ranking)
+    last_match_at = ranking.report.created_at
+    won = won?(profile, ranking)
+    unless old_position
+      ladder = ranking.ladder
+      number_of_matches = 1
+      number_of_won_matches = won ? 1 : 0
+      scores_from_wins = (number_of_won_matches == 1)? score_gained : 0
+      average_win_score = (number_of_won_matches == 1)? (scores_from_wins/number_of_won_matches) : 0
+
+      RankedPosition.create(
+        profile: profile,
+        ladder: ladder,
+        current_score: score,
+        last_score_gained: score_gained,
+        last_match_at: last_match_at,
+        number_of_confirmed_matches: number_of_matches,
+        number_of_won_matches: number_of_won_matches,
+        scores_from_wins: scores_from_wins,
+        average_win_score: average_win_score
+      )
+    else
+      number_of_matches = old_position.number_of_confirmed_matches + 1
+      number_of_won_matches = old_position.number_of_won_matches + (won ? 1 : 0)
+      old_winscores = old_position.scores_from_wins
+      scores_from_wins = (won ? old_winscores + score_gained : old_winscores)
+      average_win_score = (number_of_won_matches > 0)? (scores_from_wins/number_of_won_matches) : 0
+
+      old_position.update(
+        current_score: score,
+        last_score_gained: score_gained,
+        last_match_at: last_match_at,
+        number_of_confirmed_matches: number_of_matches,
+        number_of_won_matches: number_of_won_matches,
+        scores_from_wins: scores_from_wins,
+        average_win_score: average_win_score
+      )
+    end
+
   end
 
 end

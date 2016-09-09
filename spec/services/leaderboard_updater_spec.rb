@@ -113,6 +113,181 @@ RSpec.describe ReportsCalculating, type: :service do
         ]
       end
 
+      context "one more report and two additional rankings" do
+        before :context do
+          LeaderboardUpdater.update
+          second_report = Report.create!(scenario: @scenario2, reporter: @profileA, confirmer: @profileB, reporters_faction_id: 1, confirmers_faction_id: 2, result: @defeat, status: :calculated)
+          Ranking.create!(profile: @profileA, ladder: @ladder, value: 1280, report: second_report)
+          Ranking.create!(profile: @profileB, ladder: @ladder, value: 1320, report: second_report)
+        end
+
+        after :context do
+          RankedPosition.destroy_all
+          Ranking.destroy_all
+          Report.destroy_all
+        end
+
+        it 'still has old ranked positions before update' do
+          ranked_positions = RankedPosition.all
+          actual_attributes = []
+          ranked_positions.each do |rp|
+            actual_attributes << [ rp.profile,
+                                   rp.ladder,
+                                   rp.current_score,
+                                   rp.last_score_gained,
+                                   rp.last_match_at,
+                                   rp.number_of_confirmed_matches,
+                                   rp.number_of_won_matches,
+                                   rp.scores_from_wins,
+                                   rp.average_win_score
+                                  ]
+          end
+          expect(actual_attributes).to match_array [
+            [@profileA, @ladder, 1350, 50, @profileA.rankings.first.report.created_at, 1, 1, 50, 50],
+            [@profileB, @ladder, 1250, -50, @profileB.rankings.first.report.created_at, 1, 0, 0, 0]
+          ]
+        end
+
+        it "doesn't create new ranked positions" do
+          expect { LeaderboardUpdater.update }.to_not change{RankedPosition.count}
+        end
+
+        it 'updates old ranked positions with correct profile and current_score' do
+          LeaderboardUpdater.update
+          ranked_positions = RankedPosition.all
+          actual_attributes = []
+          ranked_positions.each do |rp|
+            actual_attributes << [ rp.profile,
+                                   rp.current_score,
+                                  ]
+          end
+          expect(actual_attributes).to match_array [
+            [@profileA, 1280],
+            [@profileB, 1320]
+          ]
+        end
+
+        it 'updates old ranked positions with correct profile and last_score_gained' do
+          LeaderboardUpdater.update
+          ranked_positions = RankedPosition.all
+          actual_attributes = []
+          ranked_positions.each do |rp|
+            actual_attributes << [ rp.profile,
+                                   rp.last_score_gained,
+                                  ]
+          end
+          expect(actual_attributes).to match_array [
+            [@profileA, -70],
+            [@profileB, 70]
+          ]
+        end
+
+        it 'updates old ranked positions with correct profile and ladder' do
+          LeaderboardUpdater.update
+          ranked_positions = RankedPosition.all
+          actual_attributes = []
+          ranked_positions.each do |rp|
+            actual_attributes << [ rp.profile,
+                                   rp.ladder,
+                                  ]
+          end
+          expect(actual_attributes).to match_array [
+            [@profileA, @ladder],
+            [@profileB, @ladder]
+          ]
+        end
+
+        it 'updates old ranked positions with correct profile and last_match_at' do
+          LeaderboardUpdater.update
+          ranked_positions = RankedPosition.all
+          actual_attributes = []
+          ranked_positions.each do |rp|
+            actual_attributes << [ rp.profile,
+                                   rp.last_match_at,
+                                  ]
+          end
+          expect(actual_attributes).to match_array [
+            [@profileA, @profileA.rankings.last.report.created_at],
+            [@profileB, @profileB.rankings.last.report.created_at]
+          ]
+        end
+
+        it 'updates old ranked positions with correct profile and number_of_confirmed_matches' do
+          LeaderboardUpdater.update
+          ranked_positions = RankedPosition.all
+          actual_attributes = []
+          ranked_positions.each do |rp|
+            actual_attributes << [ rp.profile,
+                                   rp.number_of_confirmed_matches,
+                                  ]
+          end
+          expect(actual_attributes).to match_array [
+            [@profileA, 2],
+            [@profileB, 2]
+          ]
+        end
+
+        it 'updates old ranked positions with correct profile and number_of_won_matches' do
+          LeaderboardUpdater.update
+          ranked_positions = RankedPosition.all
+          actual_attributes = []
+          ranked_positions.each do |rp|
+            actual_attributes << [ rp.profile,
+                                   rp.number_of_won_matches,
+                                  ]
+          end
+          expect(actual_attributes).to match_array [
+            [@profileA, 1],
+            [@profileB, 1]
+          ]
+        end
+
+        # it 'updates old ranked positions with correct values' do
+        #   LeaderboardUpdater.update
+        #   ranked_positions = RankedPosition.all
+        #   actual_attributes = []
+        #   ranked_positions.each do |rp|
+        #     actual_attributes << [ rp.profile,
+        #                            rp.ladder,
+        #                            rp.current_score,
+        #                            rp.last_score_gained,
+        #                            rp.last_match_at,
+        #                            rp.number_of_confirmed_matches,
+        #                            rp.number_of_won_matches,
+        #                            rp.scores_from_wins,
+        #                            rp.average_win_score
+        #                           ]
+        #   end
+        #   expect(actual_attributes).to match_array [
+        #     [@profileA, @ladder, 1350, 50, @profileA.rankings.first.report.created_at, 1, 1, 50, 50],
+        #     [@profileB, @ladder, 1250, -50, @profileB.rankings.first.report.created_at, 1, 0, 0, 0]
+        #   ]
+        # end
+        #
+        # it 'updates old ranked positions with correct values' do
+        #   LeaderboardUpdater.update
+        #   ranked_positions = RankedPosition.all
+        #   actual_attributes = []
+        #   ranked_positions.each do |rp|
+        #     actual_attributes << [ rp.profile,
+        #                            rp.ladder,
+        #                            rp.current_score,
+        #                            rp.last_score_gained,
+        #                            rp.last_match_at,
+        #                            rp.number_of_confirmed_matches,
+        #                            rp.number_of_won_matches,
+        #                            rp.scores_from_wins,
+        #                            rp.average_win_score
+        #                           ]
+        #   end
+        #   expect(actual_attributes).to match_array [
+        #     [@profileA, @ladder, 1350, 50, @profileA.rankings.first.report.created_at, 1, 1, 50, 50],
+        #     [@profileB, @ladder, 1250, -50, @profileB.rankings.first.report.created_at, 1, 0, 0, 0]
+        #   ]
+        # end
+        #
+      end
+
     end
 
   end

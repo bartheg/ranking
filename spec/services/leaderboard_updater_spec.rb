@@ -242,50 +242,89 @@ RSpec.describe ReportsCalculating, type: :service do
           ]
         end
 
-        # it 'updates old ranked positions with correct values' do
-        #   LeaderboardUpdater.update
-        #   ranked_positions = RankedPosition.all
-        #   actual_attributes = []
-        #   ranked_positions.each do |rp|
-        #     actual_attributes << [ rp.profile,
-        #                            rp.ladder,
-        #                            rp.current_score,
-        #                            rp.last_score_gained,
-        #                            rp.last_match_at,
-        #                            rp.number_of_confirmed_matches,
-        #                            rp.number_of_won_matches,
-        #                            rp.scores_from_wins,
-        #                            rp.average_win_score
-        #                           ]
-        #   end
-        #   expect(actual_attributes).to match_array [
-        #     [@profileA, @ladder, 1350, 50, @profileA.rankings.first.report.created_at, 1, 1, 50, 50],
-        #     [@profileB, @ladder, 1250, -50, @profileB.rankings.first.report.created_at, 1, 0, 0, 0]
-        #   ]
-        # end
-        #
-        # it 'updates old ranked positions with correct values' do
-        #   LeaderboardUpdater.update
-        #   ranked_positions = RankedPosition.all
-        #   actual_attributes = []
-        #   ranked_positions.each do |rp|
-        #     actual_attributes << [ rp.profile,
-        #                            rp.ladder,
-        #                            rp.current_score,
-        #                            rp.last_score_gained,
-        #                            rp.last_match_at,
-        #                            rp.number_of_confirmed_matches,
-        #                            rp.number_of_won_matches,
-        #                            rp.scores_from_wins,
-        #                            rp.average_win_score
-        #                           ]
-        #   end
-        #   expect(actual_attributes).to match_array [
-        #     [@profileA, @ladder, 1350, 50, @profileA.rankings.first.report.created_at, 1, 1, 50, 50],
-        #     [@profileB, @ladder, 1250, -50, @profileB.rankings.first.report.created_at, 1, 0, 0, 0]
-        #   ]
-        # end
-        #
+        context "one more report and two additional rankings but with a player in this ladder" do
+          before :context do
+            LeaderboardUpdater.update
+            third_report = Report.create!(scenario: @scenario1, reporter: @profileA, confirmer: @profileC, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :calculated)
+            Ranking.create!(profile: @profileA, ladder: @ladder, value: 1334, report: third_report)
+            Ranking.create!(profile: @profileC, ladder: @ladder, value: 1246, report: third_report)
+          end
+
+          after :context do
+            RankedPosition.destroy_all
+            Ranking.destroy_all
+            Report.destroy_all
+          end
+
+          it 'still has old ranked positions before update' do
+            ranked_positions = RankedPosition.all
+            actual_attributes = []
+            ranked_positions.each do |rp|
+              actual_attributes << [ rp.profile,
+                                     rp.ladder,
+                                     rp.current_score,
+                                     rp.last_score_gained,
+                                     rp.last_match_at,
+                                     rp.number_of_confirmed_matches,
+                                     rp.number_of_won_matches,
+                                     rp.scores_from_wins,
+                                     rp.average_win_score
+                                    ]
+            end
+            expect(actual_attributes).to match_array [
+              [@profileA, @ladder, 1280, -70, @profileA.rankings.second.report.created_at, 2, 1, 50, 50],
+              [@profileB, @ladder, 1320, 70, @profileB.rankings.second.report.created_at, 2, 1, 70, 70]
+            ]
+          end
+
+          it "creates one new ranked positions" do
+            expect { LeaderboardUpdater.update }.to change{RankedPosition.count}.from(2).to(3)
+          end
+
+          it 'updates two old ranked positions and creates one new with correct
+              profile, ladder, current_score, and last_score_gaines' do
+            LeaderboardUpdater.update
+            ranked_positions = RankedPosition.all
+            actual_attributes = []
+            ranked_positions.each do |rp|
+              actual_attributes << [ rp.profile.id,
+                                     rp.ladder.id,
+                                     rp.current_score,
+                                     rp.last_score_gained
+                                    ]
+            end
+            expect(actual_attributes).to match_array [
+              [@profileA.id, @ladder.id, 1334, 54],
+              [@profileB.id, @ladder.id, 1320, 70],
+              [@profileC.id, @ladder.id, 1246, -54]
+            ]
+          end
+
+          it 'updates two old ranked positions and creates one new with correct
+              profile, last_match_at, number_of_confirmed_matches,
+              number_of_won_matches, scores_from_wins, average_win_score' do
+            LeaderboardUpdater.update
+            ranked_positions = RankedPosition.all
+            actual_attributes = []
+            ranked_positions.each do |rp|
+              actual_attributes << [ rp.profile.id,
+                                      rp.last_match_at,
+                                      rp.number_of_confirmed_matches,
+                                      rp.number_of_won_matches,
+                                      rp.scores_from_wins,
+                                      rp.average_win_score
+                                    ]
+            end
+            expect(actual_attributes).to match_array [
+              [@profileA.id, @profileA.rankings.last.report.created_at, 3, 2, 104, 52],
+              [@profileB.id, @profileB.rankings.last.report.created_at, 2, 1, 70, 70],
+              [@profileC.id, @profileC.rankings.last.report.created_at, 1, 0, 0, 0]
+            ]
+          end
+
+        end
+
+
       end
 
     end

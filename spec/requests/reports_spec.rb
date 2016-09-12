@@ -92,7 +92,7 @@ RSpec.describe "Adding reports", type: :request do
     expect(response).to redirect_to(reports_path)
     expect(Report.first.status).to eq "calculated"
     expect(Ranking.count).to eq 2
-
+    expect(RankedPosition.count).to eq 2
 
   end
 

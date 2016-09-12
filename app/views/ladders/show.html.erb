@@ -41,3 +41,5 @@
     <%= link_to 'Create a new ladder ranking config', new_ladder_ladder_config_path(@ladder), class: "btn btn-success" %>
   <% end %>
 <% end %>
+
+<%= render partial: "ranked_positions_index", locals: {ranked_positions: @ranked_positions} %>

@@ -16,6 +16,7 @@ class LaddersController < ApplicationController
 
   def show
     @config = @ladder.ladder_config
+    @ranked_positions = @ladder.ranked_positions
   end
 
   def new

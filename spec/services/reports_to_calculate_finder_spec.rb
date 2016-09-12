@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ReportsToCalculateFinderService, type: :service do
+RSpec.describe ReportsToCalculateFinder, type: :service do
 
   before(:context) do
     create :default_config
@@ -44,7 +44,7 @@ RSpec.describe ReportsToCalculateFinderService, type: :service do
       reporters_faction_id: 1, confirmers_faction_id: 2,
       result: @victory, status: :confirmed)
     expect do
-      ReportsToCalculateFinderService.new(one_report).tag_to_calculate
+      ReportsToCalculateFinder.new(one_report).tag_to_calculate
       one_report.reload
     end.to change{one_report.status}.from('confirmed').to('to_calculate')
   end
@@ -55,7 +55,7 @@ RSpec.describe ReportsToCalculateFinderService, type: :service do
   #     result: @draw, status: "confirmed")
   #     @ladder.reload
   #   expect do
-  #     ReportsToCalculateFinderService.new(@ladder).tag_to_calculate
+  #     ReportsToCalculateFinder.new(@ladder).tag_to_calculate
   #     wrong_ladder_report.reload
   #   end.to_not change{wrong_ladder_report.status}
   # end
@@ -71,14 +71,14 @@ RSpec.describe ReportsToCalculateFinderService, type: :service do
   #   it 'turns status to :to_calculate for the first confirmed report' do
   #     ladder = Ladder.find(@first_report.scenario.ladder.id)
   #     expect do
-  #       ReportsToCalculateFinderService.new(ladder).tag_to_calculate
+  #       ReportsToCalculateFinder.new(ladder).tag_to_calculate
   #       @first_report.reload
   #     end.to change{@first_report.status}.from('confirmed').to('to_calculate')
   #   end
   #
   #   it 'turns status to :to_calculate for the second confirmed report' do
   #     @ladder.reload
-  #     ReportsToCalculateFinderService.new(@ladder).tag_to_calculate
+  #     ReportsToCalculateFinder.new(@ladder).tag_to_calculate
   #     @second_report.reload
   #     expect(@second_report.status).to eq 'to_calculate'
   #   end
@@ -86,7 +86,7 @@ RSpec.describe ReportsToCalculateFinderService, type: :service do
   #   it 'turns status to :to_calculate for the third confirmed report' do
   #     @ladder.reload
   #     expect do
-  #       ReportsToCalculateFinderService.new(@ladder).tag_to_calculate
+  #       ReportsToCalculateFinder.new(@ladder).tag_to_calculate
   #       @third_report.reload
   #     end.to change(@third_report, :status).from('confirmed').to('to_calculate')
   #   end
@@ -106,7 +106,7 @@ RSpec.describe ReportsToCalculateFinderService, type: :service do
 
     it 'it doesn\'t tag to calculate when it find a unconfirmed previous reports' do
       @sixth_report.update(status: :confirmed)
-      ReportsToCalculateFinderService.new(@sixth_report).tag_to_calculate
+      ReportsToCalculateFinder.new(@sixth_report).tag_to_calculate
       @first_report.reload
       @second_report.reload
       @third_report.reload
@@ -123,7 +123,7 @@ RSpec.describe ReportsToCalculateFinderService, type: :service do
       @third_report.update(status: :to_calculate)
       @fourth_report.update(status: :calculated)
       @sixth_report.update(status: :confirmed)
-      ReportsToCalculateFinderService.new(@sixth_report).tag_to_calculate
+      ReportsToCalculateFinder.new(@sixth_report).tag_to_calculate
       @first_report.reload
       @second_report.reload
       @third_report.reload
@@ -145,7 +145,7 @@ RSpec.describe ReportsToCalculateFinderService, type: :service do
       @sixth_report.update(status: :confirmed)
       @seventh_report = Report.create!(scenario_id: @scenario1.id, reporter: @profileB, confirmer: @profileE, reporters_faction_id: 1, confirmers_faction_id: 2, result: @draw, status: :unconfirmed)
       @eighth_report = Report.create!(scenario_id: @scenario1.id, reporter: @profileA, confirmer: @profileE, reporters_faction_id: 1, confirmers_faction_id: 2, result: @draw, status: :confirmed)
-      ReportsToCalculateFinderService.new(@fourth_report).tag_to_calculate
+      ReportsToCalculateFinder.new(@fourth_report).tag_to_calculate
       @first_report.reload
       @second_report.reload
       @third_report.reload

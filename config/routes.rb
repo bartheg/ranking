@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :rankings, only: :index
+
   resources :ladder_configs, only: [:edit, :update]
 
   devise_for :users

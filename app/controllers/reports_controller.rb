@@ -7,9 +7,14 @@ class ReportsController < ApplicationController
       @reports = @ladder.reports
 
     elsif params[:profile]
-      @profile = Profile.find(params[:profile])
-      @header = "Reports with #{@profile.name}"
-      @reports = Report.by_profile(@profile)
+      begin
+        @profile = Profile.find(params[:profile])
+        @header = "Reports for #{@profile.name}"
+        @reports = Report.by_profile(@profile)
+      rescue ActiveRecord::RecordNotFound
+        @header = "Reports for profile ID #{params[:profile]}"
+        render :no_profile_error
+      end
     else
       @header = "Reports"
       @reports = Report.all
@@ -31,9 +36,7 @@ class ReportsController < ApplicationController
     @scenario = Scenario.find(report_params[:scenario_id])
     @report.confirmer = Profile.where(name: report_params[:confirmers_name]).first
 
-    # new code
-
-    @report.handle_possible_confirmation
+    @report = @report.handle_possible_confirmation
 
     unless @report.was_just_confirmation?
       if @report.save
@@ -42,35 +45,18 @@ class ReportsController < ApplicationController
         render :new
       end
     else
+      @report.reload
+      ReportsToCalculateFinder.new(@report).tag_to_calculate
+      ReportsCalculating.new(@scenario.ladder).calculate
+      LeaderboardUpdater.update
       redirect_to reports_path, notice: 'Report was successfully confirmed.'
-      ReportsToCalculateFinderService.new(@report).tag_to_calculate
-
     end
-
-    # end of new code
-
-    #original code
-    # @original_report = @report.original_report
-    #
-    # if @original_report
-    #   @original_report.status = "confirmed"
-    #   if @original_report.save
-    #     redirect_to reports_path, notice: 'Report was successfully confirmed.'
-    #   else
-    #     render :new
-    #   end
-    # else
-    #   if @report.save
-    #     redirect_to reports_path, notice: 'Report was successfully created.'
-    #   else
-    #     render :new
-    #   end
-    # end
-    # end of original code
 
   end
 
   private
+
+
 
   def report_params
     params.require(:report).permit(:scenario_id, :reporter_id, :confirmers_name, :reporters_faction_id, :confirmers_faction_id, :result_id)

@@ -6,6 +6,7 @@ class Ladder < ActiveRecord::Base
   has_many :reports, through: :scenarios
   has_many :rankings
   has_one :ladder_config
+  has_many :ranked_positions
 
 
   validates :name, presence: true

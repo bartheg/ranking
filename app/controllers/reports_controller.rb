@@ -48,6 +48,7 @@ class ReportsController < ApplicationController
       @report.reload
       ReportsToCalculateFinder.new(@report).tag_to_calculate
       ReportsCalculating.new(@scenario.ladder).calculate
+      LeaderboardUpdater.update
       redirect_to reports_path, notice: 'Report was successfully confirmed.'
     end
 

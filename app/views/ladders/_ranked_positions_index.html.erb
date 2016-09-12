@@ -1,0 +1,34 @@
+<h1>Leaderboard</h1>
+<% if ranked_positions.any? %>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Profile name</th>
+        <th>User ID</th>
+        <th>Current score</th>
+        <th>Last score change</th>
+        <th>Number of matche</th>
+        <th>Number of wins</th>
+        <th>Average score per win</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% ranked_positions.each do |position| %>
+        <tr>
+          <td><%= position.profile.name %></td>
+          <td><%= position.profile.user.id %></td>
+          <td><%= position.current_score %></td>
+          <td><%= position.last_score_gained %></td>
+          <td><%= position.number_of_won_matches %></td>
+          <td><%= position.average_win_score %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<% else %>
+ <p> Nothing to display. </p>
+<% end %>

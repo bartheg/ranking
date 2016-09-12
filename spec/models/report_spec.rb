@@ -136,9 +136,9 @@ RSpec.describe Report, type: :model do
       report_to_confirmed.save!
       subject = Report.new(scenario_id: @scenario1.id, reporter_id: @profile2.id, confirmer_id: @profile1.id, reporters_faction_id: 2, confirmers_faction_id: 1, result_id: @defeat.id, status: "unconfirmed")
 
-      subject.handle_possible_confirmation
+      report = subject.handle_possible_confirmation
 
-      expect(subject.was_just_confirmation?).to be true
+      expect(report.was_just_confirmation?).to be true
     end
 
     it 'does nothing when the previous report is too old' do

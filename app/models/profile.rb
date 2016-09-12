@@ -7,6 +7,7 @@ class Profile < ActiveRecord::Base
 
   has_many :report_comments
 
+  has_many :ranked_positions
   # has_many :profile_name_edits
 
   before_save :make_default_if_there_are_not_any

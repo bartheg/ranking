@@ -10,7 +10,7 @@ class LaddersController < ApplicationController
 
     else
       @header = "Ladders"
-      @ladders = Ladder.all
+      @ladders = Ladder.includes(:game, :scenarios)
     end
   end
 

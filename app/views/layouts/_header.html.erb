@@ -19,9 +19,7 @@
           Notifications <span class="badge number-of-notifications"><%= @reports_to_confirm_number %></span><span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-          <% if @reports_to_confirm_number > 0 %>
-            <li role="presentation"><%= link_to "Reports to confirm (#{@reports_to_confirm_number})", '#' %></li>
-          <% end %>
+          <li role="presentation"><%= link_to "Reports (#{@reports_to_confirm_number} to confirm)", user_reports_path(current_user) %></li>
         </ul>
       </li>
 

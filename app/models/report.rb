@@ -56,6 +56,10 @@ class Report < ActiveRecord::Base
     Report.where(["reporter_id = ? OR confirmer_id = ?", profile.id, profile.id])
   end
 
+  def self.to_confirm_by_user(user)
+    Report.where(confirmer: user.profiles).unconfirmed.count
+  end
+
   private
 
   def original_report

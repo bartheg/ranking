@@ -26,7 +26,12 @@ class ReportsController < ApplicationController
     end
   end
 
-### copyed
+  def confirm
+    report = Report.find(params[:id])
+    report.confirm
+    redirect_to user_reports_path(params[:user_id])
+  end
+
   def new
     @report = Report.new
     if params[:scenario_id]

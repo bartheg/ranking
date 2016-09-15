@@ -15,9 +15,14 @@ class ReportsController < ApplicationController
         @header = "Reports for profile ID #{params[:profile]}"
         render :no_profile_error
       end
+    elsif params[:user_id]
+      user = User.find(params[:user_id])
+      @reports = Report.where(["reporter_id = ? OR confirmer_id = ?", user.profiles.pluck(:id), user.profiles.pluck(:id)])
+
     else
       @header = "Reports"
       @reports = Report.all
+
     end
   end
 

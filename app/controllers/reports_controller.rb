@@ -29,7 +29,10 @@ class ReportsController < ApplicationController
   def confirm
     report = Report.find(params[:id])
     report.confirm
-    redirect_to user_reports_path(params[:user_id])
+    ReportsToCalculateFinder.new(report).tag_to_calculate
+    ReportsCalculating.new(report.scenario.ladder).calculate
+    LeaderboardUpdater.update
+    redirect_to user_reports_path(params[:user_id]), notice: 'Report was successfully confirmed.'
   end
 
   def new

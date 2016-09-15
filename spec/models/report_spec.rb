@@ -412,7 +412,39 @@ RSpec.describe Report, type: :model do
       expect(Report.to_confirm_by_user(@userD)).to eq 2
     end
 
+  end
+
+  describe '#confirm' do
+
+    before(:context) do
+      @userA = create :user_from_china
+      @userB = create :user_from_poland
+      @profileA = create :sun_tzu, user: @userA
+      @profileB = create :panther, user: @userB
+    end
+
+    after(:context) do
+      Profile.destroy_all
+      User.destroy_all
+    end
+
+    it 'changes the report\'s status to confirmed' do
+      report =  Report.create!(scenario_id: 1, reporter: @profileA, confirmer: @profileB, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: 1, status: :unconfirmed)
+      expect{report.confirm}.to change{report.status}.from('unconfirmed').to('confirmed')
+    end
+
+    it "doesn't change the report's status if the status is calculated" do
+      report =  Report.create!(scenario_id: 1, reporter: @profileA, confirmer: @profileB, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: 1, status: :calculated)
+      expect{report.confirm}.to_not change{report.status}
+    end
+
+    it "doesn't change the report's status if the status is to_calculate" do
+      report =  Report.create!(scenario_id: 1, reporter: @profileA, confirmer: @profileB, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: 1, status: :to_calculate)
+      expect{report.confirm}.to_not change{report.status}
+    end
 
 
   end
+
+
 end

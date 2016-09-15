@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :profiles, only: :index
+    resources :reports, only: :index
   end
 
   resources :games do

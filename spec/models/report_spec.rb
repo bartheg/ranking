@@ -352,4 +352,67 @@ RSpec.describe Report, type: :model do
 
 
   end
+
+  describe 'to_confirm_by_user' do
+
+    before(:context) do
+      create(:default_config)
+      @game = create :wesnoth
+      @ladder = create :wesnoth_ladder, game: @game
+      @blitz_ladder = create :wesnoth_blitz_ladder, game: @game
+      @scenario1 = create :freelands, ladder: @ladder
+      @scenario2 = create :basilisk, ladder: @ladder
+      @scenario1b = create :freelands, ladder: @blitz_ladder
+      @scenario2b = create :basilisk, ladder: @blitz_ladder
+      @victory = create :victory, game: @game
+      @defeat = create :defeat, game: @game
+      @draw = create :draw, game: @game
+      @userA = create :user_from_china
+      @userB = create :user_from_poland
+      @userC = create :user_from_china, email: "usa@usa.us", password: "usa23edwjeio23"
+      @userD = create :user_from_china, email: "russia@russia.ru", password: "russia23fdweiofj23"
+      @userE = create :user_from_china, email: "indoa@india.id", password: "india23edwjeio23"
+      @profileA = create :sun_tzu, user: @userA
+      @profileB = create :panther, user: @userB
+      @profileC = create :sun_tzu, name: "Patton", user: @userC
+      @profileD = create :sun_tzu, name: "Suvorov", user: @userD
+      @profileE = create :sun_tzu, name: "Gandhi", user: @userE
+    end
+
+    after(:context) do
+      Profile.destroy_all
+      User.destroy_all
+      PossibleResult.destroy_all
+      Scenario.destroy_all
+      Ladder.destroy_all
+      Game.destroy_all
+      LadderConfig.destroy_all
+    end
+
+    before(:example) do
+      @reportAB =  Report.create!(scenario: @scenario1, reporter: @profileA, confirmer: @profileB, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :calculated)
+      @reportCD = Report.create!(scenario: @scenario2b, reporter: @profileC, confirmer: @profileD, reporters_faction_id: 1, confirmers_faction_id: 2, result: @defeat, status: :unconfirmed)
+      @reportAD =  Report.create!(scenario_id: @scenario1.id, reporter: @profileA, confirmer: @profileD, reporters_faction_id: 1, confirmers_faction_id: 2, result: @draw, status: :unconfirmed)
+      @reportBA =  Report.create!(scenario_id: @scenario1.id, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @draw, status: :unconfirmed)
+    end
+
+    it 'returns correct number of reports that should be confirmed by user' do
+      expect(Report.to_confirm_by_user(@userA)).to eq 1
+    end
+
+    it 'returns correct number of reports that should be confirmed by user' do
+      expect(Report.to_confirm_by_user(@userB)).to eq 0
+    end
+
+    it 'returns correct number of reports that should be confirmed by user' do
+      expect(Report.to_confirm_by_user(@userC)).to eq 0
+    end
+
+    it 'returns correct number of reports that should be confirmed by user' do
+      expect(Report.to_confirm_by_user(@userD)).to eq 2
+    end
+
+
+
+  end
 end

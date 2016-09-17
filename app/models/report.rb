@@ -60,6 +60,10 @@ class Report < ActiveRecord::Base
     Report.where(confirmer: user.profiles).unconfirmed.count
   end
 
+  def confirm
+    self.confirmed! if self.unconfirmed?
+  end
+
   private
 
   def original_report

@@ -11,6 +11,7 @@
       <th>Confirmer</th>
       <th>Winner</th>
       <th>Status</th>
+      <th>Action</th>
     </tr>
   </thead>
 
@@ -35,6 +36,10 @@
         <td>
           <%= report.status %>
         </td>
+        <td>
+          <%= link_to 'Confirm', confirm_report_path(id: report, user_id: current_user), method: :patch, class: "btn" %>
+        </td>
+
       </tr>
     <% end %>
   </tbody>

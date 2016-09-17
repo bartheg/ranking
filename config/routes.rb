@@ -4,6 +4,13 @@ Rails.application.routes.draw do
 
   resources :ladder_configs, only: [:edit, :update]
 
+  resources :reports, only: [:edit, :update]
+
+  resources :reports do
+    member do
+      patch 'confirm'
+    end
+  end
   devise_for :users
 
   resources :users do

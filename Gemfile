@@ -12,6 +12,7 @@ gem 'turbolinks', '2.5.3'
 gem 'devise', '3.5.6'
 gem 'bootstrap-sass', '3.3.6 '
 gem "cocoon"
+gem "rolify"
 
 gem 'rspec-rails', '3.4.2', group: [:test, :development]
 gem 'factory_girl_rails', group: [:test, :development]

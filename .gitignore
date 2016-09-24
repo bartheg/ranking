@@ -11,10 +11,6 @@
 .ruby-version
 .rspec
 
-README.rdoc
-mind_map.vym
-Ladder App.xmind
-*calculated algorithm.ods*
 
 # Ignore the default SQLite database.
 /db/*.sqlite3

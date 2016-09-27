@@ -1,4 +1,4 @@
-:super_admin (the first user account, total control, there can be only one)
+:super_admin (the first user account, created by install action, total control, there can be only one)
 
 :admin (total control except of deleting other :admins or :super_admin)
 

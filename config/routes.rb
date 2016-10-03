@@ -43,6 +43,12 @@ Rails.application.routes.draw do
 
   get 'pages/admin'
 
+  devise_scope :user do
+    get 'install', to: 'new_super_admin#new'
+    post 'create_super_admin', to: 'create_super_admin#create'
+    # get 'sign_in', to: 'devise/sessions#new'
+  end
+
 
   get 'pages/access_denied'
 

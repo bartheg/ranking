@@ -1,5 +1,88 @@
-# require 'rails_helper'
-#
-# RSpec.describe User, type: :model do
-#   pending "add some examples to (or delete) #{__FILE__}"
-# end
+require 'rails_helper'
+
+RSpec.describe User, type: :model do
+
+  describe "scopes" do
+    before :context do
+
+      create :default_config, default_ranking: 1400
+      @game = create :wesnoth
+      @ladder = create :wesnoth_ladder, game: @game
+      @blitz_ladder = create :wesnoth_blitz_ladder, game: @game
+
+      @u_sa = User.create!(email: "auuh@sadmin.com", password: "asdqwezxc1123")
+      @u_vsa = User.create!(email: "buuh@vsadmin.com", password: "1asdqwezxc1123")
+      @u_a1 = User.create!(email: "cuuh@admin.com", password: "2asdqwezxc1123")
+      @u_a2 = User.create!(email: "duuh@admin.com", password: "3asdqwezxc1123")
+      @u_a3 = User.create!(email: "euuh@admin.com", password: "4asdqwezxc1123")
+      @u_va1 = User.create!(email: "fuuh@vadmin.com", password: "5asdqwezxc1123")
+      @u_va2 = User.create!(email: "guuh@vadmin.com", password: "6asdqwezxc1123")
+      @u_va3 = User.create!(email: "huuh@vadmin.com", password: "7asdqwezxc1123")
+      @u_va4 = User.create!(email: "iuuh@vadmin.com", password: "8asdqwezxc1123")
+      @u_gm1 = User.create!(email: "juuh@gmod.com", password: "9asdqwezxc1123")
+      @u_gm2 = User.create!(email: "kuuh@gmod.com", password: "0asdqwezxc1123")
+      @u_gm3 = User.create!(email: "luuh@gmod.com", password: "aasdqwezxc1123")
+
+      @u_ge1 = User.create!(email: "auuh@ge.com", password: "a1qwezxc1123")
+      @u_ge2 = User.create!(email: "buuh@ge.com", password: "aasd22c1123")
+      @u_re1 = User.create!(email: "cuuh@re.com", password: "aas33c1123")
+      @u_re2 = User.create!(email: "duuh@re.com", password: "aasd44c1123")
+
+      @u_t1 = User.create!(email: "muuh@user.com", password: "sasdqwezxc1123")
+      @u_t2 = User.create!(email: "nuuh@user.com", password: "dasdqwezxc1123")
+      @u1 = User.create!(email: "ouuh@user.com", password: "fasdqwezxc1123")
+      @u2 = User.create!(email: "puuh@user.com", password: "gasdqwezxc1123")
+      @u_n1 = User.create!(email: "quuh@user.com", password: "hasdqwezxc1123")
+      @u_n2 = User.create!(email: "ruuh@user.com", password: "jdqwezxc1123")
+      @u_bl1 = User.create!(email: "suuh@user.com", password: "kasdqweds1123")
+      @u_bl2 = User.create!(email: "tuuh@user.com", password: "kasdqweec1123")
+      @u_ba1 = User.create!(email: "uuuh@user.com", password: "kasd2344ezxc1123")
+      @u_ba2 = User.create!(email: "vuuh@user.com", password: "kasdqwfv3xc1123")
+      @u_e1 = User.create!(email: "wuuh@user.com", password: "ka3xc1123")
+      @u_e2 = User.create!(email: "yuuh@user.com", password: "kasgghzxc1123")
+
+      @u_sa.add_role :super_admin
+      @u_vsa.add_role :vice_super_admin
+      @u_a1.add_role :admin
+      @u_a2.add_role :admin
+      @u_a3.add_role :admin
+      @u_va1.add_role :vice_admin
+      @u_va2.add_role :vice_admin
+      @u_va3.add_role :vice_admin
+      @u_va4.add_role :vice_admin
+      @u_gm1.add_role :global_moderator
+      @u_gm2.add_role :global_moderator
+      @u_gm3.add_role :global_moderator
+
+      @u_ge1.add_role :game_editor, @game
+      @u_ge2.add_role :game_editor, @game
+      @u_re1.add_role :ranking_editor, @ladder
+      @u_re2.add_role :ranking_editor, @blitz_ladder
+
+      @u_t1.add_role :trusted
+      @u_t2.add_role :trusted
+      #@u1.add_role :
+      #@u2.add_role :
+      @u_n1.add_role :new
+      @u_n2.add_role :new
+      @u_bl1.add_role :blocked
+      @u_bl2.add_role :blocked
+      @u_ba1.add_role :banned
+      @u_ba2.add_role :banned
+      @u_e1.add_role :evaporated
+      @u_e2.add_role :evaporated
+    end
+
+    after :context do
+      User.destroy_all
+      Ladder.destroy_all
+      Game.destroy_all
+      LadderConfig.destroy_all
+    end
+
+    
+
+  end
+
+
+end

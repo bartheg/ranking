@@ -80,7 +80,9 @@ RSpec.describe User, type: :model do
       LadderConfig.destroy_all
     end
 
-    
+    it "can scope super_admins" do
+      expect(User.super_admins).to eq [@u_sa]
+    end
 
   end
 

@@ -10,4 +10,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :lockable
   # :confirmable - disabled
+
+  scope :super_admins, -> { with_any_role(:super_admin) }
+
 end

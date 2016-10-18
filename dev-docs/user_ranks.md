@@ -8,8 +8,9 @@ STAFF
 * **:ranking_editor** (can edit a given ranking)
 
 USERS
-* **:trusted** - an idea for a future feature
-* **:new** - an idea for a future feature
-* **:blocked** - user can login and send private messages to admins and moderators but nothing else. Later someone should unblock or ban that user.
-* **:banned** - user can not even login.
-* **:evaporated** - user user can not login, all his matches are deleted and rankings are recalculated.
+* **:trusted_user** - an idea for a future feature
+* **:new_user** - an idea for a future feature
+* **:user** - an idea for a future feature
+* **:blocked_user** - user can login and send private messages to admins and moderators but nothing else. Later someone should unblock or ban that user.
+* **:banned_user** - user can not even login.
+* **:evaporated_user** - user user can not login, all his matches are deleted and rankings are recalculated.

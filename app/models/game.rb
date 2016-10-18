@@ -6,4 +6,5 @@ class Game < ActiveRecord::Base
 
   accepts_nested_attributes_for :possible_results, reject_if: :all_blank, allow_destroy: true
 
+  resourcify
 end

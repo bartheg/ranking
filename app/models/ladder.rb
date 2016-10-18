@@ -13,7 +13,8 @@ class Ladder < ActiveRecord::Base
   validates :description, presence: true
   validates :game_id, presence: true
 
-
+  resourcify
+  
   private
   def build_default_config
     default_config = LadderConfig.default_config.dup

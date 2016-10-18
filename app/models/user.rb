@@ -11,6 +11,14 @@ class User < ActiveRecord::Base
          :lockable
   # :confirmable - disabled
 
-  scope :super_admins, -> { with_any_role(:super_admin) }
+  scope :super_admins,      -> { with_role(:super_admin) }
+  scope :vice_super_admins, -> { with_role(:vice_super_admin) }
+  scope :admins,            -> { with_role(:admin) }
+  scope :vice_admins,       -> { with_role(:vice_admin) }
+  scope :global_moderators, -> { with_role(:global_moderator) }
+  scope :game_editors,      -> { with_role(:game_editor, :any) }
+  scope :ranking_editors,   -> { with_role(:ranking_editor, :any) }
+  scope :all_admins,        -> { with_any_role(:super_admin, :vice_super_admin, :admin, :vice_admin) }
+  scope :all_staff_members, -> { with_any_role(:super_admin, :vice_super_admin, :admin, :vice_admin, :global_moderator, {name: :game_editor, resource: :any}, {name: :ranking_editor, resource: :any}) }
 
 end

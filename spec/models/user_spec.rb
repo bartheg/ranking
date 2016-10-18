@@ -54,10 +54,10 @@ RSpec.describe User, type: :model do
       @u_gm2.add_role :global_moderator
       @u_gm3.add_role :global_moderator
 
-      @u_ge1.add_role :game_editor, @game
-      @u_ge2.add_role :game_editor, @game
-      @u_re1.add_role :ranking_editor, @ladder
-      @u_re2.add_role :ranking_editor, @blitz_ladder
+      @u_ge1.add_role(:game_editor, @game)
+      @u_ge2.add_role(:game_editor, @game)
+      @u_re1.add_role(:ranking_editor, @ladder)
+      @u_re2.add_role(:ranking_editor, @blitz_ladder)
 
       @u_t1.add_role :trusted
       @u_t2.add_role :trusted
@@ -81,7 +81,45 @@ RSpec.describe User, type: :model do
     end
 
     it "can scope super_admins" do
-      expect(User.super_admins).to eq [@u_sa]
+      expect(User.super_admins).to match_array [@u_sa]
+    end
+
+    it "can scope vice_super_admins" do
+      expect(User.vice_super_admins).to match_array [@u_vsa]
+    end
+
+    it "can scope admins" do
+      expect(User.admins).to match_array [@u_a2, @u_a1, @u_a3]
+    end
+
+    it "can scope vice_admins" do
+      expect(User.vice_admins).to match_array [@u_va4, @u_va1, @u_va3, @u_va2,]
+    end
+
+    it "can scope global_moderators" do
+      expect(User.global_moderators).to match_array [@u_gm1, @u_gm2, @u_gm3]
+    end
+
+    it "is fucking test of test" do
+      expect(@u_ge1.has_role?(:game_editor, :any)).to be true
+    end
+
+    it "can scope game_editors" do
+      expect(User.game_editors).to match_array [@u_ge2, @u_ge1]
+    end
+
+    it "can scope ranking_editors" do
+      expect(User.ranking_editors).to match_array [@u_re1, @u_re2]
+    end
+
+    it "can scope all_admins (not moderators, not editors)" do
+      expect(User.all_admins).to match_array [@u_vsa, @u_sa, @u_va4, @u_va3, @u_va2, @u_va1,
+      @u_a1, @u_a2, @u_a3]
+    end
+
+    it "can scope all_staff_members (admins + moderators and editors)" do
+      expect(User.all_staff_members).to match_array [@u_vsa, @u_sa, @u_va4, @u_va3, @u_va2, @u_va1,
+      @u_a1, @u_a2, @u_a3, @u_gm1, @u_gm2, @u_gm3, @u_ge2, @u_ge1, @u_re1, @u_re2]
     end
 
   end

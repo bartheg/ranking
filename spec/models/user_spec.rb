@@ -59,18 +59,18 @@ RSpec.describe User, type: :model do
       @u_re1.add_role(:ranking_editor, @ladder)
       @u_re2.add_role(:ranking_editor, @blitz_ladder)
 
-      @u_t1.add_role :trusted
-      @u_t2.add_role :trusted
-      #@u1.add_role :
-      #@u2.add_role :
-      @u_n1.add_role :new
-      @u_n2.add_role :new
-      @u_bl1.add_role :blocked
-      @u_bl2.add_role :blocked
-      @u_ba1.add_role :banned
-      @u_ba2.add_role :banned
-      @u_e1.add_role :evaporated
-      @u_e2.add_role :evaporated
+      @u_t1.add_role :trusted_user
+      @u_t2.add_role :trusted_user
+      @u2.add_role :user
+      @u1.add_role :user
+      @u_n1.add_role :new_user
+      @u_n2.add_role :new_user
+      @u_bl1.add_role :blocked_user
+      @u_bl2.add_role :blocked_user
+      @u_ba1.add_role :banned_user
+      @u_ba2.add_role :banned_user
+      @u_e1.add_role :evaporated_user
+      @u_e2.add_role :evaporated_user
     end
 
     after :context do
@@ -121,6 +121,35 @@ RSpec.describe User, type: :model do
       expect(User.all_staff_members).to match_array [@u_vsa, @u_sa, @u_va4, @u_va3, @u_va2, @u_va1,
       @u_a1, @u_a2, @u_a3, @u_gm1, @u_gm2, @u_gm3, @u_ge2, @u_ge1, @u_re1, @u_re2]
     end
+
+    it "can scope users" do
+      expect(User.users).to match_array [@u1, @u2]
+    end
+
+    it "can scope new_users" do
+      expect(User.new_users).to match_array [@u_n1, @u_n2]
+    end
+
+    it "can scope trusted_users" do
+      expect(User.trusted_users).to match_array [@u_t1, @u_t2]
+    end
+
+    it "can scope blocked_users" do
+      expect(User.blocked_users).to match_array [@u_bl2, @u_bl1]
+    end
+
+    it "can scope banned_users" do
+      expect(User.banned_users).to match_array [@u_ba2, @u_ba1]
+    end
+
+    it "can scope evaporated_users" do
+      expect(User.evaporated_users).to match_array [@u_e2, @u_e1]
+    end
+
+    it "can scope not_banned_users (not banned and not evaporated)" do
+      expect(User.not_banned_users).to match_array [@u1, @u2, @u_bl2, @u_bl1, @u_t1, @u_t2, @u_n1, @u_n2]
+    end
+
 
   end
 

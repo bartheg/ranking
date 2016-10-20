@@ -21,4 +21,12 @@ class User < ActiveRecord::Base
   scope :all_admins,        -> { with_any_role(:super_admin, :vice_super_admin, :admin, :vice_admin) }
   scope :all_staff_members, -> { with_any_role(:super_admin, :vice_super_admin, :admin, :vice_admin, :global_moderator, {name: :game_editor, resource: :any}, {name: :ranking_editor, resource: :any}) }
 
+  scope :users,            -> { with_role(:user) }
+  scope :new_users,        -> { with_role(:new_user) }
+  scope :trusted_users,    -> { with_role(:trusted_user) }
+  scope :blocked_users,    -> { with_role(:blocked_user) }
+  scope :banned_users,     -> { with_role(:banned_user) }
+  scope :evaporated_users, -> { with_role(:evaporated_user) }
+  scope :not_banned_users, -> { with_any_role(:user, :new_user, :trusted_user, :blocked_user) }
+
 end

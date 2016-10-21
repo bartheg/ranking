@@ -1,15 +1,16 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+# 1. NECESSARY. Basic data necessary for proper work of the application
 
-LadderConfig.create!(default_ranking: 1500, max_distance_between_players: 10, min_points_to_gain: 10, disproportion_factor: 10, unexpected_result_bonus: 50, hours_to_confirm: 49, is_default: true)
+## 1.1 Create super admin account (must be one super admin account)
+super_admin = User.create!(email: 'admin@yopmail.com', password: "11112222")
+super_admin.add_role(:super_admin)
 
+# 2. OPTIONAL. Not necessary to run application and can be done later by application
+
+## 2.1 Create super admin first profile
+super_admin_profile = Profile.create!(user_id: super_admin.id, name: "John_the_Admin", description: "I like to play all games.", color: '#111111')   # id 1
+
+## 2.2 Languages (for profiles descriptions)
 languages = [
-  # most used on the internet
   { iso_639_1: "en", english_name: "English" },  # id:  1
   { iso_639_1: "ru", english_name: "Russian" },
   { iso_639_1: "de", english_name: "German" },
@@ -67,40 +68,68 @@ languages = [
   { iso_639_1: "mn", english_name: "Mongolian" },
   { iso_639_1: "tk", english_name: "Turkmen" }
 ]
-
-users = [
-  # temp mails
-  { email: 'chinczyk-123qwe@yopmail.com', password: "123qweasd"  },   # id 1
-  { email: 'polak-123qwe@yopmail.com', password: "123qweasd"  },      # id 2
-  { email: 'arab-123qwe@yopmail.com', password: "123qweasd"  },       # id 3
-  { email: 'amerykanin-123qwe@yopmail.com', password: "123qweasd"  }, # id 4
-  { email: 'anglik-123qwe@yopmail.com', password: "123qweasd"  },     # id 5
-  { email: 'fin-123qwe@yopmail.com', password: "123qweasd"  },        # id 6
-  { email: 'hiszpan-123qwe@yopmail.com', password: "123qweasd"  }     # id 7
-]
-
 Language.create!(languages)
 
-User.create!(users)
+## 2.3 Time zones (for profiles descriptions)
+## To do.
 
-profiles = [
-  { user_id: 1, name: "Sun_Tzu", description: "Ni hao", color: '#dddd11'  },   # id 1
-  { user_id: 2, name: "pantherSS-88", description: "siema kto pl", color: '#111111'  },   # id 2
-  { user_id: 3, name: "Saladin", description: "allah akbar, bum! kill all, isis good, more social for me", color: '#11dd11'  },   # id 3
-  { user_id: 4, name: "Patton", description: "hello", color: '#1111dd'  },   # id 4
-  { user_id: 5, name: "Wellington", description: "hi", color: '#5525dd'  },   # id 5
-  { user_id: 6, name: "Suomi", description: "suomi", color: '#8888ff'  },   # id 6
-  { user_id: 7, name: "Matador", description: "hola", color: '#ee1143'  },   # id 7
-]
+## 2.4 Set languages for super admin profile
+super_admin_profile.languages << Language.where(english_name: "English").first
+super_admin_profile.languages << Language.where(english_name: "Polish").first
 
-Profile.create! profiles
+## 2.5 Set time zones for super admin profile
+## To do.
 
-native_languages = [7, 10, 14, 1, 1, 26, 5]
-native_lan_index = 0
-Profile.all.each do |profile|
-  profile.languages << Language.find(native_languages[native_lan_index])
-  native_lan_index += 1
-end
+## 2.6 Default ladder configuration ()
+
+LadderConfig.create!(
+                default_ranking: 1500,
+   max_distance_between_players: 10,
+             min_points_to_gain: 10,
+           disproportion_factor: 10,
+        unexpected_result_bonus: 50,
+               hours_to_confirm: 49,
+                     is_default: true)
+
+
+# 3.0 DEBUG. Test and development data. This section should be delete in production seed.
+
+## Users and profiles
+
+polak = User.new(email: 'polak-123qwe@yopmail.com', password: "123qweasd") # id 2
+arab = User.new(email: 'arab-123qwe@yopmail.com', password: "123qweasd") # id 3
+amerykanin = User.new(email: 'amerykanin-123qwe@yopmail.com', password: "123qweasd") # id 4
+anglik = User.new(email: 'anglik-123qwe@yopmail.com', password: "123qweasd") # id 5
+fin = User.new(email: 'fin-123qwe@yopmail.com', password: "123qweasd") # id 6
+hiszpan = User.new(email: 'hiszpan-123qwe@yopmail.com', password: "123qweasd") # id 7
+
+polak.add_role(:new_user)
+arab.add_role(:new_user)
+amerykanin.add_role(:new_user)
+anglik.add_role(:new_user)
+fin.add_role(:new_user)
+hiszpan.add_role(:new_user)
+
+polak.save
+arab.save
+amerykanin.save
+anglik.save
+fin.save
+hiszpan.save
+
+chinese_lang = Language.where(english_name: "Chinese").first
+polish_lang = Language.where(english_name: "Polish").first
+arabic_lang = Language.where(english_name: "Arabic").first
+english_lang = Language.where(english_name: "English").first
+finnish_lang = Language.where(english_name: "Finnish").first
+spanish_lang = Language.where(english_name: "Spanish").first
+
+Profile.create!(user_id: polak.id, name: "pantherSS-88", description: "siema kto pl", color: '#111111').languages << polish_lang
+Profile.create!(user_id: arab.id, name: "Saladin", description: "allah akbar, bum! kill all, isis good, more social for me", color: '#11dd11').languages << arabic_lang
+Profile.create!(user_id: amerykanin.id, name: "Patton", description: "hello", color: '#1111dd').languages << english_lang
+Profile.create!(user_id: anglik.id, name: "Wellington", description: "hi", color: '#5525dd').languages << english_lang
+Profile.create!(user_id: fin.id, name: "Suomi", description: "suomi", color: '#8888ff').languages << finnish_lang
+Profile.create!(user_id: hiszpan.id, name: "Matador", description: "hola", color: '#ee1143').languages << spanish_lang
 
 # game id 1
 Game.create!(full_name: 'The Battle for Wesnoth',

@@ -21,4 +21,11 @@
   <p>
     params: <%= p params %>
   </p>
+  <p>
+    User roles:
+    <% current_user.roles.each_with_index do |role, index| %>
+      <%= p role.name %><% if current_user.roles[index+1].nil?%>.<% else %>,<% end %>
+    <% end %>
+  </p>
+
 </div>

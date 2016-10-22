@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   end
   devise_for :users
 
+  resources :users, only: :index
+  
   resources :users do
     resources :profiles, only: :index
     resources :reports, only: :index

@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>All Users</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Number of profiles</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= user.email %></td>
+        <td><%#= user.main_role %> placeholder</td>
+        <td><%= user.profiles.count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

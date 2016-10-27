@@ -22,3 +22,7 @@ gem 'pry-rails', group: :development
 
 gem 'pg', '0.18.4', group: :production
 gem 'rails_12factor', '0.0.3', group: :production
+
+gem 'capistrano', '~> 3.6', '>= 3.6.1', group: :development
+gem 'capistrano-rails', '~> 1.2', group: :development
+gem 'capistrano-rbenv', '~> 2.0', '>= 2.0.4', group: :development

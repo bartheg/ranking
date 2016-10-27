@@ -2,7 +2,7 @@
 lock '3.6.1'
 
 set :application, 'ranking'
-set :repo_url, 'git@github.com:bartheg/ranking.git'
+set :repo_url, 'https://github.com/bartheg/ranking.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp

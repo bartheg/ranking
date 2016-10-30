@@ -4,28 +4,25 @@
   </p>
   <p>
     current_user.id:
-    <!-- <% if current_user %> -->
+    <% if current_user %>
       <%= current_user.id %>
-    <!-- <% else %> -->
-      <!-- nil (unlogged) -->
-    <!-- <% end %> -->
-  </p>
-  <p>
-    @user.id:
-    <!-- <% if @user %> -->
-      <%= @user.id %>
-    <!-- <% else %> -->
-      <!-- nil -->
-    <!-- <% end %> -->
+    <% else %>
+      nil (unlogged)
+    <% end %>
   </p>
   <p>
     params: <%= p params %>
   </p>
   <p>
     User roles:
-    <% current_user.roles.each_with_index do |role, index| %>
-      <%= p role.name %><% if current_user.roles[index+1].nil?%>.<% else %>,<% end %>
+    <% if current_user %>
+      <% current_user.roles.each_with_index do |role, index| %>
+        <%= p role.name %><% if current_user.roles[index+1].nil?%>.<% else %>,<% end %>
+      <% end %>
+    <% else %>
+      nil (unlogged)
     <% end %>
+
   </p>
 
 </div>

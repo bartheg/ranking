@@ -1,9 +1,11 @@
 <!--  USER BAR  -->
 <% if user_signed_in? %>
-  <div class="well well-sm profile-color" data-color="<%= @profile_color %>" style="background-color: <%= @profile_color %>;">
+  <div class="row well well-sm profile-color" data-color="<%= @profile_color %>" style="background-color: <%= @profile_color %>;">
 
-    <ul class="nav nav-pills">
+    <ul class="nav nav-pills col-sm-4 col-md-3">
       <%= render 'layouts/logo' %>
+    </ul>
+    <ul class="nav nav-pills col-sm-8 col-md-9">
       <li role="presentation" class="dropdown pull-right dark-or-light-hover">
         <a class="dropdown-toggle dark-or-light-bg" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
           Switch profile <span class="caret"></span>
@@ -40,9 +42,11 @@
     </ul>
   </div>
 <% else %>
-  <div class="well well-sm profile-color">
-    <ul class="nav nav-pills">
+  <div class="row well well-sm profile-color">
+    <ul class="nav nav-pills col-sm-4 col-md-3">
       <%= render 'layouts/logo' %>
+    </ul>
+    <ul class="nav nav-pills col-sm-8 col-md-9">
       <li role="presentation" class="pull-right <%= "active" if current_page?(new_user_session_path) %>"><%= link_to 'Log in', new_user_session_path%></li>
       <li role="presentation" class="pull-right <%= "active" if current_page?(new_user_registration_path) %>"><%= link_to 'Join', new_user_registration_path%></li>
     </ul>

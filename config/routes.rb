@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :users, only: :index
-  
+
   resources :users do
     resources :profiles, only: :index
     resources :reports, only: :index
@@ -41,7 +41,7 @@ Rails.application.routes.draw do
 
 
   get 'pages/home'
-  get 'pages/about'
+  get 'pages/how_it_works'
 
   get 'pages/admin'
 

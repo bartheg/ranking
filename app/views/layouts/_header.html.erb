@@ -47,8 +47,8 @@
       <%= render 'layouts/logo' %>
     </ul>
     <ul class="nav nav-pills col-sm-8 col-md-9">
+      <li role="presentation" class="pull-right <%= "active" if current_page?(new_user_registration_path) %>"><%= link_to 'Register', new_user_registration_path%></li>
       <li role="presentation" class="pull-right <%= "active" if current_page?(new_user_session_path) %>"><%= link_to 'Log in', new_user_session_path%></li>
-      <li role="presentation" class="pull-right <%= "active" if current_page?(new_user_registration_path) %>"><%= link_to 'Join', new_user_registration_path%></li>
     </ul>
   </div>
 <% end %>

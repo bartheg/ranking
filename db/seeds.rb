@@ -125,7 +125,7 @@ finnish_lang = Language.where(english_name: "Finnish").first
 spanish_lang = Language.where(english_name: "Spanish").first
 
 Profile.create!(user_id: polak.id, name: "pantherSS-88", description: "siema kto pl", color: '#111111').languages << polish_lang
-Profile.create!(user_id: arab.id, name: "Saladin", description: "allah akbar, bum! kill all, isis good, more social for me", color: '#11dd11').languages << arabic_lang
+Profile.create!(user_id: arab.id, name: "Saladin", description: "allah akbar, bum! kill all, isis good, more welfare for me", color: '#11dd11').languages << arabic_lang
 Profile.create!(user_id: amerykanin.id, name: "Patton", description: "hello", color: '#1111dd').languages << english_lang
 Profile.create!(user_id: anglik.id, name: "Wellington", description: "hi", color: '#5525dd').languages << english_lang
 Profile.create!(user_id: fin.id, name: "Suomi", description: "suomi", color: '#8888ff').languages << finnish_lang

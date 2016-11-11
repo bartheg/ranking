@@ -44,16 +44,16 @@ RSpec.describe ReportsCalculating, type: :service do
 
 
   describe ':update' do
-    context 'one report, two correct rankings' do
+    context 'one report, two correct calculated_positions' do
 
       before :context do
         first_report = Report.create!(scenario: @scenario1, reporter: @profileA, confirmer: @profileB, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :calculated)
-        Ranking.create!(profile: @profileA, ladder: @ladder, value: 1350, report: first_report)
-        Ranking.create!(profile: @profileB, ladder: @ladder, value: 1250, report: first_report)
+        CalculatedPosition.create!(profile: @profileA, ladder: @ladder, value: 1350, report: first_report)
+        CalculatedPosition.create!(profile: @profileB, ladder: @ladder, value: 1250, report: first_report)
       end
 
       after :context do
-        Ranking.destroy_all
+        CalculatedPosition.destroy_all
         Report.destroy_all
       end
 
@@ -108,22 +108,22 @@ RSpec.describe ReportsCalculating, type: :service do
                                 ]
         end
         expect(actual_attributes).to match_array [
-          [@profileA, @ladder, 1350, 50, @profileA.rankings.last.report.created_at, 1, 1, 50, 50],
-          [@profileB, @ladder, 1250, -50, @profileB.rankings.last.report.created_at, 1, 0, 0, 0]
+          [@profileA, @ladder, 1350, 50, @profileA.calculated_positions.last.report.created_at, 1, 1, 50, 50],
+          [@profileB, @ladder, 1250, -50, @profileB.calculated_positions.last.report.created_at, 1, 0, 0, 0]
         ]
       end
 
-      context "one more report and two additional rankings" do
+      context "one more report and two additional calculated_positions" do
         before :context do
           LeaderboardUpdater.update
           second_report = Report.create!(scenario: @scenario2, reporter: @profileA, confirmer: @profileB, reporters_faction_id: 1, confirmers_faction_id: 2, result: @defeat, status: :calculated)
-          Ranking.create!(profile: @profileA, ladder: @ladder, value: 1280, report: second_report)
-          Ranking.create!(profile: @profileB, ladder: @ladder, value: 1320, report: second_report)
+          CalculatedPosition.create!(profile: @profileA, ladder: @ladder, value: 1280, report: second_report)
+          CalculatedPosition.create!(profile: @profileB, ladder: @ladder, value: 1320, report: second_report)
         end
 
         after :context do
           RankedPosition.destroy_all
-          Ranking.destroy_all
+          CalculatedPosition.destroy_all
           Report.destroy_all
         end
 
@@ -143,8 +143,8 @@ RSpec.describe ReportsCalculating, type: :service do
                                   ]
           end
           expect(actual_attributes).to match_array [
-            [@profileA, @ladder, 1350, 50, @profileA.rankings.first.report.created_at, 1, 1, 50, 50],
-            [@profileB, @ladder, 1250, -50, @profileB.rankings.first.report.created_at, 1, 0, 0, 0]
+            [@profileA, @ladder, 1350, 50, @profileA.calculated_positions.first.report.created_at, 1, 1, 50, 50],
+            [@profileB, @ladder, 1250, -50, @profileB.calculated_positions.first.report.created_at, 1, 0, 0, 0]
           ]
         end
 
@@ -207,8 +207,8 @@ RSpec.describe ReportsCalculating, type: :service do
                                   ]
           end
           expect(actual_attributes).to match_array [
-            [@profileA, @profileA.rankings.last.report.created_at],
-            [@profileB, @profileB.rankings.last.report.created_at]
+            [@profileA, @profileA.calculated_positions.last.report.created_at],
+            [@profileB, @profileB.calculated_positions.last.report.created_at]
           ]
         end
 
@@ -242,17 +242,17 @@ RSpec.describe ReportsCalculating, type: :service do
           ]
         end
 
-        context "one more report and two additional rankings but with a player in this ladder" do
+        context "one more report and two additional calculated_positions but with a player in this ladder" do
           before :context do
             LeaderboardUpdater.update
             third_report = Report.create!(scenario: @scenario1, reporter: @profileA, confirmer: @profileC, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :calculated)
-            Ranking.create!(profile: @profileA, ladder: @ladder, value: 1334, report: third_report)
-            Ranking.create!(profile: @profileC, ladder: @ladder, value: 1246, report: third_report)
+            CalculatedPosition.create!(profile: @profileA, ladder: @ladder, value: 1334, report: third_report)
+            CalculatedPosition.create!(profile: @profileC, ladder: @ladder, value: 1246, report: third_report)
           end
 
           after :context do
             RankedPosition.destroy_all
-            Ranking.destroy_all
+            CalculatedPosition.destroy_all
             Report.destroy_all
           end
 
@@ -272,8 +272,8 @@ RSpec.describe ReportsCalculating, type: :service do
                                     ]
             end
             expect(actual_attributes).to match_array [
-              [@profileA, @ladder, 1280, -70, @profileA.rankings.second.report.created_at, 2, 1, 50, 50],
-              [@profileB, @ladder, 1320, 70, @profileB.rankings.second.report.created_at, 2, 1, 70, 70]
+              [@profileA, @ladder, 1280, -70, @profileA.calculated_positions.second.report.created_at, 2, 1, 50, 50],
+              [@profileB, @ladder, 1320, 70, @profileB.calculated_positions.second.report.created_at, 2, 1, 70, 70]
             ]
           end
 
@@ -316,9 +316,9 @@ RSpec.describe ReportsCalculating, type: :service do
                                     ]
             end
             expect(actual_attributes).to match_array [
-              [@profileA.id, @profileA.rankings.last.report.created_at, 3, 2, 104, 52],
-              [@profileB.id, @profileB.rankings.last.report.created_at, 2, 1, 70, 70],
-              [@profileC.id, @profileC.rankings.last.report.created_at, 1, 0, 0, 0]
+              [@profileA.id, @profileA.calculated_positions.last.report.created_at, 3, 2, 104, 52],
+              [@profileB.id, @profileB.calculated_positions.last.report.created_at, 2, 1, 70, 70],
+              [@profileC.id, @profileC.calculated_positions.last.report.created_at, 1, 0, 0, 0]
             ]
           end
 

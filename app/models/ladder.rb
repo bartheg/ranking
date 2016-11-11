@@ -4,7 +4,7 @@ class Ladder < ActiveRecord::Base
   belongs_to :game
   has_many :scenarios
   has_many :reports, through: :scenarios
-  has_many :rankings
+  has_many :calculated_positions
   has_one :ladder_config
   has_many :ranked_positions
 
@@ -14,7 +14,7 @@ class Ladder < ActiveRecord::Base
   validates :game_id, presence: true
 
   resourcify
-  
+
   private
   def build_default_config
     default_config = LadderConfig.default_config.dup

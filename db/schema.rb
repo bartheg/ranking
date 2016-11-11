@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160924130259) do
+ActiveRecord::Schema.define(version: 20161111120806) do
+
+  create_table "calculated_positions", force: :cascade do |t|
+    t.integer  "ladder_id"
+    t.integer  "profile_id"
+    t.integer  "value"
+    t.integer  "report_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "calculated_positions", ["ladder_id"], name: "index_calculated_positions_on_ladder_id"
+  add_index "calculated_positions", ["profile_id"], name: "index_calculated_positions_on_profile_id"
+  add_index "calculated_positions", ["report_id"], name: "index_calculated_positions_on_report_id"
 
   create_table "faction_to_scenario_assignments", force: :cascade do |t|
     t.integer  "faction_id"
@@ -131,19 +144,6 @@ ActiveRecord::Schema.define(version: 20160924130259) do
   add_index "ranked_positions", ["number_of_confirmed_matches"], name: "index_ranked_positions_on_number_of_confirmed_matches"
   add_index "ranked_positions", ["number_of_won_matches"], name: "index_ranked_positions_on_number_of_won_matches"
   add_index "ranked_positions", ["profile_id"], name: "index_ranked_positions_on_profile_id"
-
-  create_table "rankings", force: :cascade do |t|
-    t.integer  "ladder_id"
-    t.integer  "profile_id"
-    t.integer  "value"
-    t.integer  "report_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "rankings", ["ladder_id"], name: "index_rankings_on_ladder_id"
-  add_index "rankings", ["profile_id"], name: "index_rankings_on_profile_id"
-  add_index "rankings", ["report_id"], name: "index_rankings_on_report_id"
 
   create_table "report_comments", force: :cascade do |t|
     t.integer  "report_id"

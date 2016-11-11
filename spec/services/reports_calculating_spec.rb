@@ -92,41 +92,41 @@ RSpec.describe ReportsCalculating, type: :service do
   #
   # end
   #
-  # describe '#from_report_to_rankings' do
+  # describe '#from_report_to_calculated_positions' do
   #
-  #   it 'returns two rankings' do
+  #   it 'returns two calculated_positions' do
   #     first_report =  Report.create!(scenario: @scenario1, reporter: @profileA, confirmer: @profileB, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
-  #     result = ReportsCalculating.new(@ladder).from_report_to_rankings(first_report)
+  #     result = ReportsCalculating.new(@ladder).from_report_to_calculated_positions(first_report)
   #     result.map! {|r| r.class}
-  #     expect(result).to eq [Ranking, Ranking]
+  #     expect(result).to eq [CalculatedPosition, CalculatedPosition]
   #   end
   #
-  #   it 'returns rankings for reporting and confirming profiles' do
+  #   it 'returns calculated_positions for reporting and confirming profiles' do
   #     first_report =  Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
-  #     result = ReportsCalculating.new(@ladder).from_report_to_rankings(first_report)
+  #     result = ReportsCalculating.new(@ladder).from_report_to_calculated_positions(first_report)
   #     result.map! {|r| r.profile}
   #     expect(result).to eq [@profileB, @profileA]
   #   end
   #
-  #   it 'returns valid rankings' do
+  #   it 'returns valid calculated_positions' do
   #     first_report =  Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
-  #     result = ReportsCalculating.new(@ladder).from_report_to_rankings(first_report)
+  #     result = ReportsCalculating.new(@ladder).from_report_to_calculated_positions(first_report)
   #     result.map! {|r| r.valid?}
   #     expect(result).to eq [true, true]
   #   end
   #
-  #   it 'returns rankings for correct ladder' do
+  #   it 'returns calculated_positions for correct ladder' do
   #     first_report =  Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
-  #     result = ReportsCalculating.new(@ladder).from_report_to_rankings(first_report)
+  #     result = ReportsCalculating.new(@ladder).from_report_to_calculated_positions(first_report)
   #     result.map! {|r| r.ladder}
   #     expect(result).to eq [@ladder, @ladder]
   #   end
   #
   #   context 'unranked profiles' do
-  #     it 'returns rankings with correct values' do
+  #     it 'returns calculated_positions with correct values' do
   #       first_report =  Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
-  #       result = ReportsCalculating.new(@ladder).from_report_to_rankings(first_report)
-  #       # default ranking is 1300
+  #       result = ReportsCalculating.new(@ladder).from_report_to_calculated_positions(first_report)
+  #       # default calculated_position is 1300
   #       # so it is rank 1300 vs rank 1300, result 100
   #       # points 50
   #       result.map! {|r| r.value}
@@ -136,13 +136,13 @@ RSpec.describe ReportsCalculating, type: :service do
   #   context 'profiles are ranked' do
   #     before(:example) do
   #       report = Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :calculated)
-  #       Ranking.create!(ladder: @ladder, profile: @profileB, value: 1350, report: report)
-  #       Ranking.create!(ladder: @ladder, profile: @profileA, value: 1250, report: report)
+  #       CalculatedPosition.create!(ladder: @ladder, profile: @profileB, value: 1350, report: report)
+  #       CalculatedPosition.create!(ladder: @ladder, profile: @profileA, value: 1250, report: report)
   #     end
   #
-  #     it 'returns rankings with correct values' do
+  #     it 'returns calculated_positions with correct values' do
   #       second_report = Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
-  #       result = ReportsCalculating.new(@ladder).from_report_to_rankings(second_report)
+  #       result = ReportsCalculating.new(@ladder).from_report_to_calculated_positions(second_report)
   #       # it is rank 1350 vs rank 1250, result 100
   #       # points 45
   #       result.map! {|r| r.value}
@@ -154,16 +154,16 @@ RSpec.describe ReportsCalculating, type: :service do
 
   describe '#calculate' do
   #this is full main method that is doing all job
-    context 'one repport only, no rankings' do
+    context 'one repport only, no calculated_positions' do
 
       let!(:report) do
         Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :to_calculate)
       end
 
-      it 'creates two rankings' do
+      it 'creates two calculated_positions' do
         expect {
           ReportsCalculating.new(@ladder).calculate
-        }.to change{Ranking.count}.by 2
+        }.to change{CalculatedPosition.count}.by 2
       end
 
       it 'changes report status from to_calculate to calculated' do
@@ -173,31 +173,31 @@ RSpec.describe ReportsCalculating, type: :service do
         }.to change{report.status}.from('to_calculate').to('calculated')
       end
 
-      it 'creates two rankings with reporting and confirming profiles' do
+      it 'creates two calculated_positions with reporting and confirming profiles' do
         ReportsCalculating.new(@ladder).calculate
-        last_rankings = Ranking.last 2
-        profiles = last_rankings.map {|r| r.profile}
+        last_calculated_positions = CalculatedPosition.last 2
+        profiles = last_calculated_positions.map {|r| r.profile}
         expect(profiles).to eq [@profileB, @profileA]
       end
 
-      it 'creates two rankings with correct ladder IDs' do
+      it 'creates two calculated_positions with correct ladder IDs' do
         ReportsCalculating.new(@ladder).calculate
-        last_rankings = Ranking.last 2
-        ladders = last_rankings.map {|r| r.ladder}
+        last_calculated_positions = CalculatedPosition.last 2
+        ladders = last_calculated_positions.map {|r| r.ladder}
         expect(ladders).to eq [@ladder, @ladder]
       end
 
-      it 'creates two rankings with correct report IDs' do
+      it 'creates two calculated_positions with correct report IDs' do
         ReportsCalculating.new(@ladder).calculate
-        last_rankings = Ranking.last 2
-        reports = last_rankings.map {|r| r.report}
+        last_calculated_positions = CalculatedPosition.last 2
+        reports = last_calculated_positions.map {|r| r.report}
         expect(reports).to eq [report, report]
       end
 
-      it 'creates two rankings with correct values' do
+      it 'creates two calculated_positions with correct values' do
         ReportsCalculating.new(@ladder).calculate
-        last_rankings = Ranking.last 2
-        values = last_rankings.map {|r| r.value}
+        last_calculated_positions = CalculatedPosition.last 2
+        values = last_calculated_positions.map {|r| r.value}
         expect(values).to eq [1350, 1250]
       end
 
@@ -207,20 +207,20 @@ RSpec.describe ReportsCalculating, type: :service do
 
       before(:context) do
         @first_report = Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :calculated)
-        @first_ranking = Ranking.create!(profile: @profileB, ladder: @ladder, value: 1350, report: @first_report)
-        @second_ranking = Ranking.create!(profile: @profileA, ladder: @ladder, value: 1250, report: @first_report)
+        @first_calculated_position = CalculatedPosition.create!(profile: @profileB, ladder: @ladder, value: 1350, report: @first_report)
+        @second_calculated_position = CalculatedPosition.create!(profile: @profileA, ladder: @ladder, value: 1250, report: @first_report)
         @second_report = Report.create!(scenario: @scenario2, reporter: @profileB, confirmer: @profileC, reporters_faction_id: 1, confirmers_faction_id: 2, result: @defeat, status: :to_calculate)
       end
 
       after(:context) do
-        Ranking.destroy_all
+        CalculatedPosition.destroy_all
         Report.destroy_all
       end
 
-      it 'creates two rankings' do
+      it 'creates two calculated_positions' do
         expect {
           ReportsCalculating.new(@ladder).calculate
-        }.to change{Ranking.count}.by 2
+        }.to change{CalculatedPosition.count}.by 2
       end
 
       it 'changes report status from to_calculate to calculated' do
@@ -230,46 +230,46 @@ RSpec.describe ReportsCalculating, type: :service do
         }.to change{@second_report.status}.from('to_calculate').to('calculated')
       end
 
-      it 'creates two rankings with reporting and confirming profiles' do
+      it 'creates two calculated_positions with reporting and confirming profiles' do
         ReportsCalculating.new(@ladder).calculate
-        last_rankings = Ranking.last 2
-        profiles = last_rankings.map {|ranking| ranking.profile}
+        last_calculated_positions = CalculatedPosition.last 2
+        profiles = last_calculated_positions.map {|calculated_position| calculated_position.profile}
         expect(profiles).to eq [@profileB, @profileC]
       end
 
-      it 'creates two rankings with correct ladder IDs' do
+      it 'creates two calculated_positions with correct ladder IDs' do
         ReportsCalculating.new(@ladder).calculate
-        last_rankings = Ranking.last 2
-        ladders = last_rankings.map {|ranking| ranking.ladder}
+        last_calculated_positions = CalculatedPosition.last 2
+        ladders = last_calculated_positions.map {|calculated_position| calculated_position.ladder}
         expect(ladders).to eq [@ladder, @ladder]
       end
 
-      it 'creates two rankings with correct report IDs' do
+      it 'creates two calculated_positions with correct report IDs' do
         ReportsCalculating.new(@ladder).calculate
-        last_rankings = Ranking.last 2
-        reports = last_rankings.map {|r| r.report}
+        last_calculated_positions = CalculatedPosition.last 2
+        reports = last_calculated_positions.map {|r| r.report}
         expect(reports).to eq [@second_report, @second_report]
       end
 
-      it 'creates two rankings with correct values' do
+      it 'creates two calculated_positions with correct values' do
         ReportsCalculating.new(@ladder).calculate
-        last_rankings = Ranking.last 2
-        values = last_rankings.map {|r| r.value}
+        last_calculated_positions = CalculatedPosition.last 2
+        values = last_calculated_positions.map {|r| r.value}
         expect(values).to eq [1289, 1361]
       end
 
     end
 
 
-    context 'two calculated reppors with rankings, three reports to calculate' do
+    context 'two calculated reppors with calculated_positions, three reports to calculate' do
 
       before(:context) do
         @first_report = Report.create!(scenario: @scenario1, reporter: @profileB, confirmer: @profileA, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :calculated)
-        @first_ranking = Ranking.create!(profile: @profileB, ladder: @ladder, value: 1350, report: @first_report)
-        @second_ranking = Ranking.create!(profile: @profileA, ladder: @ladder, value: 1250, report: @first_report)
+        @first_calculated_position = CalculatedPosition.create!(profile: @profileB, ladder: @ladder, value: 1350, report: @first_report)
+        @second_calculated_position = CalculatedPosition.create!(profile: @profileA, ladder: @ladder, value: 1250, report: @first_report)
         @second_report = Report.create!(scenario: @scenario2, reporter: @profileB, confirmer: @profileC, reporters_faction_id: 1, confirmers_faction_id: 2, result: @defeat, status: :calculated)
-        @third_ranking = Ranking.create!(profile: @profileB, ladder: @ladder, value: 1289, report: @second_report)
-        @fourth_ranking = Ranking.create!(profile: @profileC, ladder: @ladder, value: 1361, report: @second_report)
+        @third_calculated_position = CalculatedPosition.create!(profile: @profileB, ladder: @ladder, value: 1289, report: @second_report)
+        @fourth_calculated_position = CalculatedPosition.create!(profile: @profileC, ladder: @ladder, value: 1361, report: @second_report)
         @third_report = Report.create!(scenario: @scenario2, reporter: @profileC, confirmer: @profileD, reporters_faction_id: 1, confirmers_faction_id: 2, result: @draw, status: :to_calculate)
         @fourth_report = Report.create!(scenario: @scenario1, reporter: @profileA, confirmer: @profileD, reporters_faction_id: 1, confirmers_faction_id: 2, result: @defeat, status: :to_calculate)
         @fifth_report = Report.create!(scenario: @scenario2, reporter: @profileE, confirmer: @profileF, reporters_faction_id: 1, confirmers_faction_id: 2, result: @draw, status: :to_calculate)
@@ -277,14 +277,14 @@ RSpec.describe ReportsCalculating, type: :service do
       end
 
       after(:context) do
-        Ranking.destroy_all
+        CalculatedPosition.destroy_all
         Report.destroy_all
       end
 
-      it 'creates six rankings' do
+      it 'creates six calculated_positions' do
         expect {
           ReportsCalculating.new(@ladder).calculate
-        }.to change{Ranking.count}.by 6
+        }.to change{CalculatedPosition.count}.by 6
       end
 
       it 'changes report status from to_calculate to calculated' do
@@ -295,31 +295,31 @@ RSpec.describe ReportsCalculating, type: :service do
         .to(['calculated', 'calculated','calculated'])
       end
 
-      it 'creates six rankings with reporting and confirming profiles' do
+      it 'creates six calculated_positions with reporting and confirming profiles' do
         ReportsCalculating.new(@ladder).calculate
-        last_rankings = Ranking.last 6
-        profiles = last_rankings.map {|ranking| ranking.profile}
+        last_calculated_positions = CalculatedPosition.last 6
+        profiles = last_calculated_positions.map {|calculated_position| calculated_position.profile}
         expect(profiles).to eq [@profileC, @profileD, @profileA, @profileD, @profileE, @profileF]
       end
 
-      it 'creates six rankings with correct ladder IDs' do
+      it 'creates six calculated_positions with correct ladder IDs' do
         ReportsCalculating.new(@ladder).calculate
-        last_rankings = Ranking.last 6
-        ladders = last_rankings.map {|ranking| ranking.ladder}
+        last_calculated_positions = CalculatedPosition.last 6
+        ladders = last_calculated_positions.map {|calculated_position| calculated_position.ladder}
         expect(ladders).to eq [@ladder, @ladder, @ladder, @ladder, @ladder, @ladder]
       end
 
-      it 'creates six rankings with correct report IDs' do
+      it 'creates six calculated_positions with correct report IDs' do
         ReportsCalculating.new(@ladder).calculate
-        last_rankings = Ranking.last 6
-        reports = last_rankings.map {|r| r.report}
+        last_calculated_positions = CalculatedPosition.last 6
+        reports = last_calculated_positions.map {|r| r.report}
         expect(reports).to eq [@third_report, @third_report, @fourth_report, @fourth_report, @fifth_report, @fifth_report]
       end
 
-      it 'creates six rankings with correct values' do
+      it 'creates six calculated_positions with correct values' do
         ReportsCalculating.new(@ladder).calculate
-        last_rankings = Ranking.last 6
-        values = last_rankings.map {|r| r.value}
+        last_calculated_positions = CalculatedPosition.last 6
+        values = last_calculated_positions.map {|r| r.value}
         expect(values).to eq [1358, 1303, 1203, 1350, 1300, 1300]
       end
 

@@ -1,4 +1,4 @@
-class Ranking < ActiveRecord::Base
+class CalculatedPosition < ActiveRecord::Base
   belongs_to :ladder
   belongs_to :profile
   belongs_to :report
@@ -6,11 +6,11 @@ class Ranking < ActiveRecord::Base
   # after_create :update_leaderboard
 
   def self.find_score(ladder, profile)
-    ranking = self.where(profile: profile, ladder: ladder).last
-    if ranking
-      ranking.value
+    calculated_position = self.where(profile: profile, ladder: ladder).last
+    if calculated_position
+      calculated_position.value
     else
-      ladder.ladder_config.default_ranking
+      ladder.ladder_config.default_calculated_position
     end
   end
 

@@ -9,28 +9,28 @@ class ReportsCalculating
   def calculate
     reports = collect
     reports.each do |report|
-      rankings = from_report_to_rankings report
-      rankings.each do |ranking|
-        ranking.save
-        # puts 'Ranking'
-        # p ranking
-        # puts 'Ranking report'
-        # p ranking.report
+      calculated_positions = from_report_to_calculated_positions report
+      calculated_positions.each do |calculated_position|
+        calculated_position.save
+        # puts 'CalculatedPosition'
+        # p calculated_position
+        # puts 'CalculatedPosition report'
+        # p calculated_position.report
       end
       report.status = 'calculated'
       report.save!
     end
   end
 
-  def from_report_to_rankings(report)
-    reporter_rank = Ranking.find_score(@ladder, report.reporter)
-    confirmer_rank = Ranking.find_score(@ladder, report.confirmer)
+  def from_report_to_calculated_positions(report)
+    reporter_rank = CalculatedPosition.find_score(@ladder, report.reporter)
+    confirmer_rank = CalculatedPosition.find_score(@ladder, report.confirmer)
     result = report.result.score_factor
     points_change = calculate_points(reporter_rank, confirmer_rank, result)
     reporter_rank += points_change
     confirmer_rank -= points_change
-    [ Ranking.new(profile: report.reporter, ladder: @ladder, value: reporter_rank, report: report),
-      Ranking.new(profile: report.confirmer, ladder: @ladder, value: confirmer_rank, report: report)
+    [ CalculatedPosition.new(profile: report.reporter, ladder: @ladder, value: reporter_rank, report: report),
+      CalculatedPosition.new(profile: report.confirmer, ladder: @ladder, value: confirmer_rank, report: report)
     ]
   end
 

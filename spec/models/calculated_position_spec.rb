@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Ranking, type: :model do
+RSpec.describe CalculatedPosition, type: :model do
 
   before(:context) do
     create :default_config, default_ranking: 1400
@@ -40,43 +40,43 @@ RSpec.describe Ranking, type: :model do
 
   describe ':find_score' do
     before(:context) do
-      Ranking.create!(report_id: 1, value: 3232, profile_id: @profileA.id, ladder_id: @ladder.id)
-      Ranking.create!(report_id: 1, value: 232, profile_id: @profileB.id, ladder_id: @ladder.id)
-      Ranking.create!(report_id: 2, value: 2000, profile_id: @profileA.id, ladder_id: @blitz_ladder.id)
-      Ranking.create!(report_id: 2, value: 500, profile_id: @profileB.id, ladder_id: @blitz_ladder.id)
+      CalculatedPosition.create!(report_id: 1, value: 3232, profile_id: @profileA.id, ladder_id: @ladder.id)
+      CalculatedPosition.create!(report_id: 1, value: 232, profile_id: @profileB.id, ladder_id: @ladder.id)
+      CalculatedPosition.create!(report_id: 2, value: 2000, profile_id: @profileA.id, ladder_id: @blitz_ladder.id)
+      CalculatedPosition.create!(report_id: 2, value: 500, profile_id: @profileB.id, ladder_id: @blitz_ladder.id)
     end
 
     after(:context) do
-      Ranking.destroy_all
+      CalculatedPosition.destroy_all
       RankedPosition.destroy_all
     end
 
     it 'returns a score value of given profile in given ladder' do
-      expect(Ranking.find_score(@ladder, @profileB)).to eq 232
+      expect(CalculatedPosition.find_score(@ladder, @profileB)).to eq 232
     end
 
     it 'returns a score value of given profile in given ladder 2' do
-      Ranking.create!(report_id: 3, value: 1800, profile_id: @profileA.id, ladder_id: @blitz_ladder.id)
-      Ranking.create!(report_id: 3, value: 400, profile_id: @profileB.id, ladder_id: @blitz_ladder.id)
-      expect(Ranking.find_score(@blitz_ladder, @profileA)).to eq 1800
+      CalculatedPosition.create!(report_id: 3, value: 1800, profile_id: @profileA.id, ladder_id: @blitz_ladder.id)
+      CalculatedPosition.create!(report_id: 3, value: 400, profile_id: @profileB.id, ladder_id: @blitz_ladder.id)
+      expect(CalculatedPosition.find_score(@blitz_ladder, @profileA)).to eq 1800
     end
 
-    context 'when profile has no ranking in given ladder' do
-      it 'returns the default ranking' do
-        expect(Ranking.find_score(@blitz_ladder, @profileC)).to eq 1400
+    context 'when profile has no calculated_position in given ladder' do
+      it 'returns the default calculated_position' do
+        expect(CalculatedPosition.find_score(@blitz_ladder, @profileC)).to eq 1400
       end
     end
 
   end
 
   # describe ':create' do
-  #   context 'when no rankings yet' do
+  #   context 'when no calculated_positions yet' do
   #     it 'creates two ranked positions' do
   #     report = Report.create!(scenario_id: @scenario1.id, reporter_id: @profileA.id, confirmer_id: @profileB.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "calculated")
   #
   #     expect {
-  #       Ranking.create!(report_id: report.id, value: 1450, profile_id: @profileA.id, ladder_id: @ladder.id)
-  #       Ranking.create!(report_id: report.id, value: 1350, profile_id: @profileB.id, ladder_id: @ladder.id)
+  #       CalculatedPosition.create!(report_id: report.id, value: 1450, profile_id: @profileA.id, ladder_id: @ladder.id)
+  #       CalculatedPosition.create!(report_id: report.id, value: 1350, profile_id: @profileB.id, ladder_id: @ladder.id)
   #     }.to change{RankedPosition.count}.from(0).to(2)
   #     end
   #

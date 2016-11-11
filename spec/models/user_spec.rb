@@ -109,7 +109,7 @@ RSpec.describe User, type: :model do
     end
 
     it "can scope ranking_editors" do
-      expect(User.ranking_editors).to match_array [@u_re1, @u_re2]
+      expect(User.calculated_position_editors).to match_array [@u_re1, @u_re2]
     end
 
     it "can scope all_admins (not moderators, not editors)" do

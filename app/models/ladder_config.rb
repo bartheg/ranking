@@ -1,7 +1,7 @@
 class LadderConfig < ActiveRecord::Base
   belongs_to :ladder
 
-  validates :default_ranking, presence: true
+  validates :default_score, presence: true
   validates :hours_to_confirm, presence: true
 
   validate :invalid_when_is_default_and_has_ladder_id

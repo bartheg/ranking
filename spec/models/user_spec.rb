@@ -5,7 +5,7 @@ RSpec.describe User, type: :model do
   describe "scopes" do
     before :context do
 
-      create :default_config, default_ranking: 1400
+      create :default_config, default_score: 1400
       @game = create :wesnoth
       @ladder = create :wesnoth_ladder, game: @game
       @blitz_ladder = create :wesnoth_blitz_ladder, game: @game

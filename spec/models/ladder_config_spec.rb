@@ -15,7 +15,7 @@ RSpec.describe LadderConfig, type: :model do
     end
 
     subject { LadderConfig.new(
-      default_ranking: 1500,
+      default_score: 1500,
       max_distance_between_players: 10,
       min_points_to_gain: 5,
       disproportion_factor: 50,
@@ -29,8 +29,8 @@ RSpec.describe LadderConfig, type: :model do
       expect(subject).to be_valid
     end
 
-    it 'is invalid without default_ranking' do
-      subject.default_ranking = nil
+    it 'is invalid without default_score' do
+      subject.default_score = nil
       expect(subject).to be_invalid
     end
 
@@ -41,7 +41,7 @@ RSpec.describe LadderConfig, type: :model do
 
     it 'is valid when is_default is not set' do
       config = LadderConfig.new(
-       default_ranking: 1500,
+       default_score: 1500,
        max_distance_between_players: 10,
        min_points_to_gain: 5,
        disproportion_factor: 50,

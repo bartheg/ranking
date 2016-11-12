@@ -4,7 +4,7 @@ RSpec.describe ReportsCalculating, type: :service do
 
   before(:context) do
     LadderConfig.create!(
-      default_ranking: 1300,
+      default_score: 1300,
       max_distance_between_players: 1000,
       min_points_to_gain: 1,
       disproportion_factor: 10,

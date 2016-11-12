@@ -17,7 +17,7 @@ class LeaderboardUpdater
     if previous_report
       return current_score - previous_report.value
     else
-      return current_score - calculated_position.ladder.ladder_config.default_ranking
+      return current_score - calculated_position.ladder.ladder_config.default_score
     end
   end
 

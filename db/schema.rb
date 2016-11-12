@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161111120806) do
+ActiveRecord::Schema.define(version: 20161112164511) do
 
   create_table "calculated_positions", force: :cascade do |t|
     t.integer  "ladder_id"
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20161111120806) do
   add_index "games", ["short_name"], name: "index_games_on_short_name", unique: true
 
   create_table "ladder_configs", force: :cascade do |t|
-    t.integer  "default_ranking"
+    t.integer  "default_score"
     t.integer  "max_distance_between_players"
     t.integer  "min_points_to_gain"
     t.integer  "disproportion_factor"

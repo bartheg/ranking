@@ -21,7 +21,7 @@ class Ladder < ActiveRecord::Base
     # default_config
     self.ladder_config = default_config
     self.ladder_config.is_default = false
-    # LadderConfig.new(is_default: false, hours_to_confirm: 49, default_ranking: 233)
+    # LadderConfig.new(is_default: false, hours_to_confirm: 49, default_score: 233)
     # self.ladder_config.save
     true
   end

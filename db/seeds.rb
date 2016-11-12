@@ -83,7 +83,7 @@ super_admin_profile.languages << Language.where(english_name: "Polish").first
 ## 2.6 Default ladder configuration ()
 
 LadderConfig.create!(
-                default_ranking: 1500,
+                default_score: 1500,
    max_distance_between_players: 10,
              min_points_to_gain: 10,
            disproportion_factor: 10,

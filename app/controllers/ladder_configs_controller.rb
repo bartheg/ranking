@@ -46,7 +46,7 @@ class LadderConfigsController < ApplicationController
   private
 
   def ladder_config_params
-    params.require(:ladder_config).permit(:default_ranking, :max_distance_between_players,
+    params.require(:ladder_config).permit(:default_score, :max_distance_between_players,
       :min_points_to_gain, :disproportion_factor, :unexpected_result_bonus, :hours_to_confirm)
   end
 

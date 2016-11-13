@@ -1,11 +1,11 @@
-<%= form_for([@game, @ladder]) do |f| %>
+<%= form_for([@game, @ranking]) do |f| %>
 
-  <% if @ladder.errors.any? %>
+  <% if @ranking.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@ladder.errors.count, "error") %> prohibited this ladder from being saved:</h2>
+      <h2><%= pluralize(@ranking.errors.count, "error") %> prohibited this ranking from being saved:</h2>
 
       <ul>
-        <% @ladder.errors.full_messages.each do |message| %>
+        <% @ranking.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>

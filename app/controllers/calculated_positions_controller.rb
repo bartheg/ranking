@@ -1,10 +1,10 @@
 class CalculatedPositionsController < ApplicationController
 
   def index
-    if params[:ladder_id]
-      @ladder = Ladder.find(params[:ladder_id].to_i)
-      @header = "Calculated Positions of #{@ladder.name}"
-      @calculated_positions = @ladder.calculated_positions
+    if params[:ranking_id]
+      @ranking = Ranking.find(params[:ranking_id].to_i)
+      @header = "Calculated Positions of #{@ranking.name}"
+      @calculated_positions = @ranking.calculated_positions
 
     else
       @header = "Calculated Positions"

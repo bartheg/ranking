@@ -13,16 +13,16 @@ class LeaderboardUpdater
 
   def self.getChange(calculated_position)
     current_score = calculated_position.value
-    previous_report = CalculatedPosition.where(profile: calculated_position.profile).where(ladder: calculated_position.ladder).where(["id < ?", calculated_position.id]).last
+    previous_report = CalculatedPosition.where(profile: calculated_position.profile).where(ranking: calculated_position.ranking).where(["id < ?", calculated_position.id]).last
     if previous_report
       return current_score - previous_report.value
     else
-      return current_score - calculated_position.ladder.ladder_config.default_score
+      return current_score - calculated_position.ranking.ranking_config.default_score
     end
   end
 
   def self.old_position(calculated_position)
-    RankedPosition.where(profile: calculated_position.profile).where(ladder: calculated_position.ladder).first
+    RankedPosition.where(profile: calculated_position.profile).where(ranking: calculated_position.ranking).first
   end
 
   def self.won?(profile, calculated_position)
@@ -42,7 +42,7 @@ class LeaderboardUpdater
     last_match_at = calculated_position.report.created_at
     won = won?(profile, calculated_position)
     unless old_position
-      ladder = calculated_position.ladder
+      ranking = calculated_position.ranking
       number_of_matches = 1
       number_of_won_matches = won ? 1 : 0
       scores_from_wins = (number_of_won_matches == 1)? score_gained : 0
@@ -50,7 +50,7 @@ class LeaderboardUpdater
 
       RankedPosition.create(
         profile: profile,
-        ladder: ladder,
+        ranking: ranking,
         current_score: score,
         last_score_gained: score_gained,
         last_match_at: last_match_at,

@@ -1,10 +1,10 @@
 class ReportsController < ApplicationController
 
   def index
-    if params[:ladder_id]
-      @ladder = Ladder.find(params[:ladder_id].to_i)
-      @header = "Reports of #{@ladder.name}"
-      @reports = @ladder.reports
+    if params[:ranking_id]
+      @ranking = Ranking.find(params[:ranking_id].to_i)
+      @header = "Reports of #{@ranking.name}"
+      @reports = @ranking.reports
 
     elsif params[:profile]
       begin
@@ -30,7 +30,7 @@ class ReportsController < ApplicationController
     report = Report.find(params[:id])
     report.confirm
     ReportsToCalculateFinder.new(report).tag_to_calculate
-    ReportsCalculating.new(report.scenario.ladder).calculate
+    ReportsCalculating.new(report.scenario.ranking).calculate
     LeaderboardUpdater.update
     redirect_to user_reports_path(params[:user_id]), notice: 'Report was successfully confirmed.'
   end
@@ -60,7 +60,7 @@ class ReportsController < ApplicationController
     else
       @report.reload
       ReportsToCalculateFinder.new(@report).tag_to_calculate
-      ReportsCalculating.new(@scenario.ladder).calculate
+      ReportsCalculating.new(@scenario.ranking).calculate
       LeaderboardUpdater.update
       redirect_to reports_path, notice: 'Report was successfully confirmed.'
     end

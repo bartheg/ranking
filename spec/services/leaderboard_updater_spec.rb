@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ReportsCalculating, type: :service do
 
   before(:context) do
-    LadderConfig.create!(
+    RankingConfig.create!(
       default_score: 1300,
       max_distance_between_players: 1000,
       min_points_to_gain: 1,
@@ -13,12 +13,12 @@ RSpec.describe ReportsCalculating, type: :service do
       is_default: true
     )
     @game = create :wesnoth
-    @ladder = create :wesnoth_ladder, game: @game
-    @blitz_ladder = create :wesnoth_blitz_ladder, game: @game
-    @scenario1 = create :freelands, ladder: @ladder
-    @scenario2 = create :basilisk, ladder: @ladder
-    @scenario1b = create :freelands, ladder: @blitz_ladder
-    @scenario2b = create :basilisk, ladder: @blitz_ladder
+    @ranking = create :wesnoth_ranking, game: @game
+    @blitz_ranking = create :wesnoth_blitz_ranking, game: @game
+    @scenario1 = create :freelands, ranking: @ranking
+    @scenario2 = create :basilisk, ranking: @ranking
+    @scenario1b = create :freelands, ranking: @blitz_ranking
+    @scenario2b = create :basilisk, ranking: @blitz_ranking
     @victory = create :victory, game: @game
     @defeat = create :defeat, game: @game
     @draw = create :draw, game: @game
@@ -37,9 +37,9 @@ RSpec.describe ReportsCalculating, type: :service do
     User.destroy_all
     PossibleResult.destroy_all
     Scenario.destroy_all
-    Ladder.destroy_all
+    Ranking.destroy_all
     Game.destroy_all
-    LadderConfig.destroy_all
+    RankingConfig.destroy_all
   end
 
 
@@ -48,8 +48,8 @@ RSpec.describe ReportsCalculating, type: :service do
 
       before :context do
         first_report = Report.create!(scenario: @scenario1, reporter: @profileA, confirmer: @profileB, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :calculated)
-        CalculatedPosition.create!(profile: @profileA, ladder: @ladder, value: 1350, report: first_report)
-        CalculatedPosition.create!(profile: @profileB, ladder: @ladder, value: 1250, report: first_report)
+        CalculatedPosition.create!(profile: @profileA, ranking: @ranking, value: 1350, report: first_report)
+        CalculatedPosition.create!(profile: @profileB, ranking: @ranking, value: 1250, report: first_report)
       end
 
       after :context do
@@ -77,11 +77,11 @@ RSpec.describe ReportsCalculating, type: :service do
         expect(scores).to match_array [1350, 1250]
       end
 
-      it 'creates two ranked positions with correct ladder' do
+      it 'creates two ranked positions with correct ranking' do
         LeaderboardUpdater.update
         ranked_positions = RankedPosition.all
-        ladders = ranked_positions.map {|p| p.ladder}
-        expect(ladders).to match_array [@ladder, @ladder]
+        rankings = ranked_positions.map {|p| p.ranking}
+        expect(rankings).to match_array [@ranking, @ranking]
       end
 
       it 'creates two ranked positions with correct last_score_gained' do
@@ -97,7 +97,7 @@ RSpec.describe ReportsCalculating, type: :service do
         actual_attributes = []
         ranked_positions.each do |rp|
           actual_attributes << [ rp.profile,
-                                 rp.ladder,
+                                 rp.ranking,
                                  rp.current_score,
                                  rp.last_score_gained,
                                  rp.last_match_at,
@@ -108,8 +108,8 @@ RSpec.describe ReportsCalculating, type: :service do
                                 ]
         end
         expect(actual_attributes).to match_array [
-          [@profileA, @ladder, 1350, 50, @profileA.calculated_positions.last.report.created_at, 1, 1, 50, 50],
-          [@profileB, @ladder, 1250, -50, @profileB.calculated_positions.last.report.created_at, 1, 0, 0, 0]
+          [@profileA, @ranking, 1350, 50, @profileA.calculated_positions.last.report.created_at, 1, 1, 50, 50],
+          [@profileB, @ranking, 1250, -50, @profileB.calculated_positions.last.report.created_at, 1, 0, 0, 0]
         ]
       end
 
@@ -117,8 +117,8 @@ RSpec.describe ReportsCalculating, type: :service do
         before :context do
           LeaderboardUpdater.update
           second_report = Report.create!(scenario: @scenario2, reporter: @profileA, confirmer: @profileB, reporters_faction_id: 1, confirmers_faction_id: 2, result: @defeat, status: :calculated)
-          CalculatedPosition.create!(profile: @profileA, ladder: @ladder, value: 1280, report: second_report)
-          CalculatedPosition.create!(profile: @profileB, ladder: @ladder, value: 1320, report: second_report)
+          CalculatedPosition.create!(profile: @profileA, ranking: @ranking, value: 1280, report: second_report)
+          CalculatedPosition.create!(profile: @profileB, ranking: @ranking, value: 1320, report: second_report)
         end
 
         after :context do
@@ -132,7 +132,7 @@ RSpec.describe ReportsCalculating, type: :service do
           actual_attributes = []
           ranked_positions.each do |rp|
             actual_attributes << [ rp.profile,
-                                   rp.ladder,
+                                   rp.ranking,
                                    rp.current_score,
                                    rp.last_score_gained,
                                    rp.last_match_at,
@@ -143,8 +143,8 @@ RSpec.describe ReportsCalculating, type: :service do
                                   ]
           end
           expect(actual_attributes).to match_array [
-            [@profileA, @ladder, 1350, 50, @profileA.calculated_positions.first.report.created_at, 1, 1, 50, 50],
-            [@profileB, @ladder, 1250, -50, @profileB.calculated_positions.first.report.created_at, 1, 0, 0, 0]
+            [@profileA, @ranking, 1350, 50, @profileA.calculated_positions.first.report.created_at, 1, 1, 50, 50],
+            [@profileB, @ranking, 1250, -50, @profileB.calculated_positions.first.report.created_at, 1, 0, 0, 0]
           ]
         end
 
@@ -182,18 +182,18 @@ RSpec.describe ReportsCalculating, type: :service do
           ]
         end
 
-        it 'updates old ranked positions with correct profile and ladder' do
+        it 'updates old ranked positions with correct profile and ranking' do
           LeaderboardUpdater.update
           ranked_positions = RankedPosition.all
           actual_attributes = []
           ranked_positions.each do |rp|
             actual_attributes << [ rp.profile,
-                                   rp.ladder,
+                                   rp.ranking,
                                   ]
           end
           expect(actual_attributes).to match_array [
-            [@profileA, @ladder],
-            [@profileB, @ladder]
+            [@profileA, @ranking],
+            [@profileB, @ranking]
           ]
         end
 
@@ -242,12 +242,12 @@ RSpec.describe ReportsCalculating, type: :service do
           ]
         end
 
-        context "one more report and two additional calculated_positions but with a player in this ladder" do
+        context "one more report and two additional calculated_positions but with a player in this ranking" do
           before :context do
             LeaderboardUpdater.update
             third_report = Report.create!(scenario: @scenario1, reporter: @profileA, confirmer: @profileC, reporters_faction_id: 1, confirmers_faction_id: 2, result: @victory, status: :calculated)
-            CalculatedPosition.create!(profile: @profileA, ladder: @ladder, value: 1334, report: third_report)
-            CalculatedPosition.create!(profile: @profileC, ladder: @ladder, value: 1246, report: third_report)
+            CalculatedPosition.create!(profile: @profileA, ranking: @ranking, value: 1334, report: third_report)
+            CalculatedPosition.create!(profile: @profileC, ranking: @ranking, value: 1246, report: third_report)
           end
 
           after :context do
@@ -261,7 +261,7 @@ RSpec.describe ReportsCalculating, type: :service do
             actual_attributes = []
             ranked_positions.each do |rp|
               actual_attributes << [ rp.profile,
-                                     rp.ladder,
+                                     rp.ranking,
                                      rp.current_score,
                                      rp.last_score_gained,
                                      rp.last_match_at,
@@ -272,8 +272,8 @@ RSpec.describe ReportsCalculating, type: :service do
                                     ]
             end
             expect(actual_attributes).to match_array [
-              [@profileA, @ladder, 1280, -70, @profileA.calculated_positions.second.report.created_at, 2, 1, 50, 50],
-              [@profileB, @ladder, 1320, 70, @profileB.calculated_positions.second.report.created_at, 2, 1, 70, 70]
+              [@profileA, @ranking, 1280, -70, @profileA.calculated_positions.second.report.created_at, 2, 1, 50, 50],
+              [@profileB, @ranking, 1320, 70, @profileB.calculated_positions.second.report.created_at, 2, 1, 70, 70]
             ]
           end
 
@@ -282,21 +282,21 @@ RSpec.describe ReportsCalculating, type: :service do
           end
 
           it 'updates two old ranked positions and creates one new with correct
-              profile, ladder, current_score, and last_score_gaines' do
+              profile, ranking, current_score, and last_score_gaines' do
             LeaderboardUpdater.update
             ranked_positions = RankedPosition.all
             actual_attributes = []
             ranked_positions.each do |rp|
               actual_attributes << [ rp.profile.id,
-                                     rp.ladder.id,
+                                     rp.ranking.id,
                                      rp.current_score,
                                      rp.last_score_gained
                                     ]
             end
             expect(actual_attributes).to match_array [
-              [@profileA.id, @ladder.id, 1334, 54],
-              [@profileB.id, @ladder.id, 1320, 70],
-              [@profileC.id, @ladder.id, 1246, -54]
+              [@profileA.id, @ranking.id, 1334, 54],
+              [@profileB.id, @ranking.id, 1320, 70],
+              [@profileC.id, @ranking.id, 1246, -54]
             ]
           end
 

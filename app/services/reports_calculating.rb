@@ -1,7 +1,7 @@
 class ReportsCalculating
 
-  def initialize(ladder)
-    @ladder = ladder
+  def initialize(ranking)
+    @ranking = ranking
     @max_distance_between_players = 1000 # 99% chance to win
     @unexpected_result_bonus = 15 # percentage of distance bonus
   end
@@ -23,19 +23,19 @@ class ReportsCalculating
   end
 
   def from_report_to_calculated_positions(report)
-    reporter_rank = CalculatedPosition.find_score(@ladder, report.reporter)
-    confirmer_rank = CalculatedPosition.find_score(@ladder, report.confirmer)
+    reporter_rank = CalculatedPosition.find_score(@ranking, report.reporter)
+    confirmer_rank = CalculatedPosition.find_score(@ranking, report.confirmer)
     result = report.result.score_factor
     points_change = calculate_points(reporter_rank, confirmer_rank, result)
     reporter_rank += points_change
     confirmer_rank -= points_change
-    [ CalculatedPosition.new(profile: report.reporter, ladder: @ladder, value: reporter_rank, report: report),
-      CalculatedPosition.new(profile: report.confirmer, ladder: @ladder, value: confirmer_rank, report: report)
+    [ CalculatedPosition.new(profile: report.reporter, ranking: @ranking, value: reporter_rank, report: report),
+      CalculatedPosition.new(profile: report.confirmer, ranking: @ranking, value: confirmer_rank, report: report)
     ]
   end
 
   def collect
-    @ladder.reports.to_calculate
+    @ranking.reports.to_calculate
   end
 
   def calculate_points(reporter, confirmer, result)

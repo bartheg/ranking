@@ -5,7 +5,7 @@
     <tr>
       <th>Report id</th>
       <th>Game</th>
-      <th>Ladder</th>
+      <th>Ranking</th>
       <th>Scenario</th>
       <th>Reporter</th>
       <th>Confirmer</th>
@@ -19,8 +19,8 @@
     <% @reports.each do |report| %>
       <tr>
         <td><%= report.id %></td>
-        <td><%= report.scenario.ladder.game.full_name %></td>
-        <td><%= report.scenario.ladder.name %></td>
+        <td><%= report.scenario.ranking.game.full_name %></td>
+        <td><%= report.scenario.ranking.name %></td>
         <td><%= report.scenario.full_name %></td>
         <td><%= report.reporter.name %> (<%= report.reporters_faction.full_name %>)</td>
         <td><%= report.confirmer.name %> (<%= report.confirmers_faction.full_name %>)</td>

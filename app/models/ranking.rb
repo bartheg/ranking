@@ -1,11 +1,11 @@
-class Ladder < ActiveRecord::Base
+class Ranking < ActiveRecord::Base
   before_create :build_default_config
 
   belongs_to :game
   has_many :scenarios
   has_many :reports, through: :scenarios
   has_many :calculated_positions
-  has_one :ladder_config
+  has_one :ranking_config
   has_many :ranked_positions
 
 
@@ -17,12 +17,12 @@ class Ladder < ActiveRecord::Base
 
   private
   def build_default_config
-    default_config = LadderConfig.default_config.dup
+    default_config = RankingConfig.default_config.dup
     # default_config
-    self.ladder_config = default_config
-    self.ladder_config.is_default = false
-    # LadderConfig.new(is_default: false, hours_to_confirm: 49, default_score: 233)
-    # self.ladder_config.save
+    self.ranking_config = default_config
+    self.ranking_config.is_default = false
+    # RankingConfig.new(is_default: false, hours_to_confirm: 49, default_score: 233)
+    # self.ranking_config.save
     true
   end
 

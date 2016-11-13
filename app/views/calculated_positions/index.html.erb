@@ -5,7 +5,7 @@
     <tr>
       <th>Calculated Position id</th>
       <th>Profile name</th>
-      <th>Ladder</th>
+      <th>Ranking</th>
       <th>Calculated Position</th>
       <th>Created at</th>
 
@@ -17,7 +17,7 @@
       <tr>
         <td><%= calculated_position.id %></td>
         <td><%= link_to calculated_position.profile.name, calculated_position.profile %></td>
-        <td><%= calculated_position.ladder.name %></td>
+        <td><%= calculated_position.ranking.name %></td>
         <td><%= calculated_position.value %></td>
         <td><%= calculated_position.created_at %></td>
       </tr>

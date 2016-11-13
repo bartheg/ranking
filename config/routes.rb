@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   resources :calculated_positions, only: :index
 
-  resources :ladder_configs, only: [:edit, :update]
+  resources :ranking_configs, only: [:edit, :update]
 
   resources :reports, only: [:edit, :update]
 
@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   end
 
   resources :games do
-    resources :ladders, only: [:index, :new, :create]
+    resources :rankings, only: [:index, :new, :create]
     resources :possible_results
 
   end
@@ -30,10 +30,10 @@ Rails.application.routes.draw do
     resources :reports
   end
 
-  resources :ladders do
+  resources :rankings do
     resources :scenarios, only: [:index, :new, :create]
     resources :calculated_positions, only: [:index]
-    resources :ladder_configs, only: [:show, :new, :create, :edit, :update]
+    resources :ranking_configs, only: [:show, :new, :create, :edit, :update]
 
   end
 

@@ -57,7 +57,7 @@
 <ul class="nav nav-pills">
   <li role="presentation" class=""><%= link_to 'Home', root_path %></li>
   <li role="presentation" class=""><%= link_to 'Games', games_path %></li>
-  <li role="presentation" class=""><%= link_to 'Ladders', ladders_path %></li>
+  <li role="presentation" class=""><%= link_to 'Rankings', rankings_path %></li>
   <li role="presentation" class=""><%= link_to 'Reports', reports_path %></li>
   <li role="presentation" class=""><%= link_to 'Calculated_positions', calculated_positions_path %></li>
   <li role="presentation" class=""><%= link_to 'Profiles', profiles_path %></li>
@@ -67,8 +67,8 @@
 <!--  SUB MENU  -->
 <% if current_page?(games_path) %>
   <%= render 'layouts/subbar_games' %>
-<% elsif current_page?(ladders_path) %>
-  <%= render 'layouts/subbar_ladders' %>
+<% elsif current_page?(rankings_path) %>
+  <%= render 'layouts/subbar_rankings' %>
 <% elsif current_page?(reports_path) %>
   <%= render 'layouts/subbar_reports' %>
 <% elsif current_page?(profiles_path) %>

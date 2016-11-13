@@ -1,0 +1,38 @@
+<h1><%= @header %></h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Ranking id</th>
+      <th>Name</th>
+      <th>Game</th>
+      <th>Description</th>
+      <th>Scenarios</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rankings.each do |ranking| %>
+      <tr>
+        <td><%= ranking.id %></td>
+        <td><%= link_to ranking.name, ranking %></td>
+        <td><%= link_to ranking.game.short_name, ranking.game %></td>
+        <td><%= truncate(ranking.description, length: 500, separator: ' ') %></td>
+        <td>
+          <% number_of_scenarios = ranking.scenarios.count %>
+          <% if number_of_scenarios > 0 %>
+            <%= link_to number_of_scenarios, ranking_scenarios_path(ranking) %>
+          <% else %>
+            0
+          <% end %>
+        </td>
+        <td><%= link_to 'Create a new scenario', new_ranking_scenario_path(ranking) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Profile', new_profile_path %>

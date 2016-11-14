@@ -14,7 +14,7 @@ USERS
 * **:pseudo_user** - an idea for a future feature
 * **:blocked_user** - user can login and send private messages to admins and moderators but nothing else. Later someone should unblock or ban that user.
 * **:banned_user** - user can not even login.
-* **:evaporated_user** - user user can not login, all his matches are deleted and rankings are recalculated.
+* **:evaporated_user** - user user can not login, all his matches are deleted and calculated positions are recalculated.
 
 
 

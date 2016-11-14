@@ -1,0 +1,30 @@
+<h1><%= @header %></h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Calculated Position id</th>
+      <th>Profile name</th>
+      <th>Ranking</th>
+      <th>Calculated Position</th>
+      <th>Created at</th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @calculated_positions.each do |calculated_position| %>
+      <tr>
+        <td><%= calculated_position.id %></td>
+        <td><%= link_to calculated_position.profile.name, calculated_position.profile %></td>
+        <td><%= calculated_position.ranking.name %></td>
+        <td><%= calculated_position.value %></td>
+        <td><%= calculated_position.created_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Back to home', root_path %>

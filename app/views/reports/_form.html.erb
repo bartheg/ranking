@@ -16,7 +16,7 @@
 
     <%= f.label :scenario %><br />
     <% if @report.scenario %>
-      <%= f.collection_select(:scenario_id, @report.scenario.ladder.scenarios, :id, :full_name, include_blank: true) %>
+      <%= f.collection_select(:scenario_id, @report.scenario.ranking.scenarios, :id, :full_name, include_blank: true) %>
     <% end %>
 
   </div>
@@ -43,8 +43,8 @@
 
   <div class="form-group">
     <%= f.label :result %><br />
-    <% if @report.scenario.ladder.game %>
-      <%= f.collection_select(:result_id, @report.scenario.ladder.game.possible_results, :id, :description, include_blank: true) %>
+    <% if @report.scenario.ranking.game %>
+      <%= f.collection_select(:result_id, @report.scenario.ranking.game.possible_results, :id, :description, include_blank: true) %>
     <% end %>
   </div>
 

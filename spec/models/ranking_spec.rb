@@ -2,89 +2,51 @@ require 'rails_helper'
 
 RSpec.describe Ranking, type: :model do
 
-  before(:context) do
-    create :default_config, default_ranking: 1400
-    @game = create :wesnoth
-    @ladder = create :wesnoth_ladder, game: @game
-    @blitz_ladder = create :wesnoth_blitz_ladder, game: @game
-    @scenario1 = create :freelands, ladder: @ladder
-    @scenario2 = create :basilisk, ladder: @ladder
-    @scenario1b = create :freelands, ladder: @blitz_ladder
-    @scenario2b = create :basilisk, ladder: @blitz_ladder
-    @victory = create :victory, game: @game
-    @defeat = create :defeat, game: @game
-    @draw = create :draw, game: @game
-    @userA = create :user_from_china
-    @userB = create :user_from_poland
-    @userC = create :user_from_china, email: "usa@usa.us", password: "usa23edwjeio23"
-    @userD = create :user_from_china, email: "russia@russia.ru", password: "russia23fdweiofj23"
-    @userE = create :user_from_china, email: "indoa@india.id", password: "india23edwjeio23"
-    @userF = create :user_from_china, email: "germany@germany.ru", password: "germany23fdweiofj23"
-    @profileA = create :sun_tzu, user: @userA
-    @profileB = create :panther, user: @userB
-    @profileC = create :sun_tzu, name: "Patton", user: @userC
-    @profileD = create :sun_tzu, name: "Suvorov", user: @userD
-    @profileE = create :sun_tzu, name: "Gandhi", user: @userE
-    @profileF = create :sun_tzu, name: "Hitler", user: @userF
+  describe 'validations' do
+    subject { Ranking.new(name: "Weslol", description: "Ranking for lols Wesnoth", game_id: 1)}
+
+    it 'is valid when every field is OK' do
+      expect(subject).to be_valid
+    end
+
+    it 'is invalid without a name' do
+      subject.name = nil
+      expect(subject).to be_invalid
+    end
+
+    it 'is invalid without a description' do
+      subject.description = nil
+      expect(subject).to be_invalid
+    end
+
+    it 'is invalid without a game_id' do
+      subject.game_id = nil
+      expect(subject).to be_invalid
+    end
+
   end
 
-  after(:context) do
-    Profile.destroy_all
-    User.destroy_all
-    PossibleResult.destroy_all
-    Scenario.destroy_all
-    Ladder.destroy_all
-    Game.destroy_all
-    LadderConfig.destroy_all
-  end
+  context 'after save' do
 
-  describe ':find_score' do
+    subject { Ranking.create!(name: "Weslol", description: "Ranking for lols Wesnoth", game_id: 1)}
+
     before(:context) do
-      Ranking.create!(report_id: 1, value: 3232, profile_id: @profileA.id, ladder_id: @ladder.id)
-      Ranking.create!(report_id: 1, value: 232, profile_id: @profileB.id, ladder_id: @ladder.id)
-      Ranking.create!(report_id: 2, value: 2000, profile_id: @profileA.id, ladder_id: @blitz_ladder.id)
-      Ranking.create!(report_id: 2, value: 500, profile_id: @profileB.id, ladder_id: @blitz_ladder.id)
+      @config = create :default_config, min_points_to_gain: 111
     end
 
     after(:context) do
-      Ranking.destroy_all
-      RankedPosition.destroy_all
+      RankingConfig.destroy_all
     end
 
-    it 'returns a score value of given profile in given ladder' do
-      expect(Ranking.find_score(@ladder, @profileB)).to eq 232
+    it 'create a ranking config' do
+      expect { subject.save }.to change{RankingConfig.count}.by(1)
     end
 
-    it 'returns a score value of given profile in given ladder 2' do
-      Ranking.create!(report_id: 3, value: 1800, profile_id: @profileA.id, ladder_id: @blitz_ladder.id)
-      Ranking.create!(report_id: 3, value: 400, profile_id: @profileB.id, ladder_id: @blitz_ladder.id)
-      expect(Ranking.find_score(@blitz_ladder, @profileA)).to eq 1800
-    end
-
-    context 'when profile has no ranking in given ladder' do
-      it 'returns the default ranking' do
-        expect(Ranking.find_score(@blitz_ladder, @profileC)).to eq 1400
-      end
+    it 'create a ranking config identical min_points_to_gain as default config' do
+      config = RankingConfig.where(ranking_id: subject.id).first
+      expect(config.min_points_to_gain).to eq 111
     end
 
   end
-
-  # describe ':create' do
-  #   context 'when no rankings yet' do
-  #     it 'creates two ranked positions' do
-  #     report = Report.create!(scenario_id: @scenario1.id, reporter_id: @profileA.id, confirmer_id: @profileB.id, reporters_faction_id: 1, confirmers_faction_id: 2, result_id: @victory.id, status: "calculated")
-  #
-  #     expect {
-  #       Ranking.create!(report_id: report.id, value: 1450, profile_id: @profileA.id, ladder_id: @ladder.id)
-  #       Ranking.create!(report_id: report.id, value: 1350, profile_id: @profileB.id, ladder_id: @ladder.id)
-  #     }.to change{RankedPosition.count}.from(0).to(2)
-  #     end
-  #
-  #   end
-  #
-  #
-  #
-  # end
-
 
 end

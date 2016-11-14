@@ -5,12 +5,12 @@ RSpec.describe ReportsToCalculateFinder, type: :service do
   before(:context) do
     create :default_config
     @game = create :wesnoth
-    @ladder = create :wesnoth_ladder, game: @game
-    @blitz_ladder = create :wesnoth_blitz_ladder, game: @game
-    @scenario1 = create :freelands, ladder: @ladder
-    @scenario2 = create :basilisk, ladder: @ladder
-    @scenario1b = create :freelands, ladder: @blitz_ladder
-    @scenario2b = create :basilisk, ladder: @blitz_ladder
+    @ranking = create :wesnoth_ranking, game: @game
+    @blitz_ranking = create :wesnoth_blitz_ranking, game: @game
+    @scenario1 = create :freelands, ranking: @ranking
+    @scenario2 = create :basilisk, ranking: @ranking
+    @scenario1b = create :freelands, ranking: @blitz_ranking
+    @scenario2b = create :basilisk, ranking: @blitz_ranking
     @victory = create :victory, game: @game
     @defeat = create :defeat, game: @game
     @draw = create :draw, game: @game
@@ -26,20 +26,20 @@ RSpec.describe ReportsToCalculateFinder, type: :service do
     @profileD = create :sun_tzu, name: "Suvorov", user: @userD
     @profileE = create :sun_tzu, name: "Gandhi", user: @userE
     @profileF = create :sun_tzu, name: "Hitler", user: @userF
-    # @config = create :default_config, is_default: false, ladder: @ladder
+    # @config = create :default_config, is_default: false, ranking: @ranking
   end
 
   after(:context) do
-    LadderConfig.destroy_all
+    RankingConfig.destroy_all
     Profile.destroy_all
     User.destroy_all
     PossibleResult.destroy_all
     Scenario.destroy_all
-    Ladder.destroy_all
+    Ranking.destroy_all
     Game.destroy_all
   end
 
-  it 'turns status to :to_calculate for the one given report if this report is the only one report for that ladder and the report is :confirmed' do
+  it 'turns status to :to_calculate for the one given report if this report is the only one report for that ranking and the report is :confirmed' do
     one_report = Report.create!(scenario: @scenario1, reporter: @profileA, confirmer: @profileB,
       reporters_faction_id: 1, confirmers_faction_id: 2,
       result: @victory, status: :confirmed)
@@ -49,15 +49,15 @@ RSpec.describe ReportsToCalculateFinder, type: :service do
     end.to change{one_report.status}.from('confirmed').to('to_calculate')
   end
 
-  # it 'does\'t touch report in other ladder' do
-  #   wrong_ladder_report = Report.create!(scenario: @scenario1b, reporter: @profileA, confirmer: @profileB,
+  # it 'does\'t touch report in other ranking' do
+  #   wrong_ranking_report = Report.create!(scenario: @scenario1b, reporter: @profileA, confirmer: @profileB,
   #     reporters_faction_id: 1, confirmers_faction_id: 2,
   #     result: @draw, status: "confirmed")
-  #     @ladder.reload
+  #     @ranking.reload
   #   expect do
-  #     ReportsToCalculateFinder.new(@ladder).tag_to_calculate
-  #     wrong_ladder_report.reload
-  #   end.to_not change{wrong_ladder_report.status}
+  #     ReportsToCalculateFinder.new(@ranking).tag_to_calculate
+  #     wrong_ranking_report.reload
+  #   end.to_not change{wrong_ranking_report.status}
   # end
 
   # context "three reports" do
@@ -69,24 +69,24 @@ RSpec.describe ReportsToCalculateFinder, type: :service do
   #   end
   #
   #   it 'turns status to :to_calculate for the first confirmed report' do
-  #     ladder = Ladder.find(@first_report.scenario.ladder.id)
+  #     ranking = Ranking.find(@first_report.scenario.ranking.id)
   #     expect do
-  #       ReportsToCalculateFinder.new(ladder).tag_to_calculate
+  #       ReportsToCalculateFinder.new(ranking).tag_to_calculate
   #       @first_report.reload
   #     end.to change{@first_report.status}.from('confirmed').to('to_calculate')
   #   end
   #
   #   it 'turns status to :to_calculate for the second confirmed report' do
-  #     @ladder.reload
-  #     ReportsToCalculateFinder.new(@ladder).tag_to_calculate
+  #     @ranking.reload
+  #     ReportsToCalculateFinder.new(@ranking).tag_to_calculate
   #     @second_report.reload
   #     expect(@second_report.status).to eq 'to_calculate'
   #   end
   #
   #   it 'turns status to :to_calculate for the third confirmed report' do
-  #     @ladder.reload
+  #     @ranking.reload
   #     expect do
-  #       ReportsToCalculateFinder.new(@ladder).tag_to_calculate
+  #       ReportsToCalculateFinder.new(@ranking).tag_to_calculate
   #       @third_report.reload
   #     end.to change(@third_report, :status).from('confirmed').to('to_calculate')
   #   end

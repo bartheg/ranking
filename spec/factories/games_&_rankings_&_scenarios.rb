@@ -9,16 +9,16 @@ FactoryGirl.define do
     simultaneous_turns false
   end
 
-# LADDERS
+# RANKINGS
 
-  factory :wesnoth_ladder, class: Ladder do
-    name  "Wesnoth Standard Ladder"
-    description "Blah bla blha, this is a standard Wesnoth ladder."
+  factory :wesnoth_ranking, class: Ranking do
+    name  "Wesnoth Standard Ranking"
+    description "Blah bla blha, this is a standard Wesnoth ranking."
   end
 
-  factory :wesnoth_blitz_ladder, class: Ladder do
-    name  "Wesnoth Blitz Ladder"
-    description "Blah bla blha, this is a blitz Wesnoth ladder."
+  factory :wesnoth_blitz_ranking, class: Ranking do
+    name  "Wesnoth Blitz Ranking"
+    description "Blah bla blha, this is a blitz Wesnoth ranking."
   end
 
 # POSSIBLE RESULTS
@@ -60,8 +60,8 @@ FactoryGirl.define do
 
 # CONFIGS
 
-  factory :default_config, class: LadderConfig do
-    default_ranking 1500
+  factory :default_config, class: RankingConfig do
+    default_score 1500
     max_distance_between_players 1000
     min_points_to_gain 2
     disproportion_factor 10

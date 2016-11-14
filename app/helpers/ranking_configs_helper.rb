@@ -1,0 +1,2 @@
+module RankingConfigsHelper
+end

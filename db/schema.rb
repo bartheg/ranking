@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160924130259) do
+ActiveRecord::Schema.define(version: 20161113153206) do
+
+  create_table "calculated_positions", force: :cascade do |t|
+    t.integer  "ranking_id"
+    t.integer  "profile_id"
+    t.integer  "value"
+    t.integer  "report_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "calculated_positions", ["profile_id"], name: "index_calculated_positions_on_profile_id"
+  add_index "calculated_positions", ["ranking_id"], name: "index_calculated_positions_on_ranking_id"
+  add_index "calculated_positions", ["report_id"], name: "index_calculated_positions_on_report_id"
 
   create_table "faction_to_scenario_assignments", force: :cascade do |t|
     t.integer  "faction_id"
@@ -48,32 +61,6 @@ ActiveRecord::Schema.define(version: 20160924130259) do
 
   add_index "games", ["full_name"], name: "index_games_on_full_name", unique: true
   add_index "games", ["short_name"], name: "index_games_on_short_name", unique: true
-
-  create_table "ladder_configs", force: :cascade do |t|
-    t.integer  "default_ranking"
-    t.integer  "max_distance_between_players"
-    t.integer  "min_points_to_gain"
-    t.integer  "disproportion_factor"
-    t.integer  "unexpected_result_bonus"
-    t.integer  "hours_to_confirm"
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
-    t.boolean  "is_default",                   default: false, null: false
-    t.integer  "ladder_id"
-  end
-
-  add_index "ladder_configs", ["ladder_id"], name: "index_ladder_configs_on_ladder_id", unique: true
-
-  create_table "ladders", force: :cascade do |t|
-    t.string   "name"
-    t.text     "description"
-    t.integer  "game_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "ladders", ["game_id"], name: "index_ladders_on_game_id"
-  add_index "ladders", ["name"], name: "index_ladders_on_name", unique: true
 
   create_table "languages", force: :cascade do |t|
     t.string   "iso_639_1"
@@ -112,7 +99,7 @@ ActiveRecord::Schema.define(version: 20160924130259) do
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id"
 
   create_table "ranked_positions", force: :cascade do |t|
-    t.integer  "ladder_id"
+    t.integer  "ranking_id"
     t.integer  "profile_id"
     t.integer  "current_score"
     t.integer  "last_score_gained"
@@ -127,23 +114,36 @@ ActiveRecord::Schema.define(version: 20160924130259) do
 
   add_index "ranked_positions", ["average_win_score"], name: "index_ranked_positions_on_average_win_score"
   add_index "ranked_positions", ["current_score"], name: "index_ranked_positions_on_current_score"
-  add_index "ranked_positions", ["ladder_id"], name: "index_ranked_positions_on_ladder_id"
   add_index "ranked_positions", ["number_of_confirmed_matches"], name: "index_ranked_positions_on_number_of_confirmed_matches"
   add_index "ranked_positions", ["number_of_won_matches"], name: "index_ranked_positions_on_number_of_won_matches"
   add_index "ranked_positions", ["profile_id"], name: "index_ranked_positions_on_profile_id"
+  add_index "ranked_positions", ["ranking_id"], name: "index_ranked_positions_on_ranking_id"
 
-  create_table "rankings", force: :cascade do |t|
-    t.integer  "ladder_id"
-    t.integer  "profile_id"
-    t.integer  "value"
-    t.integer  "report_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "ranking_configs", force: :cascade do |t|
+    t.integer  "default_score"
+    t.integer  "max_distance_between_players"
+    t.integer  "min_points_to_gain"
+    t.integer  "disproportion_factor"
+    t.integer  "unexpected_result_bonus"
+    t.integer  "hours_to_confirm"
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+    t.boolean  "is_default",                   default: false, null: false
+    t.integer  "ranking_id"
   end
 
-  add_index "rankings", ["ladder_id"], name: "index_rankings_on_ladder_id"
-  add_index "rankings", ["profile_id"], name: "index_rankings_on_profile_id"
-  add_index "rankings", ["report_id"], name: "index_rankings_on_report_id"
+  add_index "ranking_configs", ["ranking_id"], name: "index_ranking_configs_on_ranking_id", unique: true
+
+  create_table "rankings", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "game_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "rankings", ["game_id"], name: "index_rankings_on_game_id"
+  add_index "rankings", ["name"], name: "index_rankings_on_name", unique: true
 
   create_table "report_comments", force: :cascade do |t|
     t.integer  "report_id"
@@ -194,7 +194,7 @@ ActiveRecord::Schema.define(version: 20160924130259) do
     t.datetime "updated_at",              null: false
     t.string   "map_size"
     t.boolean  "map_random_generated"
-    t.integer  "ladder_id"
+    t.integer  "ranking_id"
   end
 
   create_table "users", force: :cascade do |t|

@@ -80,10 +80,10 @@ super_admin_profile.languages << Language.where(english_name: "Polish").first
 ## 2.5 Set time zones for super admin profile
 ## To do.
 
-## 2.6 Default ladder configuration ()
+## 2.6 Default ranking configuration ()
 
-LadderConfig.create!(
-                default_ranking: 1500,
+RankingConfig.create!(
+                default_score: 1500,
    max_distance_between_players: 10,
              min_points_to_gain: 10,
            disproportion_factor: 10,
@@ -125,7 +125,7 @@ finnish_lang = Language.where(english_name: "Finnish").first
 spanish_lang = Language.where(english_name: "Spanish").first
 
 Profile.create!(user_id: polak.id, name: "pantherSS-88", description: "siema kto pl", color: '#111111').languages << polish_lang
-Profile.create!(user_id: arab.id, name: "Saladin", description: "allah akbar, bum! kill all, isis good, more social for me", color: '#11dd11').languages << arabic_lang
+Profile.create!(user_id: arab.id, name: "Saladin", description: "allah akbar, bum! kill all, isis good, more welfare for me", color: '#11dd11').languages << arabic_lang
 Profile.create!(user_id: amerykanin.id, name: "Patton", description: "hello", color: '#1111dd').languages << english_lang
 Profile.create!(user_id: anglik.id, name: "Wellington", description: "hi", color: '#5525dd').languages << english_lang
 Profile.create!(user_id: fin.id, name: "Suomi", description: "suomi", color: '#8888ff').languages << finnish_lang
@@ -140,9 +140,9 @@ Game.create!(full_name: 'The Battle for Wesnoth',
 PossibleResult.create!(game_id: 1, score_factor: 100, description: "Well-deserved Victory!")
 PossibleResult.create!(game_id: 1, score_factor: 0, description: "Unlucky Defeat")
 
-# ladder id 1
-Ladder.create!(name: 'Wesnoth Blitz Test Ladder',
-            description: 'This is fake Ladder. All results are fake here',
+# ranking id 1
+Ranking.create!(name: 'Wesnoth Blitz Test Ranking',
+            description: 'This is fake Ranking. All results are fake here',
             game_id: 1)
 
 # faction id 1
@@ -193,7 +193,7 @@ Scenario.create!(full_name: 'Weldyn Channel',
                 short_name: 'Weldyn Channel',
                 description: 'Weldyn Channel is a map with a lake.',
                 mirror_matchups_allowed: true,
-                ladder_id: 1,
+                ranking_id: 1,
                 map_size: nil,
                 map_random_generated: false)
 
@@ -204,7 +204,7 @@ Scenario.create!(full_name: 'Hamlets',
                 short_name: 'Hamlets',
                 description: 'Hamlets is a very boring map.',
                 mirror_matchups_allowed: true,
-                ladder_id: 1,
+                ranking_id: 1,
                 map_size: nil,
                 map_random_generated: false)
 
@@ -215,7 +215,7 @@ Scenario.create!(full_name: 'The Freelands',
                 short_name: 'The Freelands',
                 description: 'The Freelands is a map with three ways to the enemy castle.',
                 mirror_matchups_allowed: true,
-                ladder_id: 1,
+                ranking_id: 1,
                 map_size: nil,
                 map_random_generated: false)
 
@@ -226,7 +226,7 @@ Scenario.create!(full_name: 'Caves of the Basilisk',
                 short_name: 'Caves of the Basilisk',
                 description: 'Caves of the Basilisk is a map.',
                 mirror_matchups_allowed: true,
-                ladder_id: 1,
+                ranking_id: 1,
                 map_size: nil,
                 map_random_generated: false)
 
@@ -237,7 +237,7 @@ Scenario.create!(full_name: 'Den of Onis',
                 short_name: 'Den of Onis',
                 description: 'Den of Onis is a map.',
                 mirror_matchups_allowed: true,
-                ladder_id: 1,
+                ranking_id: 1,
                 map_size: nil,
                 map_random_generated: false)
 
@@ -248,7 +248,7 @@ Scenario.create!(full_name: 'Fallenstar Lake',
                 short_name: 'Fallenstar Lake',
                 description: 'Fallenstar Lake is a map.',
                 mirror_matchups_allowed: true,
-                ladder_id: 1,
+                ranking_id: 1,
                 map_size: nil,
                 map_random_generated: false)
 
@@ -268,9 +268,9 @@ PossibleResult.create!(game_id: 2, score_factor: 50, description: "Draw")
 PossibleResult.create!(game_id: 2, score_factor: 25, description: "Marginal Defeat")
 PossibleResult.create!(game_id: 2, score_factor: 0, description: "Decisive Defeat")
 
-# ladder id 2
-Ladder.create!(name: 'FoG Test Ladder 500 points',
-            description: 'This is fake Ladder. All results are fake here',
+# ranking id 2
+Ranking.create!(name: 'FoG Test Ranking 500 points',
+            description: 'This is fake Ranking. All results are fake here',
             game_id: 2)
 
 # scenario id 7
@@ -278,7 +278,7 @@ Scenario.create!(full_name: 'Standard Match',
                 short_name: 'Match',
                 description: 'The map is chosed by a plyer with the initiative.',
                 mirror_matchups_allowed: true,
-                ladder_id: 2,
+                ranking_id: 2,
                 map_size: nil,
                 map_random_generated: false)
 

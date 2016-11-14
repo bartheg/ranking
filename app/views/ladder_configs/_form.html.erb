@@ -1,11 +1,11 @@
-<%= form_for([@ladder, @ladder_config]) do |f| %>
+<%= form_for([@ranking, @ranking_config]) do |f| %>
 
-  <% if @ladder_config.errors.any? %>
+  <% if @ranking_config.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@ladder_config.errors.count, "error") %> prohibited this report from being saved:</h2>
+      <h2><%= pluralize(@ranking_config.errors.count, "error") %> prohibited this report from being saved:</h2>
 
       <ul>
-        <% @ladder_config.errors.full_messages.each do |message| %>
+        <% @ranking_config.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
@@ -13,8 +13,8 @@
   <% end %>
 
   <div class="form-group">
-    <%= f.label :default_ranking %><br />
-    <%= f.number_field :default_ranking, in: 1..10000, step: 1, autofocus: true, class: 'form-control' %>
+    <%= f.label :default_score %><br />
+    <%= f.number_field :default_score, in: 1..10000, step: 1, autofocus: true, class: 'form-control' %>
   </div>
 
   <div class="form-group">

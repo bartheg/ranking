@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe LadderConfigsController, type: :controller do
+RSpec.describe RankingConfigsController, type: :controller do
 
   describe "GET #edit" do
     xit "returns http success" do

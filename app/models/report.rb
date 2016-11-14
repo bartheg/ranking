@@ -4,7 +4,7 @@ class Report < ActiveRecord::Base
   belongs_to :confirmer, foreign_key: 'confirmer_id', class_name: 'Profile'
   belongs_to :reporters_faction, foreign_key: 'reporters_faction_id', class_name: 'Faction'
   belongs_to :confirmers_faction, foreign_key: 'confirmers_faction_id', class_name: 'Faction'
-  has_many :rankings
+  has_many :calculated_positions
   has_many :report_comments
   belongs_to :result, foreign_key: 'result_id', class_name: 'PossibleResult'
 
@@ -67,8 +67,8 @@ class Report < ActiveRecord::Base
   private
 
   def original_report
-    number_of_hours = scenario.ladder.ladder_config.hours_to_confirm
-    opposite_results = PossibleResult.where(game_id: scenario.ladder.game).where(score_factor: add_inv(result.score_factor))
+    number_of_hours = scenario.ranking.ranking_config.hours_to_confirm
+    opposite_results = PossibleResult.where(game_id: scenario.ranking.game).where(score_factor: add_inv(result.score_factor))
 
     Report.where(status: "unconfirmed").where(scenario_id: scenario_id).where("created_at > ?", number_of_hours.hours.ago).where({reporter_id: confirmer_id, confirmer_id: reporter_id}).where({reporters_faction_id: confirmers_faction_id, confirmers_faction_id: reporters_faction_id}).where(result: opposite_results).first
   end

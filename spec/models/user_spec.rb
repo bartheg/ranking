@@ -5,10 +5,10 @@ RSpec.describe User, type: :model do
   describe "scopes" do
     before :context do
 
-      create :default_config, default_ranking: 1400
+      create :default_config, default_score: 1400
       @game = create :wesnoth
-      @ladder = create :wesnoth_ladder, game: @game
-      @blitz_ladder = create :wesnoth_blitz_ladder, game: @game
+      @ranking = create :wesnoth_ranking, game: @game
+      @blitz_ranking = create :wesnoth_blitz_ranking, game: @game
 
       @u_sa = User.create!(email: "auuh@sadmin.com", password: "asdqwezxc1123")
       @u_vsa = User.create!(email: "buuh@vsadmin.com", password: "1asdqwezxc1123")
@@ -56,8 +56,8 @@ RSpec.describe User, type: :model do
 
       @u_ge1.add_role(:game_editor, @game)
       @u_ge2.add_role(:game_editor, @game)
-      @u_re1.add_role(:ranking_editor, @ladder)
-      @u_re2.add_role(:ranking_editor, @blitz_ladder)
+      @u_re1.add_role(:ranking_editor, @ranking)
+      @u_re2.add_role(:ranking_editor, @blitz_ranking)
 
       @u_t1.add_role :trusted_user
       @u_t2.add_role :trusted_user
@@ -75,9 +75,9 @@ RSpec.describe User, type: :model do
 
     after :context do
       User.destroy_all
-      Ladder.destroy_all
+      Ranking.destroy_all
       Game.destroy_all
-      LadderConfig.destroy_all
+      RankingConfig.destroy_all
     end
 
     it "can scope super_admins" do
@@ -109,7 +109,7 @@ RSpec.describe User, type: :model do
     end
 
     it "can scope ranking_editors" do
-      expect(User.ranking_editors).to match_array [@u_re1, @u_re2]
+      expect(User.calculated_position_editors).to match_array [@u_re1, @u_re2]
     end
 
     it "can scope all_admins (not moderators, not editors)" do

@@ -7,7 +7,7 @@ RSpec.describe Report, type: :model do
   end
 
   after(:context) do
-    LadderConfig.destroy_all
+    RankingConfig.destroy_all
   end
 
   describe 'validations' do
@@ -72,9 +72,9 @@ RSpec.describe Report, type: :model do
     before(:context) do
       create(:default_config)
       @game = create :wesnoth
-      @ladder = create :wesnoth_ladder, game: @game
-      @scenario1 = create :freelands, ladder: @ladder
-      @scenario2 = create :basilisk, ladder: @ladder
+      @ranking = create :wesnoth_ranking, game: @game
+      @scenario1 = create :freelands, ranking: @ranking
+      @scenario2 = create :basilisk, ranking: @ranking
       @victory = create :victory, game: @game
       @defeat = create :defeat, game: @game
       @draw = create :draw, game: @game
@@ -85,12 +85,12 @@ RSpec.describe Report, type: :model do
     end
 
     after(:context) do
-      LadderConfig.destroy_all
+      RankingConfig.destroy_all
       Profile.destroy_all
       User.destroy_all
       PossibleResult.destroy_all
       Scenario.destroy_all
-      Ladder.destroy_all
+      Ranking.destroy_all
       Game.destroy_all
     end
 
@@ -230,9 +230,9 @@ RSpec.describe Report, type: :model do
     before(:context) do
       create(:default_config)
       @game = create :wesnoth
-      @ladder = create :wesnoth_ladder, game: @game
-      @scenario1 = create :freelands, ladder: @ladder
-      @scenario2 = create :basilisk, ladder: @ladder
+      @ranking = create :wesnoth_ranking, game: @game
+      @scenario1 = create :freelands, ranking: @ranking
+      @scenario2 = create :basilisk, ranking: @ranking
       @victory = create :victory, game: @game
       @defeat = create :defeat, game: @game
       @draw = create :draw, game: @game
@@ -243,12 +243,12 @@ RSpec.describe Report, type: :model do
     end
 
     after(:context) do
-      LadderConfig.destroy_all
+      RankingConfig.destroy_all
       Profile.destroy_all
       User.destroy_all
       PossibleResult.destroy_all
       Scenario.destroy_all
-      Ladder.destroy_all
+      Ranking.destroy_all
       Game.destroy_all
     end
 
@@ -305,12 +305,12 @@ RSpec.describe Report, type: :model do
     before(:context) do
       create(:default_config)
       @game = create :wesnoth
-      @ladder = create :wesnoth_ladder, game: @game
-      @blitz_ladder = create :wesnoth_blitz_ladder, game: @game
-      @scenario1 = create :freelands, ladder: @ladder
-      @scenario2 = create :basilisk, ladder: @ladder
-      @scenario1b = create :freelands, ladder: @blitz_ladder
-      @scenario2b = create :basilisk, ladder: @blitz_ladder
+      @ranking = create :wesnoth_ranking, game: @game
+      @blitz_ranking = create :wesnoth_blitz_ranking, game: @game
+      @scenario1 = create :freelands, ranking: @ranking
+      @scenario2 = create :basilisk, ranking: @ranking
+      @scenario1b = create :freelands, ranking: @blitz_ranking
+      @scenario2b = create :basilisk, ranking: @blitz_ranking
       @victory = create :victory, game: @game
       @defeat = create :defeat, game: @game
       @draw = create :draw, game: @game
@@ -327,12 +327,12 @@ RSpec.describe Report, type: :model do
     end
 
     after(:context) do
-      LadderConfig.destroy_all
+      RankingConfig.destroy_all
       Profile.destroy_all
       User.destroy_all
       PossibleResult.destroy_all
       Scenario.destroy_all
-      Ladder.destroy_all
+      Ranking.destroy_all
       Game.destroy_all
     end
 
@@ -358,12 +358,12 @@ RSpec.describe Report, type: :model do
     before(:context) do
       create(:default_config)
       @game = create :wesnoth
-      @ladder = create :wesnoth_ladder, game: @game
-      @blitz_ladder = create :wesnoth_blitz_ladder, game: @game
-      @scenario1 = create :freelands, ladder: @ladder
-      @scenario2 = create :basilisk, ladder: @ladder
-      @scenario1b = create :freelands, ladder: @blitz_ladder
-      @scenario2b = create :basilisk, ladder: @blitz_ladder
+      @ranking = create :wesnoth_ranking, game: @game
+      @blitz_ranking = create :wesnoth_blitz_ranking, game: @game
+      @scenario1 = create :freelands, ranking: @ranking
+      @scenario2 = create :basilisk, ranking: @ranking
+      @scenario1b = create :freelands, ranking: @blitz_ranking
+      @scenario2b = create :basilisk, ranking: @blitz_ranking
       @victory = create :victory, game: @game
       @defeat = create :defeat, game: @game
       @draw = create :draw, game: @game
@@ -384,9 +384,9 @@ RSpec.describe Report, type: :model do
       User.destroy_all
       PossibleResult.destroy_all
       Scenario.destroy_all
-      Ladder.destroy_all
+      Ranking.destroy_all
       Game.destroy_all
-      LadderConfig.destroy_all
+      RankingConfig.destroy_all
     end
 
     before(:example) do

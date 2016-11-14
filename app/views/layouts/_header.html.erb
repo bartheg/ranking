@@ -47,29 +47,28 @@
       <%= render 'layouts/logo' %>
     </ul>
     <ul class="nav nav-pills col-sm-8 col-md-9">
+      <li role="presentation" class="pull-right <%= "active" if current_page?(new_user_registration_path) %>"><%= link_to 'Register', new_user_registration_path%></li>
       <li role="presentation" class="pull-right <%= "active" if current_page?(new_user_session_path) %>"><%= link_to 'Log in', new_user_session_path%></li>
-      <li role="presentation" class="pull-right <%= "active" if current_page?(new_user_registration_path) %>"><%= link_to 'Join', new_user_registration_path%></li>
     </ul>
   </div>
 <% end %>
 
 <!--  TABS  -->
-<ul class="nav nav-tabs">
-  <li role="presentation" class=<%= "active" if current_page?(root_path) %>><%= link_to 'Home', root_path %></li>
-  <li role="presentation" class=<%= "active" if current_page?(games_path) %>><%= link_to 'Games', games_path %></li>
-  <li role="presentation" class=<%= "active" if current_page?(ladders_path) %>><%= link_to 'Ladders', ladders_path %></li>
-  <li role="presentation" class=<%= "active" if current_page?(reports_path) %>><%= link_to 'Reports', reports_path %></li>
-  <li role="presentation" class=<%= "active" if current_page?(rankings_path) %>><%= link_to 'Rankings', rankings_path %></li>
-  <li role="presentation" class=<%= "active" if current_page?(profiles_path) %>><%= link_to 'Profiles', profiles_path %></li>
-  <li role="presentation" class=<%= "active" if current_page?(users_path) %>><%= link_to 'Users', users_path %></li>
-  <li role="presentation" class= "<%= "active" if current_page?(pages_about_path) %>"><%= link_to 'About', pages_about_path %></li>
+<ul class="nav nav-pills">
+  <li role="presentation" class=""><%= link_to 'Home', root_path %></li>
+  <li role="presentation" class=""><%= link_to 'Games', games_path %></li>
+  <li role="presentation" class=""><%= link_to 'Rankings', rankings_path %></li>
+  <li role="presentation" class=""><%= link_to 'Reports', reports_path %></li>
+  <li role="presentation" class=""><%= link_to 'Calculated_positions', calculated_positions_path %></li>
+  <li role="presentation" class=""><%= link_to 'Profiles', profiles_path %></li>
+  <li role="presentation" class=""><%= link_to 'Users', users_path %></li>
 </ul>
 
 <!--  SUB MENU  -->
 <% if current_page?(games_path) %>
   <%= render 'layouts/subbar_games' %>
-<% elsif current_page?(ladders_path) %>
-  <%= render 'layouts/subbar_ladders' %>
+<% elsif current_page?(rankings_path) %>
+  <%= render 'layouts/subbar_rankings' %>
 <% elsif current_page?(reports_path) %>
   <%= render 'layouts/subbar_reports' %>
 <% elsif current_page?(profiles_path) %>

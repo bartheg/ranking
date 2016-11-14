@@ -3,14 +3,14 @@ require 'rails_helper'
 RSpec.describe "Adding reports", type: :request do
 
   before(:context) do
-    create :default_config, default_ranking: 1400
+    create :default_config, default_score: 1400
     @game = create :wesnoth
-    @ladder = create :wesnoth_ladder, game: @game
-    @blitz_ladder = create :wesnoth_blitz_ladder, game: @game
-    @scenario1 = create :freelands, ladder: @ladder
-    @scenario2 = create :basilisk, ladder: @ladder
-    @scenario1b = create :freelands, ladder: @blitz_ladder
-    @scenario2b = create :basilisk, ladder: @blitz_ladder
+    @ranking = create :wesnoth_ranking, game: @game
+    @blitz_ranking = create :wesnoth_blitz_ranking, game: @game
+    @scenario1 = create :freelands, ranking: @ranking
+    @scenario2 = create :basilisk, ranking: @ranking
+    @scenario1b = create :freelands, ranking: @blitz_ranking
+    @scenario2b = create :basilisk, ranking: @blitz_ranking
     @victory = create :victory, game: @game
     @defeat = create :defeat, game: @game
     @draw = create :draw, game: @game
@@ -33,9 +33,9 @@ RSpec.describe "Adding reports", type: :request do
     User.destroy_all
     PossibleResult.destroy_all
     Scenario.destroy_all
-    Ladder.destroy_all
+    Ranking.destroy_all
     Game.destroy_all
-    LadderConfig.destroy_all
+    RankingConfig.destroy_all
   end
 
 
@@ -91,7 +91,7 @@ RSpec.describe "Adding reports", type: :request do
     }.to_not change{Report.count}
     expect(response).to redirect_to(reports_path)
     expect(Report.first.status).to eq "calculated"
-    expect(Ranking.count).to eq 2
+    expect(CalculatedPosition.count).to eq 2
     expect(RankedPosition.count).to eq 2
 
   end

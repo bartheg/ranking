@@ -1,14 +1,14 @@
-<h1><%= @ladder.name %></h1>
-<p><%= @ladder.description %></p>
+<h1><%= @ranking.name %></h1>
+<p><%= @ranking.description %></p>
 
-<h2>The ladder configuration</h2>
+<h2>The ranking configuration</h2>
 
 
 <table class="table">
   <thead>
     <tr>
-      <th>Ladder config ID</th>
-      <th>Ladder ID</th>
+      <th>Ranking config ID</th>
+      <th>Ranking ID</th>
       <th>Is default?</th>
       <th>Starting ranking</th>
       <th>Max dist. between players</th>
@@ -22,9 +22,9 @@
   <tbody>
     <tr>
       <td><%= @config.id %></td>
-      <td><%= @ladder.id %></td>
+      <td><%= @ranking.id %></td>
       <td><%= @config.is_default? %></td>
-      <td><%= @config.default_ranking %></td>
+      <td><%= @config.default_score %></td>
       <td><%= @config.max_distance_between_players %></td>
       <td><%= @config.min_points_to_gain %></td>
       <td><%= @config.disproportion_factor %></td>
@@ -35,10 +35,10 @@
 </table>
 
 <% if user_signed_in? %>
-  <% if @ladder.ladder_config %>
-    <%= link_to 'Edit the ladder ranking config', edit_ladder_ladder_config_path(@ladder, @ladder.ladder_config), class: "btn btn-danger" %>
+  <% if @ranking.ranking_config %>
+    <%= link_to 'Edit the ranking ranking config', edit_ranking_ranking_config_path(@ranking, @ranking.ranking_config), class: "btn btn-danger" %>
   <% else %>
-    <%= link_to 'Create a new ladder ranking config', new_ladder_ladder_config_path(@ladder), class: "btn btn-success" %>
+    <%= link_to 'Create a new ranking ranking config', new_ranking_ranking_config_path(@ranking), class: "btn btn-success" %>
   <% end %>
 <% end %>
 

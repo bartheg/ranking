@@ -3,10 +3,10 @@ class ScenariosController < ApplicationController
   before_action :set_scenario, only: [:show]
 
   def index
-    if params[:ladder_id]
-      @ladder = Ladder.find(params[:ladder_id].to_i)
-      @header = "Scenarios of #{@ladder.name}"
-      @scenarios = @ladder.scenarios
+    if params[:ranking_id]
+      @ranking = Ranking.find(params[:ranking_id].to_i)
+      @header = "Scenarios of #{@ranking.name}"
+      @scenarios = @ranking.scenarios
 
     else
       @header = "Scenarios"
@@ -20,15 +20,15 @@ class ScenariosController < ApplicationController
 
   def new
     @scenario = Scenario.new
-    @ladder = Ladder.find(params[:ladder_id].to_i)
-    @game = @ladder.game
-    @scenario.ladder = @ladder
+    @ranking = Ranking.find(params[:ranking_id].to_i)
+    @game = @ranking.game
+    @scenario.ranking = @ranking
   end
 
   def create
-    @ladder = Ladder.find(params[:ladder_id])
+    @ranking = Ranking.find(params[:ranking_id])
     @scenario = Scenario.new(scenario_params)
-    @scenario.ladder = @ladder
+    @scenario.ranking = @ranking
     if @scenario.save
       redirect_to @scenario, notice: 'Scenario was successfully created.'
     else
@@ -44,7 +44,7 @@ class ScenariosController < ApplicationController
   end
 
   def scenario_params
-    params.require(:scenario).permit(:full_name,:short_name, :description, :ladder_id, :map_size, :mirror_matchups_allowed, :map_random_generated)
+    params.require(:scenario).permit(:full_name,:short_name, :description, :ranking_id, :map_size, :mirror_matchups_allowed, :map_random_generated)
   end
 
 end

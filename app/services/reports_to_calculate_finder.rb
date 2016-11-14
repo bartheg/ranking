@@ -2,7 +2,7 @@ class ReportsToCalculateFinder
 
   def initialize(report)
     @starting_report = report
-    @ladder = @starting_report.scenario.ladder
+    @ranking = @starting_report.scenario.ranking
   end
 
   def tag_to_calculate(report = @starting_report)

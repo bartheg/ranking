@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :ranked_position do
-    ladder nil
+    ranking nil
     profile nil
     last_score 1
     last_score_change 1

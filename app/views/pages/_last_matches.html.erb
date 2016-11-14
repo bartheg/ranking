@@ -1,0 +1,44 @@
+<h1><%= @header %></h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Report id</th>
+      <th>Game</th>
+      <th>Ranking</th>
+      <th>Scenario</th>
+      <th>Reporter</th>
+      <th>Confirmer</th>
+      <th>Winner</th>
+      <th>Date</th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reports.each do |report| %>
+      <tr>
+        <td><%= report.id %></td>
+        <td><%= report.scenario.ranking.game.full_name %></td>
+        <td><%= report.scenario.ranking.name %></td>
+        <td><%= report.scenario.full_name %></td>
+        <td><%= report.reporter.name %> (<%= report.reporters_faction.full_name %>)</td>
+        <td><%= report.confirmer.name %> (<%= report.confirmers_faction.full_name %>)</td>
+        <td>
+          <% if report.result.score_factor < 50 %>
+            <%= report.confirmer.name %> (<%= report.confirmers_faction.full_name %>)
+          <% elsif report.result.score_factor > 50 %>
+            <%= report.reporter.name %> (<%= report.reporters_faction.full_name %>)
+          <% else %>
+            draw
+          <% end %>
+        </td>
+        <td><%= report.created_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'More', reports_path %>

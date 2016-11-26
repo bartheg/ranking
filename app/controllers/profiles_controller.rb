@@ -11,13 +11,18 @@ class ProfilesController < ApplicationController
       if current_user
         @profiles = @user.profiles
         if current_user.id == @param_user_id
+          add_breadcrumb "My Account", @user
+          add_breadcrumb "profiles", user_profiles_path(@user)
           render :index_my
         else
+          add_breadcrumb "User id: #{@user.id}", @user
+          add_breadcrumb "profiles", user_profiles_path(@user)
           render :index_not_my
         end
       end
     else
       @profiles = Profile.all
+      add_breadcrumb "Profiles", :profiles_path
       render :index_all
     end
 

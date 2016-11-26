@@ -13,6 +13,7 @@ gem 'devise', '3.5.6'
 gem 'bootstrap-sass', '3.3.6 '
 gem "cocoon"
 gem "rolify"
+gem "breadcrumbs_on_rails"
 
 gem 'rspec-rails', '3.4.2', group: [:test, :development]
 gem 'factory_girl_rails', group: [:test, :development]

@@ -65,6 +65,17 @@
 </ul>
 
 <!--  SUB MENU  -->
+
+<!-- <ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="#">Home</a></li>
+  <li class="breadcrumb-item"><a href="#">Library</a></li>
+  <li class="breadcrumb-item active">Data</li>
+</ol> -->
+
+<ol class="breadcrumb">
+  <%= render_breadcrumbs :tag => :li, :separator => "" %>
+</ol>
+
 <% if current_page?(games_path) %>
   <%= render 'layouts/subbar_games' %>
 <% elsif current_page?(rankings_path) %>

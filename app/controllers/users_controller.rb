@@ -2,6 +2,8 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    add_breadcrumb "Users", :users_path
+
     render :index
   end
 

@@ -22,7 +22,7 @@ class ReportsController < ApplicationController
     else
       @header = "Reports"
       @reports = Report.all
-
+      add_breadcrumb "Reports", :reports_path
     end
   end
 

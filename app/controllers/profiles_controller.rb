@@ -15,7 +15,7 @@ class ProfilesController < ApplicationController
           add_breadcrumb "profiles", user_profiles_path(@user)
           render :index_my
         else
-          add_breadcrumb "User id: #{@user.id}", @user
+          add_breadcrumb "User: #{@user.email}", @user
           add_breadcrumb "profiles", user_profiles_path(@user)
           render :index_not_my
         end
@@ -31,7 +31,8 @@ class ProfilesController < ApplicationController
   # GET /profiles/1
   def show
     @languages = @profile.languages
-
+    add_breadcrumb "Profiles", :profiles_path
+    add_breadcrumb @profile.name, @profile
     if current_user
       if current_user.id == @profile.user_id
         render :show_my

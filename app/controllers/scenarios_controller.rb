@@ -7,14 +7,27 @@ class ScenariosController < ApplicationController
       @ranking = Ranking.find(params[:ranking_id].to_i)
       @header = "Scenarios of #{@ranking.name}"
       @scenarios = @ranking.scenarios
+      add_breadcrumb "Games", :games_path
+      add_breadcrumb @ranking.game.short_name, @ranking.game
+      add_breadcrumb "rankings", game_rankings_path(@ranking.game)
+      add_breadcrumb @ranking.name, @ranking
+      add_breadcrumb "scenarios", :ranking_scenarios_path
 
     else
       @header = "Scenarios"
       @scenarios = Scenario.all
+      add_breadcrumb "Scenarios", scenarios_path
+
     end
   end
 
   def show
+    add_breadcrumb "Games", :games_path
+    add_breadcrumb @scenario.ranking.game.short_name, @scenario.ranking.game
+    add_breadcrumb "rankings", game_rankings_path(@scenario.ranking.game)
+    add_breadcrumb @scenario.ranking.name, @scenario.ranking
+    add_breadcrumb "scenarios", ranking_scenarios_path(@scenario.ranking)
+    add_breadcrumb @scenario.short_name, @scenario
 
   end
 

@@ -11,13 +11,18 @@ class ProfilesController < ApplicationController
       if current_user
         @profiles = @user.profiles
         if current_user.id == @param_user_id
+          add_breadcrumb "My Account", @user
+          add_breadcrumb "profiles", user_profiles_path(@user)
           render :index_my
         else
+          add_breadcrumb "User: #{@user.email}", @user
+          add_breadcrumb "profiles", user_profiles_path(@user)
           render :index_not_my
         end
       end
     else
       @profiles = Profile.all
+      add_breadcrumb "Profiles", :profiles_path
       render :index_all
     end
 
@@ -26,7 +31,8 @@ class ProfilesController < ApplicationController
   # GET /profiles/1
   def show
     @languages = @profile.languages
-
+    add_breadcrumb "Profiles", :profiles_path
+    add_breadcrumb @profile.name, @profile
     if current_user
       if current_user.id == @profile.user_id
         render :show_my

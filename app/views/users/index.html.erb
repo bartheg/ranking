@@ -16,9 +16,9 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= user.id %></td>
-        <td><%= user.email %></td>
+        <td><%= link_to user.email, user %></td>
         <td><%#= user.main_role %> placeholder</td>
-        <td><%= user.profiles.count %></td>
+        <td><%= link_to user.profiles.count, user_profiles_path(user) %></td>
       </tr>
     <% end %>
   </tbody>

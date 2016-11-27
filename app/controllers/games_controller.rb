@@ -3,10 +3,15 @@ class GamesController < ApplicationController
 
   def index
     @games = Game.all
+    add_breadcrumb "Games", :games_path
+
   end
 
   def show
     @results = @game.possible_results
+    add_breadcrumb "Games", :games_path
+    add_breadcrumb @game.short_name, @game
+
   end
 
   def new

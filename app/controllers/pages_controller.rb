@@ -1,7 +1,6 @@
 class PagesController < ApplicationController
 
   def home
-    @header = "Last Matches"
     @reports = Report.all
     add_breadcrumb "Home", :root_path
 

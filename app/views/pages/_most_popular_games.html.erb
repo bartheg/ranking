@@ -1,0 +1,34 @@
+<h1>Our <%= @number_of_most_popular_games %> most popular games</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Game</th>
+      <th>Number of reports</th>
+      <th>Number of players</th>
+      <th>Last report date</th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if @games %>
+      <% @games.each do |game| %>
+        <tr>
+          <td><%= game.full_name %></td>
+          <td><%= game.count_reports %></td>
+          <td><%= game.ranked_positions.count %></td>
+          <% if game.reports.any? %>
+            <td><%= game.reports.last.created_at %></td>
+          <% else %>
+            <td>never</td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+
+  </tbody>
+</table>
+
+<%= link_to 'All games', '#' %>
+<p>Your favourite game is not here? <%= link_to 'Read how to add a game ranking.', '#' %></p>
